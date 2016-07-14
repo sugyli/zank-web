@@ -1,0 +1,25 @@
+{
+    "status": 1,
+    "data": [
+        {
+            "uid": 1,
+            "username": "Seven",
+            "avatar": "http://medz.cn/windid/attachment/avatar/000/00/00/1_small.jpg",
+            "age": 22,
+            "height": 172,
+            "kg": 51,
+            "role": 0.5,
+            "distance": 530,
+        },
+        {
+            "uid": 2,
+            "username": "ShiweiDu",
+            "avatar": "http://medz.cn/windid/attachment/avatar/000/00/00/2_small.jpg",
+            "age": 21,
+            "height": 176,
+            "kg": 55,
+            "role": 1,
+            "distance": 1950,
+        }
+    ]
+}
