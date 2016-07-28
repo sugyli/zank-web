@@ -2,7 +2,8 @@
 
 namespace Zank\Model;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * 用户模型
@@ -10,8 +11,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @package default
  * @author Seven Du<lovevipdsw@outlook.com>
  **/
-class User extends Eloquent
+class User extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'user';
 
