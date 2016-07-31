@@ -1,5 +1,8 @@
 <?php
 
+/* 开启强类型模式 */
+declare(strict_types = 1);
+
 require __DIR__.'/vendor/autoload.php';
 
 $settings = require __DIR__.'/src/settings.php';
