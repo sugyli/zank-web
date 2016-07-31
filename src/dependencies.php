@@ -1,10 +1,12 @@
 <?php
 
+use Slim\Container;
+
 // DIC configuration
 $container = $app->getContainer();
 
 // monolog
-$container['logger'] = function ($c) {
+$container['logger'] = function (Container $c) {
     $settings = $c->get('settings')['logger'];
     $logger = new Monolog\Logger($settings['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -13,12 +15,12 @@ $container['logger'] = function ($c) {
 };
 
 // Service factory for the Eloquent ORM.
-$container['db'] = function ($c) {
+$container['db'] = function (Container $c) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($c['settings']['db']);
+    $capsule->addConnection($c->get('settings')['db']);
 
     $capsule->setAsGlobal();
-    $capsule->bootEloquent();
+    $capsule->bootEloquent();var_dump(1);
 
     return $capsule;
 };
