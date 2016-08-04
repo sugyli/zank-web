@@ -28,5 +28,6 @@ require __DIR__.'/src/db/console.php';
 
 $app = new Symfony\Component\Console\Application('Zank Command Tool', $version);
 $app->add(new Zank\Console\TableImportCommand);
+$app->add(new Zank\Console\TableOutCommand);
 $app->setDefaultCommand('list');
 $app->run();
