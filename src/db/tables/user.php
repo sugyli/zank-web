@@ -15,9 +15,12 @@ return function (Blueprint $table) {
     $table->string('latitude', 100);
     $table->string('longitude', 100);
     $table->timestamps();
+    $table->softDeletes();
     $table->unique('phone');
     $table->unique('username');
     $table->index('geohash', 'idx_geohash');
+    $table->index('latitude', 'idx_geohash');
+    $table->index('longitude', 'idx_geohash');
     $table->index('age');
     $table->index('height');
     $table->index('kg');
