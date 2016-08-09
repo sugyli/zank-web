@@ -1,12 +1,10 @@
 #!/usr/bin/env php
 <?php
-if (PHP_VERSION_ID < 50500) {
+
+if (PHP_VERSION_ID < 70000) {
     file_put_contents('php://stderr', sprintf(
-        "ThinkSNS Installer requires PHP 5.5 version or higher and your system has\n".
+        "The project requires PHP 7.0 version or higher and your system has\n".
         "PHP %s version installed.\n\n".
-        "To solve this issue, upgrade your PHP installation or install ThinkSNS manually\n".
-        "executing the following command:\n\n".
-        "composer create-project medz/thinksns-4 <project-name> <thinksns-version>\n\n",
         PHP_VERSION
     ));
     exit(1);
