@@ -19,8 +19,8 @@ return function (Blueprint $table) {
     $table->unique('phone');
     $table->unique('username');
     $table->index('geohash', 'idx_geohash');
-    $table->index('latitude', 'idx_geohash');
-    $table->index('longitude', 'idx_geohash');
+    $table->index('latitude');
+    $table->index('longitude');
     $table->index('age');
     $table->index('height');
     $table->index('kg');
