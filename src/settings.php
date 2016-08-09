@@ -1,4 +1,5 @@
 <?php
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -6,18 +7,20 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'zank',
+            'level' => Monolog\Logger::DEBUG,
             'padt' => __DIR__.'/../logs/app.log',
         ],
         // Eloquent settings
         'db' => [
-            'driver' => 'mysql',
-            'host' => 'localhost',
+            'driver' => 'pgsql',
+            'host' => '127.0.0.1',
             'database' => 'zank',
-            'username' => 'root',
+            'username' => 'zank',
             'password' => '',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => 'medz_',
+            'port' => 3432
         ],
     ],
 ];
