@@ -25,7 +25,7 @@ class InitDb
      *
      * @param  \Psr\Http\Message\RequestInterface  $request  PSR7 request
      * @param  \Psr\Http\Message\ResponseInterface $response PSR7 response
-     * @param  \callable                           $next     Next middleware
+     * @param  callable                            $next     Next middleware
      * @return \Psr\Http\Message\ResponseInterface
      * @author Seven Du <lovevipdsw@outlook.com>
      **/
