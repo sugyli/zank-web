@@ -3,6 +3,7 @@
 namespace Zank\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -18,4 +19,21 @@ class User extends Model
     protected $table = 'user';
 
     protected $primaryKey = 'user_id';
+
+    /**
+     * 用于设置查询条件为phone的快捷方法
+     * 
+     * @param    \Illuminate\Database\Eloquent\Builder $query 查询构造器
+     * @param    string|int                            $phone 条件字符串
+     * @return   \Illuminate\Database\Eloquent\Builder
+     * 
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function scopeByPhone(Builder $query, $phone)
+    {
+        return $query
+            ->where('phone', $phone)
+        ;
+    }
 } // END class User extends Eloquent
