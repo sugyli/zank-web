@@ -12,19 +12,26 @@ use Zank\Controller;
  * @package default
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
-class SignUp extends Controller
+class Sign extends Controller
 {
-    public function __invoke(Request $request, Response $response)
+
+    /**
+     * 注册控制器
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function up(Request $request, Response $response)
     {
         $phone = $request->getParsedBodyParam('phone');
         $password = $request->getParsedBodyParam('password');
         $captcha = $request->getParsedBodyParam('captcha');
         $invite_code = $request->getParsedBodyParam('invite_code');
 
-        // if (!$phone) {
-        // }
-
         $user = \Zank\Model\User::byPhone($phone)->first();
         var_dump($user);
     }
-} // END class SignUp
+} // END class Sign
