@@ -35,4 +35,4 @@ class InitDb
 
         return $next($request, $response);
     }
-} // END class TrailingSlash
+} // END class InitDb
