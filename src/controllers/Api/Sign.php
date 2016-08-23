@@ -34,4 +34,33 @@ class Sign extends Controller
         $user = \Zank\Model\User::byPhone($phone)->first();
         var_dump($user);
     }
+
+    /**
+     * 登陆控制器
+     *
+     * @param Request $request
+     */
+    public function in(Request $request, Response, $response)
+    {
+        $user = $request->getParsedBodyParam('user');
+        $password = $request->getParsedBodyParam('password');
+    }
+
+    /**
+     * 索引方法，返回api列表
+     *
+     * @param Request $request 请求对象
+     * @param Response $response 返回资源
+     * @return Response
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function __invoke(Request $request, Response $response)
+    {
+        $response->withJson([
+            '/api/sign/up' => '用户注册',
+        ]);
+
+        return $response;
+    }
 } // END class Sign
