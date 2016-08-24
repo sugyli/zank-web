@@ -2,10 +2,13 @@
 
 use Illuminate\Database\Schema\Blueprint;
 
-return function (Blueprint $table) {
-    $table->increments('uid');
+return function (Blueprint $table)
+{
+    $table->increments('users_id');
     $table->string('phone');
     $table->string('username', 100);
+    $table->string('password', 255);
+    $table->string('hash', 100);
     $table->bigInteger('avatar')->nullable()->default(0);
     $table->smallInteger('age')->nullable()->default(0);
     $table->smallInteger('height')->nullable()->default(170);
@@ -18,7 +21,7 @@ return function (Blueprint $table) {
     $table->softDeletes();
     $table->unique('phone');
     $table->unique('username');
-    $table->index('geohash', 'idx_geohash');
+    $table->index('geohash');
     $table->index('latitude');
     $table->index('longitude');
     $table->index('age');
