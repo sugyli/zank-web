@@ -27,7 +27,8 @@
             "Zank\\Model\\": "src/models/",
             "Zank\\Console\\": "src/consoles/",
             "Zank\\Controller\\": "src/controllers/",
-            "Zank\\Middleware\\": "src/middlewares/"
+            "Zank\\Middleware\\": "src/middlewares/",
+            "Zank\\Common\\": "src/commons/"
         }
     }
 }
