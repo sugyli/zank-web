@@ -40,10 +40,13 @@ class Sign extends Controller
      *
      * @param Request $request
      */
-    public function in(Request $request, Response, $response)
+    public function in(Request $request, Response $response)
     {
         $user = $request->getParsedBodyParam('user');
         $password = $request->getParsedBodyParam('password');
+        var_dump(11);exit;
+        return 123;
+        // var_dump($this->ci->demo);exit;
     }
 
     /**
