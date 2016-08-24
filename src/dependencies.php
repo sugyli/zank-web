@@ -6,18 +6,18 @@ use Slim\Container;
 $container = $app->getContainer();
 
 // monolog
-$container['logger'] = function (Container $c)
+$container['logger'] = function (Container $c): \Monolog\Logger
 {
     $settings = $c->get('settings')['logger'];
-    $logger = new Monolog\Logger($settings['name']);
-    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
+    $logger = new \Monolog\Logger($settings['name']);
+    $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 
     return $logger;
 };
 
 // Service factory for the Eloquent ORM.
-$container['db'] = function (Container $c)
+$container['db'] = function (Container $c): \Illuminate\Database\Capsule\Manager
 {
     $capsule = new \Illuminate\Database\Capsule\Manager;
     $capsule->addConnection($c->get('settings')['db']);
