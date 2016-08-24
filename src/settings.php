@@ -8,7 +8,7 @@ return [
         'logger' => [
             'name' => 'zank',
             'level' => Monolog\Logger::DEBUG,
-            'padt' => __DIR__.'/../logs/app.log',
+            'path' => __DIR__.'/../logs/app.log',
         ],
         // Eloquent settings
         'db' => [
