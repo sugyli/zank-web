@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 
-return function (Blueprint $table)
+return function (Blueprint $table): void
 {
     $table->increments('users_id');
     $table->string('phone');

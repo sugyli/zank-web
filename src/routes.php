@@ -3,9 +3,11 @@
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-$app->group('/api', function () {
+$app->group('/api', function (): void
+{
     // index
-    $this->any('', function(Request $request, Response $response) {
+    $this->any('', function (Request $request, Response $response): Response
+    {
         $apiList = [
             '/api/sign/' => '用户注册｜登陆',
         ];
@@ -15,7 +17,8 @@ $app->group('/api', function () {
     });
 
     // 用户注册｜登陆
-    $this->group('/sign', function () {
+    $this->group('/sign', function (): void
+    {
         // 索引
         $this->any('', Zank\Controller\Api\Sign::class);
 

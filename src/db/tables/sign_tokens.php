@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 
-return function (Blueprint $table)
+return function (Blueprint $table): void
 {
     $table->increments('sign_tokens_id');
     $table->string('token', 255);

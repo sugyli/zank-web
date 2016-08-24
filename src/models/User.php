@@ -30,7 +30,7 @@ class User extends Model
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
-    public function scopeByPhone(Builder $query, $phone)
+    public function scopeByPhone(Builder $query, $phone): Builder
     {
         return $query
             ->where('phone', $phone)

@@ -2,9 +2,7 @@
 
 namespace Zank\Model;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, Builder, SoftDeletes};
 
 /**
  * 用户认证模型
@@ -19,14 +17,14 @@ class SignToken extends Model
 
     protected $primaryKey = 'sign_tokens_id';
 
-    public function scopeByToken(Builder $query, $token)
+    public function scopeByToken(Builder $query, $token): Builder
     {
         return $query
             ->where('token', $token)
         ;
     }
 
-    public function scopeByRefreshToken(Builder $query, $refreshToken)
+    public function scopeByRefreshToken(Builder $query, $refreshToken): Builder
     {
         return $query
             ->where('refresh_token', $refreshToken)
