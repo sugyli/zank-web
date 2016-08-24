@@ -14,7 +14,6 @@ $app->group('/api', function () {
         return $response;
     });
 
-
     // 用户注册｜登陆
     $this->group('/sign', function () {
         // 索引
@@ -28,7 +27,8 @@ $app->group('/api', function () {
 
         // 登陆
         $this
-            ->post('/in', Zank\Controller\Api\Sign::class,':in')
+            ->any('/in', Zank\Controller\Api\Sign::class.':in')
+            ->add(Zank\Middleware\AuthenticationUserToken::class)
             ->add(Zank\Middleware\InitDb::class)
         ;
     });
