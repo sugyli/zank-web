@@ -16,9 +16,9 @@ class User extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'user';
+    protected $table = 'users';
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'users_id';
 
     /**
      * 用于设置查询条件为phone的快捷方法
