@@ -25,6 +25,7 @@ $app->group('/api', function (): void
         // 注册
         $this
             ->post('/up', \Zank\Controller\Api\Sign::class.':up')
+            ->add(\Zank\Middleware\Sign\Up\ValidateUserInviteCode::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByUserName::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
             ->add(\Zank\Middleware\InitDb::class)
