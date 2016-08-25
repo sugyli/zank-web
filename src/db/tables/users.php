@@ -14,9 +14,9 @@ return function (Blueprint $table): void
     $table->smallInteger('height')->nullable()->default(170);
     $table->smallInteger('kg')->nullable()->default(60);
     $table->enum('role', ['1', '0.5', '0'])->nullable()->default('0.5');
-    $table->string('geohash', 100);
-    $table->string('latitude', 100);
-    $table->string('longitude', 100);
+    $table->string('geohash', 100)->nullable()->default(null);
+    $table->string('latitude', 100)->nullable()->default(null);
+    $table->string('longitude', 100)->nullable()->default(null);
     $table->timestamps();
     $table->softDeletes();
     $table->unique('phone');
