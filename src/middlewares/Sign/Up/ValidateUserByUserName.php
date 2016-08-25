@@ -25,19 +25,23 @@ class ValidateUserByUserName
 
         // 判断用户名不能为空
         if (!$username) {
-            $response = new \Zank\Model\Message($response, false, '用户名不正确');
+            $response = new \Zank\Common\Message($response, false, '用户名不正确');
 
             return $response->withJson();
 
         // 判断用户名是否符合规范
-        } elseif (!preg_match('/^[\u4E00-\u9FA5A-Za-z][\u4E00-\u9FA5A-Za-z0-9]+$/', $username)) {
-            $response = new \Zank\Model\Message($response, false, '用户名不正确，只能非数字和非符号开头。')；
+        } elseif (!preg_match('/^[a-zA-Z\x{4e00}-\x{9fa5}][_a-zA-Z0-9\x{4e00}-\x{9fa5}]+$/u', $username)) {
+            $response = new \Zank\Common\Message($response, false, '用户名不正确，只能非数字和非符号开头。');
 
             return $response->withJson();
         }
 
-        $user = $this->ci->get('user');
-        if (!$user) {
+        // 检查是否存在注入的用户信息，如果有，获取
+        if ($this->ci->has('user')) {
+            $user = $this->ci->get('user');
+
+        // 不存在注入信息，查询信息，并注入
+        } else {
             $user = \Zank\Model\User::byUserName($username)->frist();
             $this->ci->offsetSet('user', $user);
         }
@@ -50,7 +54,7 @@ class ValidateUserByUserName
 
             // 只要用户存在就不允许
             } else {
-                $response = new \Zank\Model\Message($response, false, '当前用户名或者手机号码不能注册。');
+                $response = new \Zank\Common\Message($response, false, '当前用户名或者手机号码不能注册。');
             }
 
             return $response->withJson();
