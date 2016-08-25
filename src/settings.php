@@ -12,15 +12,44 @@ return [
         ],
         // Eloquent settings
         'db' => [
-            'driver' => 'pgsql',
-            'host' => '127.0.0.1',
-            'database' => 'zank',
-            'username' => 'zank',
-            'password' => '',
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => 'medz_',
-            'port' => 3432
+            'default' => 'mysql',
+
+            'connections' => [
+
+                'sqlite' => [
+                    'driver' => 'sqlite',
+                    'database' => 'database.sqlite',
+                    'prefix' => 'medz',
+                ],
+
+                'mysql' => [
+                    'driver' => 'mysql',
+                    'host' => 'localhost',
+                    'port' => '3306',
+                    'database' => 'zank',
+                    'username' => 'root',
+                    'password' => '',
+                    'charset' => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix' => 'medz_',
+                    'strict' => false,
+                    'engine' => null,
+                ],
+
+                'pgsql' => [
+                    'driver' => 'pgsql',
+                    'host' => 'localhost',
+                    'port' => '5432',
+                    'database' => 'zank',
+                    'username' => 'zank',
+                    'password' => '',
+                    'charset' => 'utf8',
+                    'prefix' => 'medz_',
+                    'schema' => 'public',
+                ],
+
+            ],
+
         ],
     ],
 ];
