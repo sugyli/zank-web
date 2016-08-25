@@ -27,9 +27,14 @@ class Sign extends Controller
     public function up(Request $request, Response $response)
     {
         $phone = $request->getParsedBodyParam('phone');
+        $username = $request->getParsedBodyParam('username');
         $password = $request->getParsedBodyParam('password');
+
         $captcha = $request->getParsedBodyParam('captcha');
         $invite_code = $request->getParsedBodyParam('invite_code');
+
+        var_dump($password);
+        exit;
 
         $user = \Zank\Model\User::byPhone($phone)->first();
         var_dump($user);
