@@ -24,7 +24,7 @@ $app->group('/api', function (): void
 
         // 注册
         $this
-            ->any('/up', Zank\Controller\Api\Sign::class.':up')
+            ->post('/up', Zank\Controller\Api\Sign::class.':up')
             ->add(Zank\Middleware\InitDb::class)
         ;
 
