@@ -12,7 +12,7 @@ return [
         ],
         // Eloquent settings
         'db' => [
-            'default' => 'mysql',
+            'default' => 'pgsql',
 
             'connections' => [
 
