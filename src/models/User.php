@@ -36,4 +36,9 @@ class User extends Model
             ->where('phone', $phone)
         ;
     }
+
+    public function scopeByUserName(Builder $query, $username): Builder
+    {
+        return $query->where('username', $username);
+    }
 } // END class User extends Eloquent
