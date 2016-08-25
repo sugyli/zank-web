@@ -19,8 +19,11 @@ $container['logger'] = function (Container $c): \Monolog\Logger
 // Service factory for the Eloquent ORM.
 $container['db'] = function (Container $c): \Illuminate\Database\Capsule\Manager
 {
+    $settings = $c->get('settings')->get('db');
+    $settings = $settings['connections'][$settings['default']];
+
     $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($c->get('settings')['db']);
+    $capsule->addConnection($settings);
 
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
