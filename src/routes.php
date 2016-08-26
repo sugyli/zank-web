@@ -53,7 +53,7 @@ $app->group('/api', function (): void
         $this->any('', function (Request $request, Response $response): Response
         {
             $apiList = [
-                '/api/captcha/phone/get' => '获取手机号码验证码',
+                '/api/captcha/phone/get/register' => '获取手机号码验证码',
                 '/api/captcha/phone/has' => '验证手机号码验证码',
             ];
 
