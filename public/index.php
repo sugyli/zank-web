@@ -10,4 +10,4 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require __DIR__.'./../bootstarp.php';
+require __DIR__.'/../bootstrap.php';
