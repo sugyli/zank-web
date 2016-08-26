@@ -90,9 +90,9 @@ class Sign extends Controller
             return $response->withJson();
         }
 
-        $response = new \Zank\Common\Message($response, true, '刷新token成功！', $token);
-
-        return $response->withJson();
+        return with(new \Zank\Common\Message($response, true, '刷新token成功！', $token))
+            ->withJson()
+        ;
     }
 
     public function setpResisterBase(Request $request, Response $response)
