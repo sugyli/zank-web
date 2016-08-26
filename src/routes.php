@@ -22,11 +22,12 @@ $app->group('/api', function (): void
         // 索引
         $this->any('', \Zank\Controller\Api\Sign::class);
 
-        // 注册
+        // 注册第一步信息
+        // phone password
         $this
-            ->post('/up', \Zank\Controller\Api\Sign::class.':up')
+            ->post('/up/setp/base', \Zank\Controller\Api\Sign::class.':setpResisterBase')
             ->add(\Zank\Middleware\Sign\Up\ValidateUserInviteCode::class)
-            ->add(\Zank\Middleware\Sign\Up\ValidateUserByUserName::class)
+            ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
             ->add(\Zank\Middleware\InitDb::class)
         ;
@@ -35,6 +36,34 @@ $app->group('/api', function (): void
         $this
             ->any('/in', \Zank\Controller\Api\Sign::class.':in')
             ->add(\Zank\Middleware\AuthenticationUserToken::class)
+            ->add(\Zank\Middleware\InitDb::class)
+        ;
+    });
+
+    // 验证码相关
+    $this->group('/captcha', function ()
+    {
+        // 索引
+        $this->any('', function (Request $request, Response $response): Response
+        {
+            $apiList = [
+                '/api/captcha/phone/get' => '获取手机号码验证码',
+                '/api/captcha/phone/has' => '验证手机号码验证码',
+            ];
+
+            return $response->withJson($apiList);
+        });
+
+        // 获取手机号码验证码
+        $this
+            ->post('/phone/get', \Zank\Controller\Api\Captcha\Phone::class.':get')
+            ->add(\Zank\Middleware\InitDb::class)
+        ;
+
+        // 验证手机号码验证码
+        $this
+            ->post('/phone/has', \Zank\Controller\Api\Captcha\Phone::class.':has')
+            ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\InitDb::class)
         ;
     });
