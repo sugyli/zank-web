@@ -98,7 +98,7 @@ class Sign extends Controller
         ;
     }
 
-    public function setpRegisterBase(Request $request, Response $response)
+    public function stepRegisterBase(Request $request, Response $response)
     {
         $phone = $request->getParsedBodyParam('phone');
         $password = $request->getParsedBodyParam('password');
@@ -120,7 +120,7 @@ class Sign extends Controller
         ;
     }
 
-    public function setpRegisterInfo(Request $request, Response $response)
+    public function stepRegisterInfo(Request $request, Response $response)
     {
         $username = $request->getParsedBodyParam('username');
         $age = $request->getParsedBodyParam('age');
