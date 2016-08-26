@@ -29,15 +29,23 @@ class Sign extends Controller
         $phone = $request->getParsedBodyParam('phone');
         $username = $request->getParsedBodyParam('username');
         $password = $request->getParsedBodyParam('password');
-
-        $captcha = $request->getParsedBodyParam('captcha');
         $invite_code = $request->getParsedBodyParam('invite_code');
 
-        var_dump($password);
+        $user = new \Zank\Model\User;
+        $user->phone = $phone;
+        $user->username = $username;
+        $user->hash = str_random(64);
+        $user->password = md5($user->hash.$password);
+
+        if (!$user->save()) {
+            $response = new \Zank\Common\Message($response, false, '创建用户失败！');
+
+            return $response->withJson();
+        }
+
+        var_dump($user);
         exit;
 
-        $user = \Zank\Model\User::byPhone($phone)->first();
-        var_dump($user);
     }
 
     /**
@@ -51,7 +59,24 @@ class Sign extends Controller
         $password = $request->getParsedBodyParam('password');
         var_dump(11);exit;
         return 123;
+        register
         // var_dump($this->ci->demo);exit;
+    }
+
+    public function setpResisterBase(Request $request, Response $response)
+    {
+        $phone = $request->getParsedBodyParam('phone');
+        $password = $request->getParsedBodyParam('password');
+        $invite_code = $request->getParsedBodyParam('invite_code');
+
+        $user = new \Zank\Model\User;
+        $user->phone = $phone;
+        $user->username = sprintf('手机用户_%s', $phone);
+        $user->hash = str_random(64);
+        $user->password = md5($user->hash.$password);
+
+        var_dump($user);
+        exit;
     }
 
     /**
