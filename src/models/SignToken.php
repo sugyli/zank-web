@@ -30,4 +30,28 @@ class SignToken extends Model
             ->where('refresh_token', $refreshToken)
         ;
     }
+
+    public static function createToken()
+    {
+        $token = str_random(64);
+        $tokens = self::byToken($token)->count();
+
+        if ($tokens) {
+            return self::createToken();
+        }
+
+        return $token;
+    }
+
+    public static function createRefreshToken()
+    {
+        $token = str_random(64);
+        $tokens = self::ByRefreshToken($token)->count();
+
+        if ($tokens) {
+            return self::createToken();
+        }
+
+        return $token;
+    }
 } // END class SignToken extends Model
