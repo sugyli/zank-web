@@ -34,8 +34,14 @@ $app->group('/api', function (): void
 
         // 登陆
         $this
-            ->any('/in', \Zank\Controller\Api\Sign::class.':in')
-            ->add(\Zank\Middleware\AuthenticationUserToken::class)
+            ->post('/in', \Zank\Controller\Api\Sign::class.':in')
+            ->add(\Zank\Middleware\Sign\In\ValidateUserByPhone::class)
+            ->add(\Zank\Middleware\InitDb::class)
+        ;
+
+        // 刷新token 
+        $this
+            ->post('/refresh-token', \Zank\Controller\Api\Sign::class.':refreshToken')
             ->add(\Zank\Middleware\InitDb::class)
         ;
     });
@@ -56,7 +62,8 @@ $app->group('/api', function (): void
 
         // 获取手机号码验证码
         $this
-            ->post('/phone/get', \Zank\Controller\Api\Captcha\Phone::class.':get')
+            ->post('/phone/get/register', \Zank\Controller\Api\Captcha\Phone::class.':get')
+            ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
             ->add(\Zank\Middleware\InitDb::class)
         ;
 
