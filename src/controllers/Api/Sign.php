@@ -131,6 +131,7 @@ class Sign extends Controller
         $response->withJson([
             '/api/sign/in' => '用户登陆',
             '/api/sign/up/setp/base' => '用户基本信息注册',
+            '/api/sign/refresh-token' => '刷新token',
         ]);
 
         return $response;
