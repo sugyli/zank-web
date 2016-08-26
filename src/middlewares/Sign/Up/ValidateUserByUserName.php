@@ -42,7 +42,10 @@ class ValidateUserByUserName
 
         // 不存在注入信息，查询信息，并注入
         } else {
-            $user = \Zank\Model\User::byUserName($username)->frist();
+            $user = \Zank\Model\User::withTrashed()
+                ->byUserName($username)
+                ->frist()
+            ;
             $this->ci->offsetSet('user', $user);
         }
 
