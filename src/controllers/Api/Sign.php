@@ -67,17 +67,19 @@ class Sign extends Controller
 
         // 刷新token的值为空
         if (!$refreshToken) {
-            $response = new \Zank\Common\Message($response, false, '请传递正确的参数');
 
-            return $response->withJson();
+            return with(new \Zank\Common\Message($response, false, '请传递正确的参数'))
+                ->withJson()
+            ;
         }
 
         $token = \Zank\Model\SignToken::byRefreshToken($refreshToken)->first();
 
         if (!$token) {
-            $response = new \Zank\Common\Message($response, false, '刷新token的参数不存在。');
 
-            return $response->withJson();
+            return with(new \Zank\Common\Message($response, false, '刷新token的参数不存在。'))
+                ->withJson()
+            ;
         }
 
         $token->token = \Zank\Model\SignToken::createToken();
@@ -85,9 +87,10 @@ class Sign extends Controller
         
 
         if (!$token->save()) {
-            $response = new \Zank\Common\Message($response, false, '刷新token失败，请重新登陆。');
 
-            return $response->withJson();
+            return with(new \Zank\Common\Message($response, false, '刷新token失败，请重新登陆。'))
+                ->withJson()
+            ;
         }
 
         return with(new \Zank\Common\Message($response, true, '刷新token成功！', $token))
