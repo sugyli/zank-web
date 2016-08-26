@@ -46,7 +46,7 @@ class SignToken extends Model
     public static function createRefreshToken()
     {
         $token = str_random(64);
-        $tokens = self::ByRefreshToken($token)->count();
+        $tokens = self::byRefreshToken($token)->count();
 
         if ($tokens) {
             return self::createToken();
