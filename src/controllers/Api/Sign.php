@@ -61,6 +61,40 @@ class Sign extends Controller
 
     }
 
+    public function refreshToken(Request $request, Response $response)
+    {
+        $refreshToken = $request->getParsedBodyParam('refresh_token');
+
+        // 刷新token的值为空
+        if (!$refreshToken) {
+            $response = new \Zank\Common\Message($response, false, '请传递正确的参数');
+
+            return $response->withJson();
+        }
+
+        $token = \Zank\Model\SignToken::byRefreshToken($refreshToken)->first();
+
+        if (!$token) {
+            $response = new \Zank\Common\Message($response, false, '刷新token的参数不存在。');
+
+            return $response->withJson();
+        }
+
+        $token->token = \Zank\Model\SignToken::createToken();
+        $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
+        
+
+        if (!$token->save()) {
+            $response = new \Zank\Common\Message($response, false, '刷新token失败，请重新登陆。');
+
+            return $response->withJson();
+        }
+
+        $response = new \Zank\Common\Message($response, true, '刷新token成功！', $token);
+
+        return $response->withJson();
+    }
+
     public function setpResisterBase(Request $request, Response $response)
     {
         $phone = $request->getParsedBodyParam('phone');
