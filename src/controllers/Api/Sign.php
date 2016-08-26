@@ -98,7 +98,7 @@ class Sign extends Controller
         ;
     }
 
-    public function setpResisterBase(Request $request, Response $response)
+    public function setpRegisterBase(Request $request, Response $response)
     {
         $phone = $request->getParsedBodyParam('phone');
         $password = $request->getParsedBodyParam('password');
@@ -118,6 +118,15 @@ class Sign extends Controller
         return with(new \Zank\Common\Message($response, false, '注册失败！'))
             ->withJson()
         ;
+    }
+
+    public function setpRegisterInfo(Request $request, Response $response)
+    {
+        $username = $request->getParsedBodyParam('username');
+        $age = $request->getParsedBodyParam('age');
+        $height = $request->getParsedBodyParam('height');
+        $kg = $request->getParsedBodyParam('kg');
+        $areas_id = $request->getParsedBodyParam('areas_id');
     }
 
     /**
