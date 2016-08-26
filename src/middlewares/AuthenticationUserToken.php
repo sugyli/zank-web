@@ -21,19 +21,21 @@ class AuthenticationUserToken
 
     public function __invoke(Request $request, Response $response, callable $next)
     {
-        $token = $request->getParam('token');
+
+        $token = $request->getHeaderLine('zank-token');
         $token = \Zank\Model\SignToken::byToken($token)->first();
 
+        var_dump($token);exit;
+
         if (!$token) {
-            $response = new \Zank\Common\Message(
-                $response,
-                false, // 错误
-                '认证失败或者认证信息不存在。'
-            );
-            return $response->withJson();
+
+            return with(new \Zank\Common\Message($response, false, '认证失败或者认证信息不存在。'))
+                ->withJson()
+            ;
         }
 
         var_dump($token);
+        exit;
 
         return $next($request, $response);
     }
