@@ -25,7 +25,7 @@ $app->group('/api', function (): void
         // 注册第一步信息
         // phone password
         $this
-            ->post('/up/setp/base', \Zank\Controller\Api\Sign::class.':setpRegisterBase')
+            ->post('/up/step/base', \Zank\Controller\Api\Sign::class.':stepRegisterBase')
             ->add(\Zank\Middleware\Sign\Up\ValidateUserInviteCode::class)
             ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
@@ -35,7 +35,7 @@ $app->group('/api', function (): void
         // 注册第二步信息
         // 基本信息
         $this
-            ->post('/up/setp/info', \Zank\Controller\Api\Sign::class.':setpRegisterInfo')
+            ->post('/up/step/info', \Zank\Controller\Api\Sign::class.':stepRegisterInfo')
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByUserName::class)
             ->add(\Zank\Middleware\AuthenticationUserToken::class)
             ->add(\Zank\Middleware\InitDb::class);
