@@ -112,9 +112,9 @@ class Sign extends Controller
             return $this->in($request, $response);
         }
 
-        $response = new \Zank\Common\Message($response, false, '注册失败！');
-
-        return $response->withJson();
+        return with(new \Zank\Common\Message($response, false, '注册失败！'))
+            ->withJson()
+        ;
     }
 
     /**
