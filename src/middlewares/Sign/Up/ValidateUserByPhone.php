@@ -37,11 +37,12 @@ class ValidateUserByPhone
                 ->byPhone($phone)
                 ->first()
             ;
-            $this->ci->offsetSet('user', $user);
         }
 
         // 如果用户存在
         if ($user) {
+
+            $this->ci->offsetSet('user', $user);
             
             // 手机号等于注入的用户手机号
             if ($user->phone == $phone) {
