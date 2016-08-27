@@ -54,4 +54,9 @@ class SignToken extends Model
 
         return $token;
     }
+
+    public function user()
+    {
+        return $this->hasOne(\Zank\Model\User::class, 'user_id', 'user_id');
+    }
 } // END class SignToken extends Model
