@@ -65,7 +65,16 @@ class Sign extends Controller
 
     }
 
-    public function refreshToken(Request $request, Response $response)
+    /**
+     * 刷新token接口
+     *
+     * @param Request $request 请求对象
+     * @param Response $response 响应对象
+     * @return Response 请求对象
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function refreshToken(Request $request, Response $response): Response
     {
         $refreshToken = $request->getParsedBodyParam('refresh_token');
 
