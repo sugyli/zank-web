@@ -39,13 +39,13 @@ class Sign extends Controller
         $token = new \Zank\Model\SignToken;
         $token->token = \Zank\Model\SignToken::createToken();
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
-        $token->users_id = $user->users_id;
+        $token->user_id = $user->user_id;
         $token->expires = 60 * 60 * 24; // 24小时过期
 
         // 清除token
         \Zank\Model\SignToken::where('token', $token->token)
             ->orWhere('refresh_token', $token->refresh_token)
-            ->orWhere('users_id', $user->users_id)
+            ->orWhere('user_id', $user->user_id)
             ->delete()
         ;
 
@@ -53,11 +53,15 @@ class Sign extends Controller
             $response = new \Zank\Common\Message($response, false, '登陆失败！');
 
             return $response->withJson();
+
+        // 判断是否注入了验证码，删除验证码
+        } elseif ($this->ci->has('phone_captcha')) {
+            $this->ci->get('phone_captcha')->delete();
         }
 
-        $response = new \Zank\Common\Message($response, true, '登陆成功！', $token);
-
-        return $response->withJson();
+        return with(new \Zank\Common\Message($response, true, '登陆成功！', $token))
+            ->withJson()
+        ;
 
     }
 
@@ -111,6 +115,8 @@ class Sign extends Controller
         $user->password = md5($user->hash.$password);
 
         if ($user->save()) {
+
+            $this->ci->offsetSet('user', $user);
 
             return $this->in($request, $response);
         }
