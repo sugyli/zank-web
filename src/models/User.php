@@ -18,7 +18,7 @@ class User extends Model
 
     protected $table = 'users';
 
-    protected $primaryKey = 'users_id';
+    protected $primaryKey = 'user_id';
 
     /**
      * 用于设置查询条件为phone的快捷方法

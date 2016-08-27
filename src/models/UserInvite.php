@@ -26,11 +26,11 @@ class UserInvite extends Model
 
     public function scopeByCreateUsersId(Builder $query, $usersId): Builder
     {
-        return $query->where('create_users_id', $usersId);
+        return $query->where('create_user_id', $usersId);
     }
 
     public function scopeByUseUsersId(Builder $query, $usersId): Builder
     {
-        return $query->where('use_users_id', $usersId);
+        return $query->where('use_user_id', $usersId);
     }
 } // END class UserInvite extends Model
