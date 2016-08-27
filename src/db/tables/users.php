@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 return function (Blueprint $table): void
 {
-    $table->increments('users_id');
+    $table->increments('user_id');
     $table->string('phone');
     $table->string('username', 100);
     $table->string('password', 255);
