@@ -59,6 +59,9 @@ class ValidateByPhoneCaptcha
             return $response->withJson();
         }
 
+        // 注入到后层，便于完成后删除验证码
+        $this->ci->offsetSet('phone_captcha', $captcha);
+
         return $next($request, $response);
     }
 } // END class ValidateByPhoneCaptcha
