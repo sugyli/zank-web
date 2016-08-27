@@ -46,10 +46,11 @@ class ValidateUserByUserName
                 ->byUserName($username)
                 ->frist()
             ;
-            $this->ci->offsetSet('user', $user);
         }
 
         if ($user) {
+
+            $this->ci->offsetSet('user', $user);
             
             // 判断是否用户名相等于注入的用户名
             if ($user->username == $username) {
