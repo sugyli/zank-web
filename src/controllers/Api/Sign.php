@@ -111,7 +111,16 @@ class Sign extends Controller
         ;
     }
 
-    public function stepRegisterBase(Request $request, Response $response)
+    /**
+     * 注册步骤第一步，手机号，密码注册
+     *
+     * @param Request $request 请求对象
+     * @param Response $response 响应对象
+     * @return Response 请求对象
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function stepRegisterBase(Request $request, Response $response): Response
     {
         $phone = $request->getParsedBodyParam('phone');
         $password = $request->getParsedBodyParam('password');
