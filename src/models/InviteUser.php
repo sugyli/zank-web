@@ -17,7 +17,7 @@ class InviteUser extends Model
 
     protected $table = 'invite_users';
 
-    protected $primaryKey = 'invite_users_id';
+    protected $primaryKey = 'invite_user_id';
 
     public function scopeByInviteCode(Builder $query, $inviteCode): Builder
     {
@@ -26,6 +26,6 @@ class InviteUser extends Model
 
     public function scopeByUsersId(Builder $query, $usersId): Builder
     {
-        return $query->where('users_id', $usersId);
+        return $query->where('user_id', $usersId);
     }
 } // END class UserInvite extends Model
