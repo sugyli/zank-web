@@ -144,7 +144,16 @@ class Sign extends Controller
         ;
     }
 
-    public function stepRegisterInfo(Request $request, Response $response)
+    /**
+     * 完善其他信息步骤
+     *
+     * @param Request $request 请求对象
+     * @param Response $response 响应对象
+     * @return Response 请求对象
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    public function stepRegisterInfo(Request $request, Response $response): Response
     {
         $username = $request->getParsedBodyParam('username');
         $age = $request->getParsedBodyParam('age');
