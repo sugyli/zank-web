@@ -67,6 +67,15 @@ class Phone extends Controller
         return $response->withJson();
     }
 
+    /**
+     * 验证手机验证码
+     *
+     * @param Request $request 请求对象
+     * @param Response $response 响应对象
+     * @return Response 请求对象
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
     public function has(Request $request, Response $response): Response
     {
         $response = new \Zank\Common\Message($response, true, '验证码正确');
