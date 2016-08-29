@@ -3,7 +3,7 @@
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-$app->group('/api', function (): void
+$app->group('/api', function ()
 {
     // index
     $this->any('', function (Request $request, Response $response): Response
@@ -17,7 +17,7 @@ $app->group('/api', function (): void
     });
 
     // 用户注册｜登陆
-    $this->group('/sign', function (): void
+    $this->group('/sign', function ()
     {
         // 索引
         $this->any('', \Zank\Controller\Api\Sign::class);

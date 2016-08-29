@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 
-return function (Blueprint $table): void
+return function (Blueprint $table)
 {
     $table->increments('captcha_phone_id');
     $table->string('phone', 100);
