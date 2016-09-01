@@ -497,8 +497,8 @@ class AliyunOssStream implements WrapperInterface
 
         try {
             $info = $this->_getOssClient($path)->getObjectMeta(AliyunOSS::getBucket(), $name);
-            $info = $info['_info'];
-            if (!empty($info['_info'])) {
+            if (isset($info['_info']) && !empty($info['_info'])) {
+                $info = $info['_info'];
                 $stat['size'] = $info['download_content_length'];
                 $stat['atime'] = time();
                 $stat['mtime'] = $info['filetime'];
