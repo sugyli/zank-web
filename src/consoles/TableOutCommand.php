@@ -2,11 +2,11 @@
 
 namespace Zank\Console;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class TableOutCommand extends Command
 {
@@ -15,8 +15,7 @@ class TableOutCommand extends Command
         $this
             ->setName('db:delete')
             ->setDescription('Delete all tables.')
-            ->setHelp('This command delete all tables to database.')
-        ;
+            ->setHelp('This command delete all tables to database.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -24,7 +23,7 @@ class TableOutCommand extends Command
         $output->writeln([
             'Delete all tables.',
             '======================',
-            ''
+            '',
         ]);
 
         $tablesDir = dirname(__DIR__).'/db/tables';
@@ -32,8 +31,7 @@ class TableOutCommand extends Command
         $finder
             ->files()
             ->in($tablesDir)
-            ->name('*.php')
-        ;
+            ->name('*.php');
 
         $i = 0;
         foreach ($finder as $file) {

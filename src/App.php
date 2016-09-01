@@ -9,7 +9,7 @@ use Slim\App as SlimApp;
  *
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
-class App extends SlimApp   
+class App extends SlimApp
 {
     protected static $application;
 

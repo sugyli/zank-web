@@ -2,20 +2,21 @@
 
 namespace Zank\Middleware\Sign\In;
 
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Interop\Container\ContainerInterface;
 
 /**
- * 验证注册的用户手机号码是否正确
+ * 验证注册的用户手机号码是否正确.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class ValidateUserByPhone
 {
     protected $ci;
 
-    public function __construct(ContainerInterface $ci) {
+    public function __construct(ContainerInterface $ci)
+    {
         $this->ci = $ci;
     }
 
@@ -37,8 +38,7 @@ class ValidateUserByPhone
         } else {
             $user = \Zank\Model\User::withTrashed()
                 ->byPhone($phone)
-                ->first()
-            ;
+                ->first();
             $this->ci->offsetSet('user', $user);
         }
 

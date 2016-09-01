@@ -15,8 +15,7 @@ class TableImportCommand extends Command
         $this
             ->setName('db:import')
             ->setDescription('Import tables to database.')
-            ->setHelp('This command allows you to import tables to database.')
-        ;
+            ->setHelp('This command allows you to import tables to database.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,8 +31,7 @@ class TableImportCommand extends Command
         $finder
             ->files()
             ->in($tablesDir)
-            ->name('*.php')
-        ;
+            ->name('*.php');
 
         $i = 0;
         foreach ($finder as $file) {

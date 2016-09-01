@@ -5,9 +5,9 @@ namespace Zank\Common;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * 消息公用接口
+ * 消息公用接口.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Message
 {
@@ -30,9 +30,9 @@ class Message
     public function withArray(): array
     {
         return [
-            'status' => $this->status,
+            'status'  => $this->status,
             'message' => $this->message,
-            'data' => $this->data,
+            'data'    => $this->data,
         ];
     }
 
@@ -45,7 +45,6 @@ class Message
     {
         return $this
             ->response
-            ->$functionName($this->withArray())
-        ;
+            ->$functionName($this->withArray());
     }
 } // END class Message

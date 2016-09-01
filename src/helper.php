@@ -4,11 +4,13 @@ use Symfony\Component\Yaml\Yaml;
 
 if (!function_exists('env')) {
     /**
-     * env YAML配置获取
+     * env YAML配置获取.
      *
-     * @param string $key 键名
-     * @param mixed $default 默认值
+     * @param string $key     键名
+     * @param mixed  $default 默认值
+     *
      * @return mixed
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
@@ -38,9 +40,10 @@ if (!function_exists('env')) {
 
 if (!function_exists('app')) {
     /**
-     * get slim application
+     * get slim application.
      *
      * @return Slim\App
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */

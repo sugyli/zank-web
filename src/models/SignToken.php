@@ -2,12 +2,14 @@
 
 namespace Zank\Model;
 
-use Illuminate\Database\Eloquent\{Model, Builder, SoftDeletes};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 用户认证模型
+ * 用户认证模型.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class SignToken extends Model
 {
@@ -20,15 +22,13 @@ class SignToken extends Model
     public function scopeByToken(Builder $query, $token): Builder
     {
         return $query
-            ->where('token', $token)
-        ;
+            ->where('token', $token);
     }
 
     public function scopeByRefreshToken(Builder $query, $refreshToken): Builder
     {
         return $query
-            ->where('refresh_token', $refreshToken)
-        ;
+            ->where('refresh_token', $refreshToken);
     }
 
     public static function createToken()

@@ -2,12 +2,14 @@
 
 namespace Zank\Model;
 
-use Illuminate\Database\Eloquent\{Model, Builder, SoftDeletes};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 手机号码验证码模型
+ * 手机号码验证码模型.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class CaptchaPhone extends Model
 {

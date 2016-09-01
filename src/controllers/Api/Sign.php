@@ -7,15 +7,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Zank\Controller;
 
 /**
- * 认证控制器
+ * 认证控制器.
  *
- * @package default
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Sign extends Controller
 {
     /**
-     * 登陆控制器
+     * 登陆控制器.
      *
      * @param Request $request
      */
@@ -36,7 +35,7 @@ class Sign extends Controller
             return $response->withJson();
         }
 
-        $token = new \Zank\Model\SignToken;
+        $token = new \Zank\Model\SignToken();
         $token->token = \Zank\Model\SignToken::createToken();
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
         $token->user_id = $user->user_id;
@@ -46,8 +45,7 @@ class Sign extends Controller
         \Zank\Model\SignToken::where('token', $token->token)
             ->orWhere('refresh_token', $token->refresh_token)
             ->orWhere('user_id', $user->user_id)
-            ->delete()
-        ;
+            ->delete();
 
         if (!$token->save()) {
             $response = new \Zank\Common\Message($response, false, '登陆失败！');
@@ -60,17 +58,17 @@ class Sign extends Controller
         }
 
         return with(new \Zank\Common\Message($response, true, '登陆成功！', $token))
-            ->withJson()
-        ;
-
+            ->withJson();
     }
 
     /**
-     * 刷新token接口
+     * 刷新token接口.
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 响应对象
+     *
      * @return Response 请求对象
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
@@ -80,43 +78,38 @@ class Sign extends Controller
 
         // 刷新token的值为空
         if (!$refreshToken) {
-
             return with(new \Zank\Common\Message($response, false, '请传递正确的参数'))
-                ->withJson()
-            ;
+                ->withJson();
         }
 
         $token = \Zank\Model\SignToken::byRefreshToken($refreshToken)->first();
 
         if (!$token) {
-
             return with(new \Zank\Common\Message($response, false, '刷新token的参数不存在。'))
-                ->withJson()
-            ;
+                ->withJson();
         }
 
         $token->token = \Zank\Model\SignToken::createToken();
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
-        
+
 
         if (!$token->save()) {
-
             return with(new \Zank\Common\Message($response, false, '刷新token失败，请重新登陆。'))
-                ->withJson()
-            ;
+                ->withJson();
         }
 
         return with(new \Zank\Common\Message($response, true, '刷新token成功！', $token))
-            ->withJson()
-        ;
+            ->withJson();
     }
 
     /**
-     * 注册步骤第一步，手机号，密码注册
+     * 注册步骤第一步，手机号，密码注册.
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 响应对象
+     *
      * @return Response 请求对象
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
@@ -126,30 +119,30 @@ class Sign extends Controller
         $password = $request->getParsedBodyParam('password');
         $invite_code = $request->getParsedBodyParam('invite_code');
 
-        $user = new \Zank\Model\User;
+        $user = new \Zank\Model\User();
         $user->phone = $phone;
         $user->username = sprintf('用户_%s', $phone);
         $user->hash = str_random(64);
         $user->password = md5($user->hash.$password);
 
         if ($user->save()) {
-
             $this->ci->offsetSet('user', $user);
 
             return $this->in($request, $response);
         }
 
         return with(new \Zank\Common\Message($response, false, '注册失败！'))
-            ->withJson()
-        ;
+            ->withJson();
     }
 
     /**
-     * 完善其他信息步骤
+     * 完善其他信息步骤.
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 响应对象
+     *
      * @return Response 请求对象
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
@@ -163,19 +156,21 @@ class Sign extends Controller
     }
 
     /**
-     * 索引方法，返回api列表
+     * 索引方法，返回api列表.
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 返回资源
+     *
      * @return Response
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
     public function __invoke(Request $request, Response $response)
     {
         $response->withJson([
-            '/api/sign/in' => '用户登陆',
-            '/api/sign/up/setp/base' => '用户基本信息注册',
+            '/api/sign/in'            => '用户登陆',
+            '/api/sign/up/setp/base'  => '用户基本信息注册',
             '/api/sign/refresh-token' => '刷新token',
         ]);
 

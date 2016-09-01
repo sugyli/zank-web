@@ -2,12 +2,12 @@
 
 namespace Zank\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 用户邀请码数据模型
+ * 用户邀请码数据模型.
  *
  * @author Seven Du <lovevipdsw@outlook.com>
  **/

@@ -2,13 +2,13 @@
 
 namespace Zank\Middleware\Captcha;
 
+use Carbon\Carbon;
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Interop\Container\ContainerInterface;
-use Carbon\Carbon;
 
 /**
- * 验证手机验证码中间件
+ * 验证手机验证码中间件.
  *
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
@@ -16,7 +16,8 @@ class ValidateByPhoneCaptcha
 {
     protected $ci;
 
-    public function __construct(ContainerInterface $ci) {
+    public function __construct(ContainerInterface $ci)
+    {
         $this->ci = $ci;
     }
 
