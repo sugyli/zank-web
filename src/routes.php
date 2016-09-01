@@ -4,8 +4,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 app()->any('/oss', function () {
-    var_dump(getAliyunOssBucket());
-});
+    $data = $this->get('oss');
+    $data = file_get_contents('oss://zank/1.txt3');
+    var_dump($data);
+})
+->add(\Zank\Middleware\InitAliyunOss::class);
 
 app()->group('/api', function () {
     // index

@@ -115,15 +115,19 @@ class AliyunOssStream implements WrapperInterface
             return true;
         } else {
             // Otherwise, just see if the file exists or not
-            $info = $this->_getOssClient($path)->getObjectMeta(AliyunOSS::getBucket(), $name);
-            if ($info) {
-                $this->_objectName = $name;
-                $this->_objectBuffer = null;
-                $this->_objectSize = (int) $info['content-length'];
-                $this->_position = 0;
-                $this->_writeBuffer = false;
-                // $this->_getOssClient($path);
-                return true;
+            try {
+                $info = $this->_getOssClient($path)->getObjectMeta(AliyunOSS::getBucket(), $name);
+                if ($info) {
+                    $this->_objectName = $name;
+                    $this->_objectBuffer = null;
+                    $this->_objectSize = (int) $info['content-length'];
+                    $this->_position = 0;
+                    $this->_writeBuffer = false;
+                    // $this->_getOssClient($path);
+                    return true;
+                }
+            } catch (\OSS\Core\OssException $e) {
+                return false;
             }
         }
 
