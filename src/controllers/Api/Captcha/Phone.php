@@ -8,36 +8,37 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Zank\Controller;
 
 /**
- * 手机验证码控制器
+ * 手机验证码控制器.
  *
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Phone extends Controller
 {
     /**
-     * 获取手机验证码接口
+     * 获取手机验证码接口.
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 响应对象
+     *
      * @return Response 请求对象
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
     public function get(Request $request, Response $response): Response
     {
         $phone = $request->getParsedBodyParam('phone');
-        $test  = $request->getParsedBodyParam('test');
+        $test = $request->getParsedBodyParam('test');
 
         if (!$phone) {
             $response = new \Zank\Common\Message($response, false, '手机号码不正确');
 
             return $response->withJson();
-        } 
+        }
 
         $captcha = \Zank\Model\CaptchaPhone::byPhone($phone)->first();
 
         if ($captcha) {
-
             $s = $this->ci->get('settings')->get('send:phone:captcha:space');
             $es = $captcha->created_at->diffInSeconds(Carbon::now());
 
@@ -51,7 +52,7 @@ class Phone extends Controller
             \Zank\Model\CaptchaPhone::byPhone($phone)->delete();
         }
 
-        $captcha = new \Zank\Model\CaptchaPhone;
+        $captcha = new \Zank\Model\CaptchaPhone();
         $captcha->phone = $phone;
         $captcha->captcha_code = rand(1000, 9999);
         $captcha->expires = 3600;
@@ -70,9 +71,11 @@ class Phone extends Controller
     /**
      * 验证手机验证码
      *
-     * @param Request $request 请求对象
+     * @param Request  $request  请求对象
      * @param Response $response 响应对象
+     *
      * @return Response 请求对象
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */

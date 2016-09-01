@@ -1,13 +1,11 @@
 <?php
 
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
-app()->group('/api', function ()
-{
+app()->group('/api', function () {
     // index
-    $this->any('', function (Request $request, Response $response): Response
-    {
+    $this->any('', function (Request $request, Response $response): Response {
         $apiList = [
             '/api/sign/' => '用户注册｜登陆',
         ];
@@ -17,8 +15,7 @@ app()->group('/api', function ()
     });
 
     // 用户注册｜登陆
-    $this->group('/sign', function ()
-    {
+    $this->group('/sign', function () {
         // 索引
         $this->any('', \Zank\Controller\Api\Sign::class);
 
@@ -29,8 +26,7 @@ app()->group('/api', function ()
             ->add(\Zank\Middleware\Sign\Up\ValidateUserInviteCode::class)
             ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
-            ->add(\Zank\Middleware\InitDb::class)
-        ;
+            ->add(\Zank\Middleware\InitDb::class);
 
         // 注册第二步信息
         // 基本信息
@@ -44,25 +40,21 @@ app()->group('/api', function ()
         $this
             ->post('/in', \Zank\Controller\Api\Sign::class.':in')
             ->add(\Zank\Middleware\Sign\In\ValidateUserByPhone::class)
-            ->add(\Zank\Middleware\InitDb::class)
-        ;
+            ->add(\Zank\Middleware\InitDb::class);
 
-        // 刷新token 
+        // 刷新token
         $this
             ->post('/refresh-token', \Zank\Controller\Api\Sign::class.':refreshToken')
-            ->add(\Zank\Middleware\InitDb::class)
-        ;
+            ->add(\Zank\Middleware\InitDb::class);
     });
 
     // 验证码相关
-    $this->group('/captcha', function ()
-    {
+    $this->group('/captcha', function () {
         // 索引
-        $this->any('', function (Request $request, Response $response): Response
-        {
+        $this->any('', function (Request $request, Response $response): Response {
             $apiList = [
                 '/api/captcha/phone/get/register' => '获取手机号码验证码',
-                '/api/captcha/phone/has' => '验证手机号码验证码',
+                '/api/captcha/phone/has'          => '验证手机号码验证码',
             ];
 
             return $response->withJson($apiList);
@@ -72,14 +64,12 @@ app()->group('/api', function ()
         $this
             ->post('/phone/get/register', \Zank\Controller\Api\Captcha\Phone::class.':get')
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
-            ->add(\Zank\Middleware\InitDb::class)
-        ;
+            ->add(\Zank\Middleware\InitDb::class);
 
         // 验证手机号码验证码
         $this
             ->post('/phone/has', \Zank\Controller\Api\Captcha\Phone::class.':has')
             ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
-            ->add(\Zank\Middleware\InitDb::class)
-        ;
+            ->add(\Zank\Middleware\InitDb::class);
     });
 });

@@ -2,9 +2,9 @@
 
 namespace Zank\Middleware\Sign\Up;
 
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Interop\Container\ContainerInterface;
 
 /**
  * 验证注册是使用的邀请码
@@ -15,7 +15,8 @@ class ValidateUserInviteCode
 {
     protected $ci;
 
-    public function __construct(ContainerInterface $ci) {
+    public function __construct(ContainerInterface $ci)
+    {
         $this->ci = $ci;
     }
 
@@ -25,11 +26,11 @@ class ValidateUserInviteCode
 
         if ($inviteCode) {
             $invite = \Zank\Model\UserInvite::byInviteCode($inviteCode)
-                ->first()
-            ;
+                ->first();
 
             if (!$invite) {
                 $response = new \Zank\Common\Message($response, false, '该邀请码不存。');
+
                 return $response->withJson();
             }
         }

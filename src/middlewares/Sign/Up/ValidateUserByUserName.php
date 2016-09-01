@@ -2,20 +2,21 @@
 
 namespace Zank\Middleware\Sign\Up;
 
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Interop\Container\ContainerInterface;
 
 /**
- * 验证注册用户的用户名是否被使用或者用户已经存在
+ * 验证注册用户的用户名是否被使用或者用户已经存在.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class ValidateUserByUserName
 {
     protected $ci;
 
-    public function __construct(ContainerInterface $ci) {
+    public function __construct(ContainerInterface $ci)
+    {
         $this->ci = $ci;
     }
 
@@ -44,14 +45,12 @@ class ValidateUserByUserName
         } else {
             $user = \Zank\Model\User::withTrashed()
                 ->byUserName($username)
-                ->frist()
-            ;
+                ->frist();
         }
 
         if ($user) {
-
             $this->ci->offsetSet('user', $user);
-            
+
             // 判断是否用户名相等于注入的用户名
             if ($user->username == $username) {
                 $response = new \Zank\Common\Message($response, false, '用户名已经被使用。');
