@@ -14,9 +14,10 @@ class AliyunOSS extends OssClient
     protected static $_wrapperClients = [];
 
     /**
-     * Attempt to get the content-type of a file based on the extension
+     * Attempt to get the content-type of a file based on the extension.
      *
-     * @param  string $path
+     * @param string $path
+     *
      * @return string
      */
     public static function getMimeType($path)
@@ -169,13 +170,15 @@ class AliyunOSS extends OssClient
                 $content_type = 'binary/octet-stream';
                 break;
         }
+
         return $content_type;
     }
 
     /**
-     * Register this object as stream wrapper client
+     * Register this object as stream wrapper client.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return oss
      */
     public function registerAsClient($name)
@@ -186,21 +189,24 @@ class AliyunOSS extends OssClient
     }
 
     /**
-     * Unregister this object as stream wrapper client
+     * Unregister this object as stream wrapper client.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return oss
      */
     public function unregisterAsClient($name)
     {
         unset(self::$_wrapperClients[$name]);
+
         return $this;
     }
 
     /**
-     * Get wrapper client for stream type
+     * Get wrapper client for stream type.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return oss
      */
     public static function getWrapperClient($name)
@@ -209,9 +215,10 @@ class AliyunOSS extends OssClient
     }
 
     /**
-     * Register this object as stream wrapper
+     * Register this object as stream wrapper.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return oss
      */
     public function registerStreamWrapper($name = 'oss')
@@ -221,9 +228,10 @@ class AliyunOSS extends OssClient
     }
 
     /**
-     * Unregister this object as stream wrapper
+     * Unregister this object as stream wrapper.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return oss
      */
     public function unregisterStreamWrapper($name = 'oss')
