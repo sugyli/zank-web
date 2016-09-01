@@ -455,8 +455,8 @@ class AliyunOssStream implements WrapperInterface
 
         foreach ((array) $list->getPrefixList() as $l) {
             $l = substr($l->getPrefix(), 0, -1);
-            $l = explode('/', $l);
-            array_push($this->_bucketList, array_pop($l));
+            // $l = explode('/', $l);
+            array_push($this->_bucketList, basename($l));
         }
 
         foreach ((array) $list->getObjectList() as $l) {
