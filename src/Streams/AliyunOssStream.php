@@ -443,9 +443,11 @@ class AliyunOssStream implements WrapperInterface
     public function dir_opendir($path, $options)
     {
         $dirName = $this->_getNamePart($path).'/';
-        if (preg_match('@^([a-z0-9+.]|-)+://$@', $path)) {
+        if (preg_match('@^([a-z0-9+.]|-)+://$@', $path) || $dirName == '/') {
             $list = $this->_getOssClient($path)->listObjects(AliyunOSS::getBucket());
+
         } else {
+
             $list = $this
                 ->_getOssClient($path)
                 ->listObjects(AliyunOSS::getBucket(), [
@@ -454,19 +456,15 @@ class AliyunOssStream implements WrapperInterface
         }
 
         foreach ((array) $list->getPrefixList() as $l) {
-            $l = substr($l->getPrefix(), 0, -1);
-            // $l = explode('/', $l);
-            array_push($this->_bucketList, basename($l));
+            array_push($this->_bucketList, basename($l->getPrefix()));
         }
 
         foreach ((array) $list->getObjectList() as $l) {
-            $l = $l->getKey();
-
             if ($l == $dirName) {
                 continue;
             }
 
-            array_push($this->_bucketList, basename($l));
+            array_push($this->_bucketList, basename($l->getKey()));
         }
 
         return $this->_bucketList !== false;
