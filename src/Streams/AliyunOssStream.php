@@ -460,7 +460,6 @@ class AliyunOssStream implements WrapperInterface
         }
 
         foreach ((array) $list->getObjectList() as $l) {
-
             $l = $l->getKey();
 
             if ($l == $dirName) {
@@ -496,7 +495,7 @@ class AliyunOssStream implements WrapperInterface
         $stat['atime'] = 0;
         $stat['mtime'] = 0;
         $stat['ctime'] = 0;
-        $stat['blksize'] = 0;   
+        $stat['blksize'] = 0;
         $stat['blocks'] = 0;
         $name = $this->_getNamePart($path);
 
