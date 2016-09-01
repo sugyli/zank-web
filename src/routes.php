@@ -11,8 +11,8 @@ app()->any('/oss', function () {
     // foreach ($finder as $file) {
     //     var_dump($file);
     // }
-    // 
-    
+    //
+
     var_dump(is_dir('oss://zank/'));
     var_dump(is_dir('oss://zank'));
 
