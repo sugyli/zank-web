@@ -6,7 +6,8 @@ declare(strict_types = 1);
 require __DIR__.'/vendor/autoload.php';
 
 $settings = require __DIR__.'/src/settings.php';
-$app = new \Slim\App($settings);
+$app = new \Zank\App($settings);
+$app->setAsGlobal();
 
 // Set up dependencies
 require __DIR__.'/src/dependencies.php';
