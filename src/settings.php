@@ -35,7 +35,7 @@ return [
                     'collation' => env('DB_COLLATION', 'utf8_unicode_ci'),
                     'prefix'    => env('DB_PREFIX', 'medz_'),
                     'strict'    => env('DB_STRICT', false),
-                    'engine'    => ENV('DB_ENGINE', null),
+                    'engine'    => env('DB_ENGINE', null),
                 ],
 
                 'pgsql' => [
