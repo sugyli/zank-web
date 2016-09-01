@@ -6,22 +6,18 @@ use Symfony\Component\Finder\Finder;
 
 app()->any('/oss', function () {
     $finder = new Finder();
-    $finder->files()->in('oss://zank');
+    // $finder->files()->in('oss://zank/');
 
-    foreach ($finder as $file) {
-        var_dump($file);
-    }
+    // foreach ($finder as $file) {
+    //     var_dump($file);
+    // }
+    // 
+    
+    var_dump(is_dir('oss://zank/'));
+    var_dump(is_dir('oss://zank'));
 
-    var_dump('-----------------');
-
-    $finder = new Finder();
-    $finder->files()->in(__DIR__);
-
-    foreach ($finder as $file) {
-        var_dump($file);
-    }
-
-
+    var_dump(file_exists('oss://zank/'));
+    var_dump(file_exists('oss://zank'));
 
     // $oss = $this->get('oss');
     // $demo = $oss->getObjectMeta(getAliyunOssBucket(), 'zank/');
