@@ -39,7 +39,7 @@ class AliyunOssStream implements WrapperInterface
      */
     private $_bucketList = [];
     /**
-     * @var S3
+     * @var oss
      */
     private $_oss = null;
 
