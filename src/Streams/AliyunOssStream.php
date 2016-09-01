@@ -478,21 +478,21 @@ class AliyunOssStream implements WrapperInterface
      */
     public function url_stat($path, $flags)
     {
-        // var_dump($path, $flags);
-        $stat = [];
-        $stat['dev'] = 0;
-        $stat['ino'] = 0;
-        $stat['mode'] = 0777;
-        $stat['nlink'] = 0;
-        $stat['uid'] = 0;
-        $stat['gid'] = 0;
-        $stat['rdev'] = 0;
-        $stat['size'] = 0;
-        $stat['atime'] = 0;
-        $stat['mtime'] = 0;
-        $stat['ctime'] = 0;
-        $stat['blksize'] = 0;
-        $stat['blocks'] = 0;
+        $stat = [
+            'dev' => 0,
+            'ino' => 0,
+            'mode' => 0777,
+            'nlink' => 0,
+            'uid' => 0,
+            'gid' => 0,
+            'rdev' => 0,
+            'size' => 0,
+            'atime' => 0,
+            'mtime' => 0,
+            'ctime' => 0,
+            'blksize' => 0,
+            'blocks' => 0,
+        ];
         $name = $this->_getNamePart($path);
 
         try {
