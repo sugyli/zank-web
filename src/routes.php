@@ -4,6 +4,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 app()->any('/oss', function () {
+<<<<<<< HEAD
+    var_dump(getAliyunOssBucket());
+=======
     // var_dump(class_exists(Zank\Interfaces\WrapperInterface::class));
     // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
     // var_dump(class_exists('streamWrapper'));
@@ -23,6 +26,7 @@ app()->any('/oss', function () {
     // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
 
     // var_dump($oss->getObjectMeta('medz', 'zank/test.png'));
+>>>>>>> origin/master
 });
 
 app()->group('/api', function () {

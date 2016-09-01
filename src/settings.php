@@ -55,5 +55,13 @@ return [
         ],
 
         'send:phone:captcha:space' => env('SEND_PHONE_CAPTCHA_SPACE', 300), // 发送验证码间隔时间 s
+
+        // Aliyun OSS settings
+        'oss' => [
+            'accessKeyId' => env('OSS_ACCESS_KEY_ID', ''),
+            'accessKeySecret' => env('OSS_ACCESS_KEY_SECRET', ''),
+            'endpoint' => env('OSS_ENDPOINT', 'oss-cn-hangzhou.aliyuncs.com'),
+            'bucket' => env('OSS_BUCKET', '')
+        ],
     ],
 ];

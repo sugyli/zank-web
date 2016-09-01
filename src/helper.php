@@ -52,3 +52,18 @@ if (!function_exists('app')) {
         return \Zank\App::getApplication();
     }
 }
+
+if (!function_exists('getAliyunOssBucket')) {
+    /**
+     * 获取oss的bucket名称
+     *
+     * @return string
+     *
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    function getAliyunOssBucket()
+    {
+        return app()->getContainer()->get('settings')->get('oss')['bucket'];
+    }
+}

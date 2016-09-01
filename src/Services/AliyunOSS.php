@@ -76,7 +76,7 @@ class AliyunOSS extends OssClient
      */
     public function registerStreamWrapper($name = 'oss')
     {
-        stream_register_wrapper($name, 'Zank\Streams\AliyunOssStream');
+        stream_register_wrapper($name, \Zank\Streams\AliyunOssStream::class);
         $this->registerAsClient($name);
     }
 
