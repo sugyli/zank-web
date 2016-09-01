@@ -58,10 +58,10 @@ return [
 
         // Aliyun OSS settings
         'oss' => [
-            'accessKeyId' => env('OSS_ACCESS_KEY_ID', ''),
+            'accessKeyId'     => env('OSS_ACCESS_KEY_ID', ''),
             'accessKeySecret' => env('OSS_ACCESS_KEY_SECRET', ''),
-            'endpoint' => env('OSS_ENDPOINT', 'oss-cn-hangzhou.aliyuncs.com'),
-            'bucket' => env('OSS_BUCKET', '')
+            'endpoint'        => env('OSS_ENDPOINT', 'oss-cn-hangzhou.aliyuncs.com'),
+            'bucket'          => env('OSS_BUCKET', ''),
         ],
     ],
 ];
