@@ -55,7 +55,7 @@ if (!function_exists('app')) {
 
 if (!function_exists('getAliyunOssBucket')) {
     /**
-     * 获取oss的bucket名称
+     * 获取oss的bucket名称.
      *
      * @return string
      *
