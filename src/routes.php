@@ -5,7 +5,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Symfony\Component\Finder\Finder;
 
 app()->any('/oss', function () {
-
     $finder = new Finder();
     $finder->files()->in('oss://zank');
 
@@ -22,7 +21,7 @@ app()->any('/oss', function () {
         var_dump($file);
     }
 
-    
+
 
     // $oss = $this->get('oss');
     // $demo = $oss->getObjectMeta(getAliyunOssBucket(), 'zank/');
