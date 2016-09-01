@@ -442,26 +442,32 @@ class AliyunOssStream implements WrapperInterface
      */
     public function dir_opendir($path, $options)
     {
+        $dirName = $this->_getNamePart($path).'/';
         if (preg_match('@^([a-z0-9+.]|-)+://$@', $path)) {
             $list = $this->_getOssClient($path)->listObjects(AliyunOSS::getBucket());
         } else {
             $list = $this
                 ->_getOssClient($path)
                 ->listObjects(AliyunOSS::getBucket(), [
-                    OssClient::OSS_PREFIX => $this->_getNamePart($path),
+                    OssClient::OSS_PREFIX => $dirName,
                 ]);
         }
 
         foreach ((array) $list->getPrefixList() as $l) {
-            array_push($this->_bucketList, $l->getPrefix());
+            $l = substr($l->getPrefix(), 0, -1);
+            $l = explode('/', $l);
+            array_push($this->_bucketList, array_pop($l));
         }
 
         foreach ((array) $list->getObjectList() as $l) {
-            if ($l->getKey() == $this->_getNamePart($path)) {
+
+            $l = $l->getKey();
+
+            if ($l == $dirName) {
                 continue;
             }
 
-            array_push($this->_bucketList, $l->getKey());
+            array_push($this->_bucketList, basename($l));
         }
 
         return $this->_bucketList !== false;
@@ -477,6 +483,7 @@ class AliyunOssStream implements WrapperInterface
      */
     public function url_stat($path, $flags)
     {
+        // var_dump($path, $flags);
         $stat = [];
         $stat['dev'] = 0;
         $stat['ino'] = 0;
@@ -489,22 +496,21 @@ class AliyunOssStream implements WrapperInterface
         $stat['atime'] = 0;
         $stat['mtime'] = 0;
         $stat['ctime'] = 0;
-        $stat['blksize'] = 0;
+        $stat['blksize'] = 0;   
         $stat['blocks'] = 0;
         $name = $this->_getNamePart($path);
-        if (($slash = strstr($name, '/')) === false || $slash == strlen($name) - 1) {
-            /* bucket */
-            $stat['mode'] |= 040000;
-        } else {
-            $stat['mode'] |= 0100000;
-        }
 
-        $info = $this->_s3->getObjectMeta(AliyunOSS::getBucket(), $name);
-        $info = $info['_info'];
-        if (!empty($info['_info'])) {
-            $stat['size'] = $info['download_content_length'];
-            $stat['atime'] = time();
-            $stat['mtime'] = $info['filetime'];
+        try {
+            $info = $this->_getOssClient($path)->getObjectMeta(AliyunOSS::getBucket(), $name);
+            $info = $info['_info'];
+            if (!empty($info['_info'])) {
+                $stat['size'] = $info['download_content_length'];
+                $stat['atime'] = time();
+                $stat['mtime'] = $info['filetime'];
+                $stat['mode'] |= 0100000;
+            }
+        } catch (\OSS\Core\OssException $e) {
+            $stat['mode'] |= 040000;
         }
 
         return $stat;

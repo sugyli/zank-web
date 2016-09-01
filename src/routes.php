@@ -2,11 +2,31 @@
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Symfony\Component\Finder\Finder;
 
 app()->any('/oss', function () {
-    $data = $this->get('oss');
-    $data = file_get_contents('oss://zank/1.txt3');
-    var_dump($data);
+
+    $finder = new Finder();
+    $finder->files()->in('oss://zank');
+
+    foreach ($finder as $file) {
+        var_dump($file);
+    }
+
+    var_dump('-----------------');
+
+    $finder = new Finder();
+    $finder->files()->in(__DIR__);
+
+    foreach ($finder as $file) {
+        var_dump($file);
+    }
+
+    
+
+    // $oss = $this->get('oss');
+    // $demo = $oss->getObjectMeta(getAliyunOssBucket(), 'zank/');
+    // var_dump($demo);
 })
 ->add(\Zank\Middleware\InitAliyunOss::class);
 
