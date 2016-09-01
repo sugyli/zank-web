@@ -3,9 +3,9 @@
 namespace Zank\Streams;
 
 use Exception;
+use OSS\OssClient;
 use Zank\Interfaces\WrapperInterface;
 use Zank\Services\AliyunOSS;
-use OSS\OssClient;
 
 /**
  * 阿里云OSS Streams.
@@ -15,15 +15,15 @@ use OSS\OssClient;
 class AliyunOssStream implements WrapperInterface
 {
     /**
-     * @var boolean Write the buffer on fflush()?
+     * @var bool Write the buffer on fflush()?
      */
     private $_writeBuffer = false;
     /**
-     * @var integer Current read/write position
+     * @var int Current read/write position
      */
     private $_position = 0;
     /**
-     * @var integer Total size of the object as returned by oss (Content-length)
+     * @var int Total size of the object as returned by oss (Content-length)
      */
     private $_objectSize = 0;
     /**
@@ -44,9 +44,10 @@ class AliyunOssStream implements WrapperInterface
     private $_oss = null;
 
     /**
-     * Retrieve client for this stream type
+     * Retrieve client for this stream type.
      *
      * @param string $path
+     *
      * @return oss
      *
      * @author Seven Du <lovevipdsw@outlook.com>
@@ -72,9 +73,10 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Extract object name from URL
+     * Extract object name from URL.
      *
      * @param string $path
+     *
      * @return string
      */
     protected function _getNamePart($path)
@@ -83,17 +85,19 @@ class AliyunOssStream implements WrapperInterface
         if ($url['host']) {
             return !empty($url['path']) ? $url['host'].$url['path'] : $url['host'];
         }
+
         return '';
     }
 
     /**
-     * Open the stream
+     * Open the stream.
      *
-     * @param  string  $path
-     * @param  string  $mode
-     * @param  integer $options
-     * @param  string  $opened_path
-     * @return boolean
+     * @param string $path
+     * @param string $mode
+     * @param int    $options
+     * @param string $opened_path
+     *
+     * @return bool
      */
     public function stream_open($path, $mode, $options, &$opened_path)
     {
@@ -107,6 +111,7 @@ class AliyunOssStream implements WrapperInterface
             $this->_position = 0;
             $this->_writeBuffer = true;
             $this->_getOssClient($path);
+
             return true;
         } else {
             // Otherwise, just see if the file exists or not
@@ -121,11 +126,12 @@ class AliyunOssStream implements WrapperInterface
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * Close the stream
+     * Close the stream.
      *
      * @return void
      */
@@ -138,15 +144,16 @@ class AliyunOssStream implements WrapperInterface
         $this->_writeBuffer = false;
         unset($this->_oss);
     }
-    
+
     /**
-     * Read from the stream
+     * Read from the stream.
      *
      * http://bugs.php.net/21641 - stream_read() is always passed PHP's
      * internal read buffer size (8192) no matter what is passed as $count
      * parameter to fread().
      *
-     * @param  integer $count
+     * @param int $count
+     *
      * @return string
      */
     public function stream_read($count)
@@ -168,7 +175,6 @@ class AliyunOssStream implements WrapperInterface
         // buffer AND if the range end position is less than or equal to the object's
         // size returned by OSS
         if (($this->_position == 0) || (($range_end > strlen($this->_objectBuffer)) && ($range_end <= $this->_objectSize))) {
-
             $options = [
                 OssClient::OSS_RANGE => $range_start.'-'.$range_end,
             ];
@@ -182,10 +188,11 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Write to the stream
+     * Write to the stream.
      *
-     * @param  string $data
-     * @return integer
+     * @param string $data
+     *
+     * @return int
      */
     public function stream_write($data)
     {
@@ -202,20 +209,21 @@ class AliyunOssStream implements WrapperInterface
     /**
      * End of the stream?
      *
-     * @return boolean
+     * @return bool
      */
     public function stream_eof()
     {
         if (!$this->_objectName) {
             return true;
         }
-        return ($this->_position >= $this->_objectSize);
+
+        return $this->_position >= $this->_objectSize;
     }
 
     /**
-     * What is the current read/write position of the stream
+     * What is the current read/write position of the stream.
      *
-     * @return integer
+     * @return int
      */
     public function stream_tell()
     {
@@ -253,11 +261,12 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Update the read/write position of the stream
+     * Update the read/write position of the stream.
      *
-     * @param  integer $offset
-     * @param  integer $whence
-     * @return boolean
+     * @param int $offset
+     * @param int $whence
+     *
+     * @return bool
      */
     public function stream_seek($offset, $whence = SEEK_SET)
     {
@@ -290,9 +299,9 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Flush current cached stream data to storage
+     * Flush current cached stream data to storage.
      *
-     * @return boolean
+     * @return bool
      */
     public function stream_flush()
     {
@@ -307,7 +316,7 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Returns data array of stream variables
+     * Returns data array of stream variables.
      *
      * @return array
      */
@@ -317,7 +326,7 @@ class AliyunOssStream implements WrapperInterface
             return false;
         }
 
-        $stat = array();
+        $stat = [];
         $stat['dev'] = 0;
         $stat['ino'] = 0;
         $stat['mode'] = 0777;
@@ -332,7 +341,7 @@ class AliyunOssStream implements WrapperInterface
         $stat['blksize'] = 0;
         $stat['blocks'] = 0;
 
-        if (($slash = strchr($this->_objectName, '/')) === false || $slash == strlen($this->_objectName)-1) {
+        if (($slash = strstr($this->_objectName, '/')) === false || $slash == strlen($this->_objectName) - 1) {
             /* bucket */
             $stat['mode'] |= 040000;
         } else {
@@ -341,7 +350,7 @@ class AliyunOssStream implements WrapperInterface
         $info = $this->_oss->getObjectMeta(AliyunOSS::getBucket(), $this->_objectName);
         $info = $info['_info'];
         if (!empty($info['_info'])) {
-            $stat['size']  = $info['download_content_length'];
+            $stat['size'] = $info['download_content_length'];
             $stat['atime'] = time();
             $stat['mtime'] = $info['filetime'];
         }
@@ -350,10 +359,11 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Attempt to delete the item
+     * Attempt to delete the item.
      *
-     * @param  string $path
-     * @return boolean
+     * @param string $path
+     *
+     * @return bool
      */
     public function unlink($path)
     {
@@ -361,11 +371,12 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Attempt to rename the item
+     * Attempt to rename the item.
      *
-     * @param  string  $path_from
-     * @param  string  $path_to
-     * @return boolean False
+     * @param string $path_from
+     * @param string $path_to
+     *
+     * @return bool False
      */
     public function rename($path_from, $path_to)
     {
@@ -374,12 +385,13 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Create a new directory
+     * Create a new directory.
      *
-     * @param  string  $path
-     * @param  integer $mode
-     * @param  integer $options
-     * @return boolean
+     * @param string $path
+     * @param int    $mode
+     * @param int    $options
+     *
+     * @return bool
      */
     public function mkdir($path, $mode, $options)
     {
@@ -389,11 +401,12 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Remove a directory
+     * Remove a directory.
      *
-     * @param  string  $path
-     * @param  integer $options
-     * @return boolean
+     * @param string $path
+     * @param int    $options
+     *
+     * @return bool
      */
     public function rmdir($path, $options)
     {
@@ -401,7 +414,7 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Return the next filename in the directory
+     * Return the next filename in the directory.
      *
      * @return string
      */
@@ -416,17 +429,17 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Attempt to open a directory
+     * Attempt to open a directory.
      *
-     * @param  string $path
-     * @param  integer $options
-     * @return boolean
+     * @param string $path
+     * @param int    $options
+     *
+     * @return bool
      */
     public function dir_opendir($path, $options)
     {
         if (preg_match('@^([a-z0-9+.]|-)+://$@', $path)) {
             $list = $this->_getOssClient($path)->listObjects(AliyunOSS::getBucket());
-
         } else {
             $list = $this
                 ->_getOssClient($path)
@@ -445,21 +458,22 @@ class AliyunOssStream implements WrapperInterface
             }
 
             array_push($this->_bucketList, $l->getKey());
-         }
+        }
 
-        return ($this->_bucketList !== false);
+        return $this->_bucketList !== false;
     }
 
     /**
-     * Return array of URL variables
+     * Return array of URL variables.
      *
-     * @param  string $path
-     * @param  integer $flags
+     * @param string $path
+     * @param int    $flags
+     *
      * @return array
      */
     public function url_stat($path, $flags)
     {
-        $stat = array();
+        $stat = [];
         $stat['dev'] = 0;
         $stat['ino'] = 0;
         $stat['mode'] = 0777;
@@ -474,17 +488,17 @@ class AliyunOssStream implements WrapperInterface
         $stat['blksize'] = 0;
         $stat['blocks'] = 0;
         $name = $this->_getNamePart($path);
-        if (($slash = strchr($name, '/')) === false || $slash == strlen($name)-1) {
+        if (($slash = strstr($name, '/')) === false || $slash == strlen($name) - 1) {
             /* bucket */
             $stat['mode'] |= 040000;
         } else {
             $stat['mode'] |= 0100000;
         }
-        
+
         $info = $this->_s3->getObjectMeta(AliyunOSS::getBucket(), $name);
         $info = $info['_info'];
         if (!empty($info['_info'])) {
-            $stat['size']  = $info['download_content_length'];
+            $stat['size'] = $info['download_content_length'];
             $stat['atime'] = time();
             $stat['mtime'] = $info['filetime'];
         }
@@ -493,24 +507,26 @@ class AliyunOssStream implements WrapperInterface
     }
 
     /**
-     * Reset the directory pointer
+     * Reset the directory pointer.
      *
-     * @return boolean True
+     * @return bool True
      */
     public function dir_rewinddir()
     {
         reset($this->_bucketList);
+
         return true;
     }
 
     /**
-     * Close a directory
+     * Close a directory.
      *
-     * @return boolean True
+     * @return bool True
      */
     public function dir_closedir()
     {
-        $this->_bucketList = array();
+        $this->_bucketList = [];
+
         return true;
     }
 } // END class AliyunOssStream implements WrapperInterface

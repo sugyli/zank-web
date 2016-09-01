@@ -8,7 +8,7 @@ app()->any('/oss', function () {
     // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
     // var_dump(class_exists('streamWrapper'));
     $accessKeyId = 'LTAI8XM6ritGP2po';
-    $accessKeySecret = 'GOSeZSsuVjgQdawQChPAy2kg1xbVCa';  
+    $accessKeySecret = 'GOSeZSsuVjgQdawQChPAy2kg1xbVCa';
     $endpoint = 'oss-cn-hangzhou.aliyuncs.com';
     $oss = new Zank\Services\AliyunOSS($accessKeyId, $accessKeySecret, $endpoint);
     $oss->setBucket('medz');
