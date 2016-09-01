@@ -24,7 +24,7 @@ class TableImportCommand extends Command
         $output->writeln([
             'Import tables to database.',
             '======================',
-            ''
+            '',
         ]);
 
         $tablesDir = dirname(__DIR__).'/db/tables';
