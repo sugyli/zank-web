@@ -14,7 +14,7 @@ interface WrapperInterface
     /**
      * constructor.
      */
-    public function __construct();
+    // public function __construct();
 
     /**
      * @return bool

@@ -6,7 +6,23 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 app()->any('/oss', function () {
     // var_dump(class_exists(Zank\Interfaces\WrapperInterface::class));
     // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
-    var_dump(class_exists('streamWrapper'));
+    // var_dump(class_exists('streamWrapper'));
+    $accessKeyId = 'LTAI8XM6ritGP2po';
+    $accessKeySecret = 'GOSeZSsuVjgQdawQChPAy2kg1xbVCa';  
+    $endpoint = 'oss-cn-hangzhou.aliyuncs.com';
+    $oss = new Zank\Services\AliyunOSS($accessKeyId, $accessKeySecret, $endpoint);
+    $oss->setBucket('medz');
+    $oss->registerStreamWrapper('oss');
+
+    $data = file_get_contents('oss://zank/test.png');
+
+    file_put_contents('oss://zank/1.txt', 'data');
+
+    var_dump($data);
+
+    // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
+
+    // var_dump($oss->getObjectMeta('medz', 'zank/test.png'));
 });
 
 app()->group('/api', function () {
