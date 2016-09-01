@@ -3,7 +3,7 @@
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-$app->group('/api', function ()
+app()->group('/api', function ()
 {
     // index
     $this->any('', function (Request $request, Response $response): Response

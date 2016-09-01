@@ -3,7 +3,7 @@
 use Slim\Container;
 
 // DIC configuration
-$container = $app->getContainer();
+$container = app()->getContainer();
 
 // monolog
 $container['logger'] = function (Container $c): \Monolog\Logger
