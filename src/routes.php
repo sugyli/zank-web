@@ -3,6 +3,12 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+app()->any('/oss', function() {
+    // var_dump(class_exists(Zank\Interfaces\WrapperInterface::class));
+    // var_dump(class_exists(Zank\Streams\AliyunOssStream::class));
+    var_dump(class_exists('streamWrapper'));
+});
+
 app()->group('/api', function () {
     // index
     $this->any('', function (Request $request, Response $response): Response {

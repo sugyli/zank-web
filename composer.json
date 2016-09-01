@@ -35,7 +35,8 @@
             "Zank\\Console\\": "src/consoles/",
             "Zank\\Controller\\": "src/controllers/",
             "Zank\\Middleware\\": "src/middlewares/",
-            "Zank\\Common\\": "src/commons/"
+            "Zank\\Common\\": "src/commons/",
+            "Zank\\": "src/"
         }
     },
     "scripts": {
