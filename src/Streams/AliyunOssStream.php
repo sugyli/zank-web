@@ -445,9 +445,7 @@ class AliyunOssStream implements WrapperInterface
         $dirName = $this->_getNamePart($path).'/';
         if (preg_match('@^([a-z0-9+.]|-)+://$@', $path) || $dirName == '/') {
             $list = $this->_getOssClient($path)->listObjects(AliyunOSS::getBucket());
-
         } else {
-
             $list = $this
                 ->_getOssClient($path)
                 ->listObjects(AliyunOSS::getBucket(), [
