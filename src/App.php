@@ -2,7 +2,6 @@
 
 namespace Zank;
 
-use Interop\Container\ContainerInterface;
 use Slim\App as SlimApp;
 
 /**
@@ -23,4 +22,4 @@ class App extends SlimApp
     {
         return self::$application;
     }
-} // END class App extends SlimApp  
+} // END class App extends SlimApp
