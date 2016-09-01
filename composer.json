@@ -37,5 +37,10 @@
             "Zank\\Middleware\\": "src/middlewares/",
             "Zank\\Common\\": "src/commons/"
         }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
+        ]
     }
 }
