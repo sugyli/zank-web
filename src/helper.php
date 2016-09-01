@@ -3,6 +3,15 @@
 use Symfony\Component\Yaml\Yaml;
 
 if (!function_exists('env')) {
+    /**
+     * env YAML配置获取
+     *
+     * @param string $key 键名
+     * @param mixed $default 默认值
+     * @return mixed
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
     function env(string $key, $default = null)
     {
         static $yaml;
@@ -24,5 +33,19 @@ if (!function_exists('env')) {
         }
 
         return $yaml[$key];
+    }
+}
+
+if (!function_exists('app')) {
+    /**
+     * get slim application
+     *
+     * @return Slim\App
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    function app()
+    {
+        return \Zank\App::getApplication();
     }
 }
