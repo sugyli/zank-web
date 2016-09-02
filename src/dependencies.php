@@ -33,7 +33,7 @@ $container['db'] = function (Container $c): \Illuminate\Database\Capsule\Manager
 $container['oss'] = function (Container $c) {
     $settings = $c->get('settings')->get('oss');
 
-    $oss = new \Zank\Services\AliyunOSS($settings['accessKeyId'], $settings['accessKeySecret'], $settings['endpoint']);
+    $oss = new \Medz\Component\StreamWrapper\AliyunOSS($settings['accessKeyId'], $settings['accessKeySecret'], $settings['endpoint']);
     $oss->setBucket($settings['bucket']);
     $oss->registerStreamWrapper('oss');
 

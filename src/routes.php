@@ -13,6 +13,8 @@ app()->any('/oss', function () {
     // }
     //
 
+    file_put_contents('oss://zank/test.txt', 'This is a test content.');
+
     var_dump(is_dir('oss://zank/'));
     var_dump(is_dir('oss://zank'));
 
