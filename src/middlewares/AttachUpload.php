@@ -63,12 +63,12 @@ class AttachUpload
         if (!$attach) {
             $path = sprintf('attachs/%s/%s%s', \Carbon\Carbon::now()->format('Y/m/d/H/i/s'), $fileMd5, $fileExt);
 
-            $attach = new \Zank\Model\Attach;
+            $attach = new \Zank\Model\Attach();
             $attach->path = $path;
             $attach->name = $file->getClientFilename();
             $attach->type = $file->getClientMediaType();
             $attach->size = $file->getSize();
-            $attach->md5  = $fileMd5;
+            $attach->md5 = $fileMd5;
             $attach->user_id = $this->ci->get('user')->user_id;
 
             $message = null;

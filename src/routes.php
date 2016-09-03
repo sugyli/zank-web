@@ -2,7 +2,6 @@
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Symfony\Component\Finder\Finder;
 
 app()->group('/api', function () {
     // index
@@ -76,9 +75,9 @@ app()->group('/api', function () {
 
     // 上传附件相关
     $this
-        ->group('/upload', function() {
+        ->group('/upload', function () {
             // 索引
-            $this->any('', function(Request $request, Response $response) {
+            $this->any('', function (Request $request, Response $response) {
                 $apiList = [
                     '/api/upload/attach' => '上传附件',
                     '/api/uplaod/avatar' => '上传头像',
