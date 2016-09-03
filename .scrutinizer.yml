@@ -1,0 +1,23 @@
+# .scrutinizer.yml
+build:
+  environment:
+    php:
+      version: 7.0 # Common versions: 5.4, 5.5, 5.6, 7.0 or hhvm
+
+    hosts:
+      zank.io: '127.0.0.1'
+
+    apache2:
+      modules: ['rewrite']
+
+      sites:
+        zank_web:
+          web_root: 'public'
+          host: 'zank.io'
+
+  dependencies:
+    before:
+      - composer install --prefer-source --no-progress
+
+checks:
+  php: true
