@@ -62,6 +62,9 @@ return [
             'accessKeySecret' => env('OSS_ACCESS_KEY_SECRET', ''),
             'endpoint'        => env('OSS_ENDPOINT', 'oss-cn-hangzhou.aliyuncs.com'),
             'bucket'          => env('OSS_BUCKET', ''),
+            'source_url'      => env('OSS_SOURCE_URL', ''),
+            'sign'            => env('OSS_SOURCE_SIGN', false),
+            'timeout'         => env('OSS_SIGN_TIMEOUT', 1800),
         ],
     ],
 ];
