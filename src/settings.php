@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     'debug' => cfg('DEBUG', true),
 
     'settings' => [
