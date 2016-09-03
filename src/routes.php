@@ -103,7 +103,7 @@ app()->group('/api', function () {
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 // 附件相关
-app()->get('/attach/{id:\d+}', function (Request $request, Response $response, $args) {
+app()->get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, Response $response, $args) {
     $attach = \Zank\Model\Attach::find($args['id']);
 
     // 先不用判断是非存在oss中，如果是迁移，可能也有可能回源的附件。
@@ -112,14 +112,12 @@ app()->get('/attach/{id:\d+}', function (Request $request, Response $response, $
             ->withStatus(404)
             ->write('Page not found.');
     }
+    
+    $url  = attach_url($attach->path);
 
-    try {
-        // url默认可以使用一小时。
-        $url = $this->get('oss')->signUrl(getAliyunOssBucket(), $attach->path, 3600);
-    } catch (\Exception $e) {
-        return $response
-            ->withStatus(404)
-            ->write('Page not found.');
+    if ((bool) $request->getAttribute('type') === true) {
+        return with(new \Zank\Common\Message($response, true, '', $url))
+            ->withJson();
     }
 
     return $response
