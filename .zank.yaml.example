@@ -4,6 +4,9 @@
 # Seven Du <lovevipdsw@outlook.com>
 #
 
+# Debug setting
+DEBUG: true
+
 # set to false in production
 DISPLAY_ERROR_DETAILS: true
 # Allow the web server to send the content-length header
@@ -41,3 +44,6 @@ OSS_ACCESS_KEY_ID: id
 OSS_ACCESS_KEY_SECRET: secret
 OSS_ENDPOINT: oss-cn-hangzhou.aliyuncs.com
 OSS_BUCKET: zank
+OSS_SOURCE_URL: http://medz.oss-cn-hangzhou.aliyuncs.com
+OSS_SOURCE_SIGN: false
+OSS_SIGN_TIMEOUT: 1800
