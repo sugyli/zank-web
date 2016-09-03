@@ -67,3 +67,30 @@ if (!function_exists('getAliyunOssBucket')) {
         return app()->getContainer()->get('settings')->get('oss')['bucket'];
     }
 }
+
+if (!function_exists('attach_url')) {
+    /**
+     * 更具附件文件地址，获取URL
+     *
+     * @param string $path 文件地址（相对）
+     * @return string URL
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    function attach_url(string $path)
+    {
+        $settings = app()->getContainer()->get('settings')->get('oss');
+        if ($settings['sign'] === true) {
+            return app()
+                ->getContainer()
+                ->get('oss')
+                ->signUrl(
+                    getAliyunOssBucket(),
+                    $path,
+                    $settings['timeout']
+                );
+        }
+
+        return sprintf('%s/%s', $settings['source_url'], $path);
+    }
+}
