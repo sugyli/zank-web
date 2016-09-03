@@ -12,6 +12,6 @@ try {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 } catch (Exception $e) {
-    echo $e->getMassage(), "\n";
+    echo $e->getMessage(), "\n";
     exit;
 }
