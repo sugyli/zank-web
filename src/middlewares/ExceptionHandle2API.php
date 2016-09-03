@@ -2,7 +2,6 @@
 
 namespace Zank\Middleware;
 
-use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -13,7 +12,6 @@ use Psr\Http\Message\ResponseInterface as Response;
  **/
 class ExceptionHandle2API
 {
-
     /**
      * ExceptionHandle middleware invokable class.
      *
