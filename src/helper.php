@@ -70,10 +70,12 @@ if (!function_exists('getAliyunOssBucket')) {
 
 if (!function_exists('attach_url')) {
     /**
-     * 更具附件文件地址，获取URL
+     * 更具附件文件地址，获取URL.
      *
      * @param string $path 文件地址（相对）
+     *
      * @return string URL
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */

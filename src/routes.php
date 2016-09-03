@@ -112,8 +112,8 @@ app()->get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, Respon
             ->withStatus(404)
             ->write('Page not found.');
     }
-    
-    $url  = attach_url($attach->path);
+
+    $url = attach_url($attach->path);
 
     if ((bool) $request->getAttribute('type') === true) {
         return with(new \Zank\Common\Message($response, true, '', $url))
