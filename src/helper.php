@@ -2,9 +2,9 @@
 
 use Symfony\Component\Yaml\Yaml;
 
-if (!function_exists('env')) {
+if (!function_exists('cfg')) {
     /**
-     * env YAML配置获取.
+     * cfg YAML配置获取.
      *
      * @param string $key     键名
      * @param mixed  $default 默认值
@@ -14,12 +14,12 @@ if (!function_exists('env')) {
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
-    function env(string $key, $default = null)
+    function cfg(string $key, $default = null)
     {
         static $yaml;
 
         if (!is_array($yaml)) {
-            $env = dirname(__DIR__).'/.env';
+            $env = dirname(__DIR__).'/.zank.yaml';
 
             if (file_exists($env)) {
                 $env = file_get_contents($env);
