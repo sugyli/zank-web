@@ -4,29 +4,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Symfony\Component\Finder\Finder;
 
-app()->any('/oss', function () {
-    $finder = new Finder();
-    // $finder->files()->in('oss://zank/');
-
-    // foreach ($finder as $file) {
-    //     var_dump($file);
-    // }
-    //
-
-    file_put_contents('oss://zank/test.txt', 'This is a test content.');
-
-    var_dump(is_dir('oss://zank/'));
-    var_dump(is_dir('oss://zank'));
-
-    var_dump(file_exists('oss://zank/'));
-    var_dump(file_exists('oss://zank'));
-
-    // $oss = $this->get('oss');
-    // $demo = $oss->getObjectMeta(getAliyunOssBucket(), 'zank/');
-    // var_dump($demo);
-})
-->add(\Zank\Middleware\InitAliyunOss::class);
-
 app()->group('/api', function () {
     // index
     $this->any('', function (Request $request, Response $response): Response {
@@ -96,4 +73,58 @@ app()->group('/api', function () {
             ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\InitDb::class);
     });
-});
+
+    // 上传附件相关
+    $this
+        ->group('/upload', function() {
+            // 索引
+            $this->any('', function(Request $request, Response $response) {
+                $apiList = [
+                    '/api/upload/attach' => '上传附件',
+                    '/api/uplaod/avatar' => '上传头像',
+                ];
+
+                return $response->withJson($apiList);
+            });
+
+            // 上传附件
+            $this
+                ->post('/attach', \Zank\Controller\Api\Upload::class.':attach')
+                ->add(\Zank\Middleware\AttachUpload::class);
+
+            // 上传头像
+            $this
+                ->post('/avatar', \Zank\Controller\Api\Upload::class.':avatar')
+                ->add(\Zank\Middleware\AttachUpload::class);
+        })
+        ->add(\Zank\Middleware\InitAliyunOss::class)
+        ->add(\Zank\Middleware\AuthenticationUserToken::class)
+        ->add(\Zank\Middleware\InitDb::class);
+})
+->add(\Zank\Middleware\ExceptionHandle2API::class);
+
+// 附件相关
+app()->get('/attach/{id:\d+}', function (Request $request, Response $response, $args) {
+    $attach = \Zank\Model\Attach::find($args['id']);
+
+    // 先不用判断是非存在oss中，如果是迁移，可能也有可能回源的附件。
+    if (!$attach/* || file_exists(($ossPath = 'oss://'.$attach->path)) === false*/) {
+        return $response
+            ->withStatus(404)
+            ->write('Page not found.');
+    }
+
+    try {
+        $url = $this->get('oss')->signUrl(getAliyunOssBucket(), $attach->path, 3600);
+    } catch (\Exception $e) {
+        return $response
+            ->withStatus(404)
+            ->write('Page not found.');
+    }
+
+    return $response
+        ->withStatus(307)
+        ->withRedirect($url);
+})
+->add(\Zank\Middleware\InitAliyunOss::class)
+->add(\Zank\Middleware\InitDb::class);
