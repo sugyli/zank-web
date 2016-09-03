@@ -4,3 +4,5 @@ composer.lock
 .env
 
 .env.yaml
+
+.zank.yaml
