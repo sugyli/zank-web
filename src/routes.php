@@ -115,6 +115,7 @@ app()->get('/attach/{id:\d+}', function (Request $request, Response $response, $
     }
 
     try {
+        // url默认可以使用一小时。
         $url = $this->get('oss')->signUrl(getAliyunOssBucket(), $attach->path, 3600);
     } catch (\Exception $e) {
         return $response
