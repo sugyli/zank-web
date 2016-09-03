@@ -42,7 +42,7 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "php -r \"copy('.zank.yaml.example', '.zank.yaml');\""
         ]
     }
 }
