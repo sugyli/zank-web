@@ -4,6 +4,8 @@ build:
     php:
       version: 7.0 # Common versions: 5.4, 5.5, 5.6, 7.0 or hhvm
 
+    mysql: 5.5 # 5.5 or 5.6 or 5.7
+
     hosts:
       zank.io: '127.0.0.1'
 
