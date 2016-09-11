@@ -19,21 +19,12 @@ app()->group('/api', function () {
         // 索引
         $this->any('', \Zank\Controller\Api\Sign::class);
 
-        // 注册第一步信息
-        // phone password
+        // 基本信息注册
         $this
-            ->post('/up/step/base', \Zank\Controller\Api\Sign::class.':stepRegisterBase')
+            ->post('/up/base', \Zank\Controller\Api\Sign::class.':stepRegisterBase')
             ->add(\Zank\Middleware\Sign\Up\ValidateUserInviteCode::class)
             ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptcha::class)
             ->add(\Zank\Middleware\Sign\Up\ValidateUserByPhone::class)
-            ->add(\Zank\Middleware\InitDb::class);
-
-        // 注册第二步信息
-        // 基本信息
-        $this
-            ->post('/up/step/info', \Zank\Controller\Api\Sign::class.':stepRegisterInfo')
-            ->add(\Zank\Middleware\Sign\Up\ValidateUserByUserName::class)
-            ->add(\Zank\Middleware\AuthenticationUserToken::class)
             ->add(\Zank\Middleware\InitDb::class);
 
         // 登陆
@@ -99,6 +90,15 @@ app()->group('/api', function () {
         ->add(\Zank\Middleware\InitAliyunOss::class)
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
+
+    // 用户相关
+    $this
+        ->group('/user', function() {
+            // api 索引
+            $this->any('', \Zank\Controller\Api\User::class)
+        })
+        ->add(\Zank\Middleware\AuthenticationUserToken::class)
+        ->add(\Zank\Middleware\InitDb::class)
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
