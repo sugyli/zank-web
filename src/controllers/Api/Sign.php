@@ -103,7 +103,7 @@ class Sign extends Controller
     }
 
     /**
-     * 注册步骤第一步，手机号，密码注册.
+     * 注册，手机号，密码注册.
      *
      * @param Request  $request  请求对象
      * @param Response $response 响应对象
@@ -136,26 +136,6 @@ class Sign extends Controller
     }
 
     /**
-     * 完善其他信息步骤.
-     *
-     * @param Request  $request  请求对象
-     * @param Response $response 响应对象
-     *
-     * @return Response 请求对象
-     *
-     * @author Seven Du <lovevipdsw@outlook.com>
-     * @homepage http://medz.cn
-     */
-    public function stepRegisterInfo(Request $request, Response $response): Response
-    {
-        $username = $request->getParsedBodyParam('username');
-        $age = $request->getParsedBodyParam('age');
-        $height = $request->getParsedBodyParam('height');
-        $kg = $request->getParsedBodyParam('kg');
-        $areas_id = $request->getParsedBodyParam('areas_id');
-    }
-
-    /**
      * 索引方法，返回api列表.
      *
      * @param Request  $request  请求对象
@@ -170,7 +150,7 @@ class Sign extends Controller
     {
         $response->withJson([
             '/api/sign/in'            => '用户登陆',
-            '/api/sign/up/setp/base'  => '用户基本信息注册',
+            '/api/sign/up/base'       => '用户基本信息注册',
             '/api/sign/refresh-token' => '刷新token',
         ]);
 
