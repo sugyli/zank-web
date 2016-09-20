@@ -95,7 +95,7 @@ app()->group('/api', function () {
     $this
         ->group('/user', function() {
             // api 索引
-            $this->any('', \Zank\Controller\Api\User::class)
+            $this->any('', \Zank\Controller\Api\User::class);
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
