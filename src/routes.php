@@ -93,7 +93,7 @@ app()->group('/api', function () {
 
     // 用户相关
     $this
-        ->group('/user', function() {
+        ->group('/user', function () {
             // api 索引
             $this->any('', \Zank\Controller\Api\User::class);
         })
