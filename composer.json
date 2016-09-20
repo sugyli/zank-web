@@ -28,15 +28,9 @@
             "src/helper.php"
         ],
         "classmap": [
-            "src/controllers/Controller.php",
-            "src/App.php"
+            "src/Controller/Controller.php",
         ],
         "psr-4": {
-            "Zank\\Model\\": "src/models/",
-            "Zank\\Console\\": "src/consoles/",
-            "Zank\\Controller\\": "src/controllers/",
-            "Zank\\Middleware\\": "src/middlewares/",
-            "Zank\\Common\\": "src/commons/",
             "Zank\\": "src/"
         }
     },
