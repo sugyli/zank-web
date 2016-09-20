@@ -98,7 +98,7 @@ app()->group('/api', function () {
             $this->any('', \Zank\Controller\Api\User::class)
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
-        ->add(\Zank\Middleware\InitDb::class)
+        ->add(\Zank\Middleware\InitDb::class);
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
