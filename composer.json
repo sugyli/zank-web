@@ -28,7 +28,7 @@
             "src/helper.php"
         ],
         "classmap": [
-            "src/Controller/Controller.php",
+            "src/Controller/Controller.php"
         ],
         "psr-4": {
             "Zank\\": "src/"
