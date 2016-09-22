@@ -1,6 +1,6 @@
 <?php
 
-namespace Zank\Console;
+namespace Zank\Console\Command;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Command\Command;
