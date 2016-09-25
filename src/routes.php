@@ -4,9 +4,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
-Application::group('/api', function () {
+Application::group('/api', function() {
     // index
-    $this->any('', function (Request $request, Response $response): Response {
+    $this->any('', function(Request $request, Response $response): Response {
         $apiList = [
             '/api/sign'    => '用户注册｜登陆',
             '/api/captcha' => '验证码',
@@ -19,7 +19,7 @@ Application::group('/api', function () {
     });
 
     // 用户注册｜登陆
-    $this->group('/sign', function () {
+    $this->group('/sign', function() {
         // 索引
         $this->any('', \Zank\Controller\Api\Sign::class);
 
@@ -44,9 +44,9 @@ Application::group('/api', function () {
     });
 
     // 验证码相关
-    $this->group('/captcha', function () {
+    $this->group('/captcha', function() {
         // 索引
-        $this->any('', function (Request $request, Response $response): Response {
+        $this->any('', function(Request $request, Response $response): Response {
             $apiList = [
                 '/api/captcha/phone/get/register' => '获取手机号码验证码',
                 '/api/captcha/phone/has'          => '验证手机号码验证码',
@@ -70,9 +70,9 @@ Application::group('/api', function () {
 
     // 上传附件相关
     $this
-        ->group('/upload', function () {
+        ->group('/upload', function() {
             // 索引
-            $this->any('', function (Request $request, Response $response) {
+            $this->any('', function(Request $request, Response $response) {
                 $apiList = [
                     '/api/upload/attach' => '上传附件',
                     '/api/uplaod/avatar' => '上传头像',
@@ -97,7 +97,7 @@ Application::group('/api', function () {
 
     // 用户相关
     $this
-        ->group('/user', function () {
+        ->group('/user', function() {
             // api 索引
             $this->any('', \Zank\Controller\Api\User::class);
         })
@@ -107,7 +107,7 @@ Application::group('/api', function () {
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 // 附件相关
-Application::get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, Response $response, $args) {
+Application::get('/attach/{id:\d+}[/{type:[0|1]}]', function(Request $request, Response $response, $args) {
     $attach = \Zank\Model\Attach::find($args['id']);
 
     // 先不用判断是非存在oss中，如果是迁移，可能也有可能回源的附件。
