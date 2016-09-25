@@ -10,22 +10,9 @@ if (PHP_VERSION_ID < 70000) {
     exit(1);
 }
 
-require file_exists(__DIR__ . '/../../autoload.php')
-    ? __DIR__ . '/../../autoload.php'
-    : __DIR__ . '/vendor/autoload.php'
-;
-
-$version = '1.0.0';
 // Windows uses Path instead of PATH
 if (!isset($_SERVER['PATH']) && isset($_SERVER['Path'])) {
     $_SERVER['PATH'] = $_SERVER['Path'];
 }
 
-// DB
-require __DIR__.'/src/db/console.php';
-
-$app = new Symfony\Component\Console\Application('Zank Command Tool', $version);
-$app->add(new Zank\Console\TableImportCommand);
-$app->add(new Zank\Console\TableOutCommand);
-$app->setDefaultCommand('list');
-$app->run();
+require __DIR__.'/bootstrap.php';
