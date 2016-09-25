@@ -1,6 +1,6 @@
 <?php
 
-use Symfony\Component\Yaml\Yaml;
+use Zank\Util\Yaml;
 
 if (!function_exists('cfg')) {
     /**
@@ -16,40 +16,12 @@ if (!function_exists('cfg')) {
      */
     function cfg(string $key, $default = null)
     {
-        static $yaml;
+        $clientKey = '.zank.yaml';
+        $filename = dirname(__DIR__).'/.zank.yaml';
 
-        if (!is_array($yaml)) {
-            $env = dirname(__DIR__).'/.zank.yaml';
+        Yaml::addClient($clientKey, $filename);
 
-            if (file_exists($env)) {
-                $env = file_get_contents($env);
-            } else {
-                $env = '';
-            }
-
-            $yaml = Yaml::parse($env);
-        }
-
-        if (!isset($yaml[$key])) {
-            return $default;
-        }
-
-        return $yaml[$key];
-    }
-}
-
-if (!function_exists('app')) {
-    /**
-     * get slim application.
-     *
-     * @return Slim\App
-     *
-     * @author Seven Du <lovevipdsw@outlook.com>
-     * @homepage http://medz.cn
-     */
-    function app()
-    {
-        return \Zank\App::getApplication();
+        return Yaml::getClient($clientKey)->get($key, $default);
     }
 }
 
@@ -64,7 +36,7 @@ if (!function_exists('getAliyunOssBucket')) {
      */
     function getAliyunOssBucket()
     {
-        return app()->getContainer()->get('settings')->get('oss')['bucket'];
+        return \Zank\Application::getContainer()->get('settings')->get('oss')['bucket'];
     }
 }
 
@@ -81,18 +53,28 @@ if (!function_exists('attach_url')) {
      */
     function attach_url(string $path)
     {
-        $settings = app()->getContainer()->get('settings')->get('oss');
+        $settings = \Zank\Application::getContainer()->get('settings')->get('oss');
+
         if ($settings['sign'] === true) {
-            return app()
-                ->getContainer()
+            return \Zank\Application::getContainer()
                 ->get('oss')
-                ->signUrl(
-                    getAliyunOssBucket(),
-                    $path,
-                    $settings['timeout']
-                );
+                ->signUrl($settings['bucket'], $path, $settings['timeout']);
         }
 
         return sprintf('%s/%s', $settings['source_url'], $path);
+    }
+}
+
+if (!function_exists('database_source_dir')) {
+    /**
+     * 获取数据相关资源目录
+     *
+     * @return string
+     * @author Seven Du <lovevipdsw@outlook.com>
+     * @homepage http://medz.cn
+     */
+    function database_source_dir()
+    {
+        return dirname(__DIR__).'/database';
     }
 }
