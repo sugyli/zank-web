@@ -7,7 +7,7 @@ use Slim\App;
 /**
  * Zank application.
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Application
 {

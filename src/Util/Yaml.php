@@ -41,7 +41,5 @@ class Yaml extends BaseYaml
         if (isset(self::$clients[$key])) {
             return self::$clients[$key];
         }
-
-        return null;
     }
 }
