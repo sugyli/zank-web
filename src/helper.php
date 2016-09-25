@@ -67,9 +67,10 @@ if (!function_exists('attach_url')) {
 
 if (!function_exists('database_source_dir')) {
     /**
-     * 获取数据相关资源目录
+     * 获取数据相关资源目录.
      *
      * @return string
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */

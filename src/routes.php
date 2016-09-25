@@ -8,10 +8,10 @@ Application::group('/api', function () {
     // index
     $this->any('', function (Request $request, Response $response): Response {
         $apiList = [
-            '/api/sign' => '用户注册｜登陆',
+            '/api/sign'    => '用户注册｜登陆',
             '/api/captcha' => '验证码',
-            '/api/upload' => '上传相关',
-            '/api/user' => '用户相关',
+            '/api/upload'  => '上传相关',
+            '/api/user'    => '用户相关',
         ];
         $response->withJson($apiList);
 
