@@ -6,8 +6,7 @@ declare(strict_types=1);
 require __DIR__.'/vendor/autoload.php';
 
 $settings = require __DIR__.'/src/settings.php';
-$app = new \Zank\App($settings);
-$app->setAsGlobal();
+$app = new \Zank\Application($settings);
 
 // Set up dependencies
 require __DIR__.'/src/dependencies.php';
@@ -19,4 +18,4 @@ require __DIR__.'/src/middleware.php';
 require __DIR__.'/src/routes.php';
 
 // Run app
-app()->run();
+return $app->run();
