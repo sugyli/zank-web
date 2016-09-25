@@ -26,21 +26,21 @@ class TableOutCommand extends Command
             '',
         ]);
 
-        $tablesDir = dirname(__DIR__).'/db/tables';
-        $finder = new Finder();
-        $finder
-            ->files()
-            ->in($tablesDir)
-            ->name('*.php');
+        // $tablesDir = dirname(__DIR__).'/db/tables';
+        // $finder = new Finder();
+        // $finder
+        //     ->files()
+        //     ->in($tablesDir)
+        //     ->name('*.php');
 
-        $i = 0;
-        foreach ($finder as $file) {
-            $tableName = $file->getBasename('.php');
-            Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
-            $output->writeln('Delete table:'.$tableName.' <fg=green>OK.</>');
-            $i++;
-        }
+        // $i = 0;
+        // foreach ($finder as $file) {
+        //     $tableName = $file->getBasename('.php');
+        //     Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
+        //     $output->writeln('Delete table:'.$tableName.' <fg=green>OK.</>');
+        //     $i++;
+        // }
 
-        $output->writeln(sprintf('<info>Delete table num:%d</info>', $i));
+        // $output->writeln(sprintf('<info>Delete table num:%d</info>', $i));
     }
 }

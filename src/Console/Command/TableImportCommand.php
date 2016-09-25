@@ -26,23 +26,27 @@ class TableImportCommand extends Command
             '',
         ]);
 
-        $tablesDir = dirname(__DIR__).'/db/tables';
-        $finder = new Finder();
-        $finder
-            ->files()
-            ->in($tablesDir)
-            ->name('*.php');
+        var_dump(getAliyunOssBucket());
 
-        $i = 0;
-        foreach ($finder as $file) {
-            $tableName = $file->getBasename('.php');
-            Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
-            $handle = require $tablesDir.'/'.$tableName.'.php';
-            Capsule::Schema()->create($tableName, $handle);
-            $output->writeln('Create table:'.$tableName.' <fg=green>OK.</>');
-            $i++;
-        }
+        // var_dump(database_source_dir());
 
-        $output->writeln(sprintf('<info>Import table num:%d</info>', $i));
+        // $tablesDir = dirname(__DIR__).'/db/tables';
+        // $finder = new Finder();
+        // $finder
+        //     ->files()
+        //     ->in($tablesDir)
+        //     ->name('*.php');
+
+        // $i = 0;
+        // foreach ($finder as $file) {
+        //     $tableName = $file->getBasename('.php');
+        //     Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
+        //     $handle = require $tablesDir.'/'.$tableName.'.php';
+        //     Capsule::Schema()->create($tableName, $handle);
+        //     $output->writeln('Create table:'.$tableName.' <fg=green>OK.</>');
+        //     $i++;
+        // }
+
+        // $output->writeln(sprintf('<info>Import table num:%d</info>', $i));
     }
 }
