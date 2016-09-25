@@ -2,12 +2,16 @@
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zank\Application;
 
-app()->group('/api', function () {
+Application::group('/api', function () {
     // index
     $this->any('', function (Request $request, Response $response): Response {
         $apiList = [
-            '/api/sign/' => '用户注册｜登陆',
+            '/api/sign' => '用户注册｜登陆',
+            '/api/captcha' => '验证码',
+            '/api/upload' => '上传相关',
+            '/api/user' => '用户相关',
         ];
         $response->withJson($apiList);
 
@@ -103,7 +107,7 @@ app()->group('/api', function () {
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 // 附件相关
-app()->get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, Response $response, $args) {
+Application::get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, Response $response, $args) {
     $attach = \Zank\Model\Attach::find($args['id']);
 
     // 先不用判断是非存在oss中，如果是迁移，可能也有可能回源的附件。
