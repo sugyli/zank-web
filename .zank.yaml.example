@@ -21,7 +21,7 @@ LOGGER_PATH: /logs/app.log # 相对于root目录
 DB_DRIVER: mysql
 DB_PREFIX: medz_
 
-# Eloquent settings for pgsql MySQL.
+# Eloquent settings for MySQL.
 # ----------------------------------
 DB_HOST: localhost
 DB_PORT: 3306
