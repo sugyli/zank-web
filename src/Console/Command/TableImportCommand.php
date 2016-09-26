@@ -26,7 +26,7 @@ class TableImportCommand extends Command
             '',
         ]);
 
-        var_dump(getAliyunOssBucket());
+        var_dump(get_oss_bucket_name());
 
         // var_dump(database_source_dir());
 

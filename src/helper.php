@@ -25,7 +25,7 @@ if (!function_exists('cfg')) {
     }
 }
 
-if (!function_exists('getAliyunOssBucket')) {
+if (!function_exists('get_oss_bucket_name')) {
     /**
      * 获取oss的bucket名称.
      *
@@ -34,7 +34,7 @@ if (!function_exists('getAliyunOssBucket')) {
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
-    function getAliyunOssBucket()
+    function get_oss_bucket_name()
     {
         return \Zank\Application::getContainer()->get('settings')->get('oss')['bucket'];
     }

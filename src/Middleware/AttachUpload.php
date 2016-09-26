@@ -71,7 +71,7 @@ class AttachUpload
             $attach->md5 = $fileMd5;
             $attach->user_id = $this->ci->get('user')->user_id;
 
-            $this->ci->get('oss')->multiuploadFile(getAliyunOssBucket(), $path, $file->file);
+            $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
             $attach->save();
         }
 
