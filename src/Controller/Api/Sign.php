@@ -149,8 +149,8 @@ class Sign extends Controller
     public function __invoke(Request $request, Response $response)
     {
         $response->withJson([
-            '/api/sign/in'            => '用户登陆',
-            '/api/sign/up/base'       => '用户基本信息注册',
+            '/api/sign/in' => '用户登陆',
+            '/api/sign/up/base' => '用户基本信息注册',
             '/api/sign/refresh-token' => '刷新token',
         ]);
 
