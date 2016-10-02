@@ -14,7 +14,7 @@ return function (Blueprint $table) {
     $table->smallInteger('kg')->nullable()->default(60);
     $table->integer('areas_id')->nullable()->default(0);
     $table->enum('role', ['1', '0.5', '0', '-1'])->nullable()->default('0.5');
-    $table->enum('shape', ['']);
+    $table->enum('shape', ['壮熊', '狒狒', '肌肉', '普通', '偏瘦']);
     $table->string('geohash', 100)->nullable()->default(null);
     $table->string('latitude', 100)->nullable()->default(null);
     $table->string('longitude', 100)->nullable()->default(null);
