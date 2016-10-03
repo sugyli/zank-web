@@ -4,7 +4,7 @@ namespace Zank\Middleware\User\Change;
 
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Zank\Trait\Container;
+use Zank\Traits\Container;
 
 class Username
 {
