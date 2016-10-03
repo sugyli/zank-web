@@ -35,5 +35,7 @@ class User extends Controller
         $kg = $request->getParsedBodyParam('kg');
         $role = $request->getParsedBodyParam('role');
         $area_id = $request->getParsedBodyParam('area_id');
+        $shape = $request->getParsedBodyParam('shape');
+        $love = $request->getParsedBodyParam('love');
     }
 }
