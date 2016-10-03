@@ -100,6 +100,11 @@ Application::group('/api', function () {
         ->group('/user', function () {
             // api 索引
             $this->any('', \Zank\Controller\Api\User::class);
+
+            // change data
+            $this
+                ->post('/change', \Zank\Controller\Api\User::class.':changeDate')
+                ->add(\Zank\Middleware\User\Change\Username::class);
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
