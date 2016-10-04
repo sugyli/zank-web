@@ -13,11 +13,11 @@ class Role
     /**
      * 修改用户角色中间件.
      *
-     * @param Psr\Http\RequestInterface $request 请求注入容器
+     * @param Psr\Http\RequestInterface  $request  请求注入容器
      * @param Psr\Http\ResponseInterface $response 返回的资源体
      *
      * @return callable $next
-     * 
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
