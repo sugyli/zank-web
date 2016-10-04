@@ -104,6 +104,7 @@ Application::group('/api', function () {
             // change data
             $this
                 ->post('/change', \Zank\Controller\Api\User::class.':changeDate')
+                ->add(\Zank\Middleware\User\Change\Age::class)
                 ->add(\Zank\Middleware\User\Change\Username::class);
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
