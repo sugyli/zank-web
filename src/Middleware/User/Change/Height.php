@@ -16,7 +16,6 @@ class Height
         $user = $this->ci->get('user');
 
         if ($height) {
-
             if ($height < 20 || $height > 320) {
                 return with(new \Zank\Common\Message($response, false, '不合法的身高范围'))
                     ->withJson();

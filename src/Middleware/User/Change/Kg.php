@@ -16,7 +16,7 @@ class Kg
         $kg = (int) $request->getParsedBodyParam('kg');
 
         if ($kg > 0) {
-          $user->kg = $kg;
+            $user->kg = $kg;
         }
 
         return $next($request, $response);
