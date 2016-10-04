@@ -1,6 +1,6 @@
 <?php
 
-namespace Zank\Controller\Api\User;
+namespace Zank\Controller\Api;
 
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -29,13 +29,15 @@ class User extends Controller
 
     public function changeDate(Request $request, Response $response)
     {
-        $username = $request->getParsedBodyParam('username');
-        $age = $request->getParsedBodyParam('age');
-        $height = $request->getParsedBodyParam('height');
-        $kg = $request->getParsedBodyParam('kg');
-        $role = $request->getParsedBodyParam('role');
-        $area_id = $request->getParsedBodyParam('area_id');
-        $shape = $request->getParsedBodyParam('shape');
-        $love = $request->getParsedBodyParam('love');
+        var_dump($this->ci->user);
+        exit;
+        // $username = $request->getParsedBodyParam('username');
+        // $age = $request->getParsedBodyParam('age');
+        // $height = $request->getParsedBodyParam('height');
+        // $kg = $request->getParsedBodyParam('kg');
+        // $role = $request->getParsedBodyParam('role');
+        // $area_id = $request->getParsedBodyParam('area_id');
+        // $shape = $request->getParsedBodyParam('shape');
+        // $love = $request->getParsedBodyParam('love');
     }
 }
