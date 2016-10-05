@@ -39,7 +39,6 @@ class TableImportCommand extends Command
 
 
         foreach ($finder as $file) {
-
             $tableName = $file->getBasename('.php');
             $filename = $file->getPathname();
             $handle = require $filename;
