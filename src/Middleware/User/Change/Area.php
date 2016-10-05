@@ -10,7 +10,7 @@ use Zank\Model;
 /**
  * 修改用户信息，地区修改中间件。
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Area
 {
