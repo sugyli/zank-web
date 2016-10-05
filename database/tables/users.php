@@ -14,8 +14,8 @@ return function (Blueprint $table) {
     $table->smallInteger('kg')->nullable()->default(60); // 体重
     $table->integer('areas_id')->nullable()->default(0); // 地区id
     $table->enum('role', ['1', '0.5', '0', '-1'])->nullable()->default('0.5'); // 角色
-    $table->enum('shape', ['壮熊', '狒狒', '肌肉', '普通', '偏瘦']); // 体型
-    $table->smallInteger('love', 1)->nullable()->default(0); // 情感状态
+    $table->enum('shape', ['壮熊', '狒狒', '肌肉', '普通', '偏瘦'])->nullable()->default('普通'); // 体型
+    $table->smallInteger('love')->nullable()->default(0); // 情感状态
     $table->string('geohash', 100)->nullable()->default(null);
     $table->string('latitude', 100)->nullable()->default(null);
     $table->string('longitude', 100)->nullable()->default(null);
