@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Zank\Application as Web;
 
 class TableImportCommand extends Command
 {
@@ -26,27 +27,29 @@ class TableImportCommand extends Command
             '',
         ]);
 
-        var_dump(get_oss_bucket_name());
+        // init database;
+        Web::getContainer()->get('db');
 
-        // var_dump(database_source_dir());
+        $tablesDir = database_source_dir().'/tables';
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in($tablesDir)
+            ->name('*.php');
 
-        // $tablesDir = dirname(__DIR__).'/db/tables';
-        // $finder = new Finder();
-        // $finder
-        //     ->files()
-        //     ->in($tablesDir)
-        //     ->name('*.php');
 
-        // $i = 0;
-        // foreach ($finder as $file) {
-        //     $tableName = $file->getBasename('.php');
-        //     Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
-        //     $handle = require $tablesDir.'/'.$tableName.'.php';
-        //     Capsule::Schema()->create($tableName, $handle);
-        //     $output->writeln('Create table:'.$tableName.' <fg=green>OK.</>');
-        //     $i++;
-        // }
+        foreach ($finder as $file) {
 
-        // $output->writeln(sprintf('<info>Import table num:%d</info>', $i));
+            $tableName = $file->getBasename('.php');
+            $filename = $file->getPathname();
+            $handle = require $filename;
+
+            Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
+            Capsule::Schema()->create($tableName, $handle);
+
+            $output->writeln('Create table:'.$tableName.' <fg=green>OK.</>');
+        }
+
+        $output->writeln(sprintf('<info>Import table num:%d</info>', $finder->count()));
     }
 }
