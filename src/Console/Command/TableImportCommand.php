@@ -44,7 +44,7 @@ class TableImportCommand extends Command
         }
 
         $io->title('(setp:2) 导入数据表结构到数据库中');
-        
+
         $tables = [];
         $files = new DatabaseTablesIterator;
         $io->progressStart($files->count());
