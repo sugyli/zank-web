@@ -5,13 +5,16 @@ namespace Zank\Console\Command;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
-use Zank\Application as Web;
+use Zank\Util\DatabaseTablesIterator;
+use Zank\Traits\InitDatabaseToConsole;
 
 class TableImportCommand extends Command
 {
+    use InitDatabaseToConsole;
+
     protected function configure()
     {
         $this
@@ -23,46 +26,43 @@ class TableImportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('导入数据表结构到数据库中');
+        $io->title('(setp:1) 删除数据库中的表结构和数据');
 
-        $confirm = $io->confirm('导入数据表会删除已有的数据表和数据,是否确定导入？', false);
-        if ($confirm === false) {
-            $output->writeln('<question>已经取消导入数据表结构.</question>');
+        $commandName = 'db:delet';
+        $command = $this->getApplication()->find($commandName);
+        $arguments = [
+            'command' => $commandName,
+            '--confirm' => '导入数据表会删除已有的数据表和数据,是否确定删除并导入？',
+            '--confirm-no-message' => '已经取消导入数据表结构.',
+            '--no-title' => true,
+        ];
+        $greetInput = new ArrayInput($arguments);
+        $returnCode = $command->run($greetInput, $output);
 
-            return ;
+        if ($returnCode === -1) {
+            return 1;
         }
 
-        // init database;
-        Web::getContainer()->get('db');
-
-        $tablesDir = database_source_dir().'/tables';
-        $finder = new Finder();
-        $finder
-            ->files()
-            ->in($tablesDir)
-            ->name('*.php');
-
-
-        $io->progressStart($finder->count());
+        $io->title('(setp:2) 导入数据表结构到数据库中');
+        
         $tables = [];
+        $files = new DatabaseTablesIterator;
+        $io->progressStart($files->count());
 
-        foreach ($finder as $file) {
+        $files->forEach(function ($file) use (&$tables, $io) {
             $tableName = $file->getBasename('.php');
             $filename = $file->getPathname();
 
             try {
                 $handle = require $filename;
-
-                Capsule::Schema()->dropIfExists($tableName); // 删除数据库的表
                 Capsule::Schema()->create($tableName, $handle);
-
                 $tables[] = [$tableName, '<info>success</info>'];
             } catch (\Exception $e) {
                 $tables[] = [$tableName, '<error>error</error>', $e->getMessage()];
             }
 
             $io->progressAdvance();
-        }
+        });
 
         $io->progressFinish();
         $io->table(
