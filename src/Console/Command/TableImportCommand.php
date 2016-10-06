@@ -57,7 +57,6 @@ class TableImportCommand extends Command
                 Capsule::Schema()->create($tableName, $handle);
 
                 $tables[] = [$tableName, '<info>success</info>'];
-
             } catch (\Exception $e) {
                 $tables[] = [$tableName, '<error>error</error>', $e->getMessage()];
             }
