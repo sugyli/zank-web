@@ -13,9 +13,9 @@ build:
             modules: ['rewrite']
 
             sites:
-            zank_web:
-                web_root: 'public'
-                host: 'zank.io'
+                zank_web:
+                    web_root: 'public'
+                    host: 'zank.io'
 
     dependencies:
         before:
