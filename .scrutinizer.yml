@@ -21,8 +21,8 @@ build:
         before:
             - composer install --prefer-source --no-progress
 
-    checks:
-        php: true
+checks:
+    php: true
 
 coding_style:
     php:
