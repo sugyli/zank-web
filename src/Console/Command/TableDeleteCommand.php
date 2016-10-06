@@ -34,7 +34,7 @@ class TableDeleteCommand extends Command
 
         $io->note('建议先对数据库进行备份。');
         if ($input->getOption('y') === false) {
-            $confirm = $io->confirm($input->getOption('confirm'), false);
+            $confirm = (bool) $io->confirm($input->getOption('confirm'), false);
             if ($confirm === false) {
                 $output->writeln(
                     sprintf(
