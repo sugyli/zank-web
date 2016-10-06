@@ -15,8 +15,11 @@ class Application extends BaseApplication
 
         parent::__construct(self::$name, self::$version);
 
-        $this->add(new Command\TableImportCommand());
-        $this->add(new Command\TableOutCommand());
+        $this->addCommands([
+            new Command\TableImportCommand(),
+            new Command\TableDeleteCommand(),
+        ]);
+
         $this->setDefaultCommand('list');
     }
 }
