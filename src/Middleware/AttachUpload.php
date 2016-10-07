@@ -5,6 +5,7 @@ namespace Zank\Middleware;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * 附件上传中间件.
@@ -20,6 +21,46 @@ class AttachUpload
         $this->ci = $ci;
     }
 
+    public function upload(UploadedFileInterface $file, Response $response)
+    {
+        $ext = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
+        $ext = $ext ? '.'.$ext : '';
+        $md5 = md5_file($file->file);
+
+        $attach = \Zank\Model\Attach::byMd5($md5)->first();
+        if (!$attach) {
+            try {
+                
+                $path = $this->getUploadPath($md5, $ext);
+
+                $attach = new \Zank\Model\Attach();
+                $attach->path = $path;
+                $attach->name = $file->getClientFilename();
+                $attach->type = $file->getClientMediaType();
+                $attach->size = $file->getSize();
+                $attach->md5 = $md5;
+                $attach->user_id = $this->ci->get('user')->user_id;
+
+                $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
+                $attach->save();
+            } catch (\Exception $e) {
+                return with(new \Zank\Common\Message($response, false, $e->getMessage()));
+            }
+        }
+
+        return $attach;
+    }
+
+    protected function getUploadPath(string $md5, string $ext)
+    {
+        return sprintf(
+            'attachs/%s/%s%s',
+            \Carbon\Carbon::now()->format('Y/m/d/H/i/s'),
+            $md5,
+            $ext
+        );
+    }
+
     /**
      * Upload attach middleware invokable class.
      *
@@ -33,49 +74,28 @@ class AttachUpload
      **/
     public function __invoke(Request $request, Response $response, callable $next)
     {
-        $file = $request->getUploadedFiles();
-        $fileNum = count($file);
+        $files = $request->getUploadedFiles();
 
-        if ($fileNum <= 0) {
-            return with(new \Zank\Common\Message($response, false, '没有上传任何文件.'))
+        // 判断是否只上传了一个文件。
+        if (count($files) !== 1) {
+            return with(new \Zank\Common\Message($response, false, '只允许单个文件上传'))
                 ->withJson();
-        // 如果超过一个
-        } elseif ($fileNum > 1) {
-            return with(new \Zank\Common\Message($response, false, '只允许单个文件上传.'))
-                ->withJson();
-        }
 
-        $file = current($file);
-        if ($file->getError() !== UPLOAD_ERR_OK) {
+        // 判断如果上传错误，将返回什么错误消息。
+        } elseif (($file = current($files)) && $file->getError() !== UPLOAD_ERR_OK) {
             try {
                 throw new \Zank\Exception\UploadException($file->getError());
             } catch (\Zank\Exception\UploadException $e) {
                 return with(new \Zank\Common\Message($response, false, $e->getMessage()))
                     ->withJson();
             }
+
+        // 执行上传操作，如果返回的是错误对象，则返回错误，否则，继续执行。
+        } elseif (($result = $this->upload($file, $response)) && $result instanceof \Zank\Common\Message) {
+            return $result->withJson;
         }
 
-        $fileExt = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
-        $fileExt = $fileExt ? '.'.$fileExt : '';
-        $fileMd5 = md5_file($file->file);
-
-        $attach = \Zank\Model\Attach::byMd5($fileMd5)->first();
-        if (!$attach) {
-            $path = sprintf('attachs/%s/%s%s', \Carbon\Carbon::now()->format('Y/m/d/H/i/s'), $fileMd5, $fileExt);
-
-            $attach = new \Zank\Model\Attach();
-            $attach->path = $path;
-            $attach->name = $file->getClientFilename();
-            $attach->type = $file->getClientMediaType();
-            $attach->size = $file->getSize();
-            $attach->md5 = $fileMd5;
-            $attach->user_id = $this->ci->get('user')->user_id;
-
-            $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
-            $attach->save();
-        }
-
-        $this->ci->offsetSet('attach', $attach);
+        $this->ci->offsetSet('attach', $result);
 
         return $next($request, $response);
     }
