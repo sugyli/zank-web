@@ -40,7 +40,7 @@ class User extends Model
     {
         return $query->where('username', $username);
     }
-    
+
     public function attachLinks()
     {
         return $this->hasMany(AttachLink::class);
