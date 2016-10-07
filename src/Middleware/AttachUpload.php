@@ -96,7 +96,7 @@ class AttachUpload
 
         // 执行上传操作，如果返回的是错误对象，则返回错误，否则，继续执行。
         } elseif (($result = $this->upload($file, $response)) && $result instanceof \Zank\Common\Message) {
-            return $result->withJson;
+            return $result->withJson();
         }
 
         $this->ci->offsetSet('attach', $result);
