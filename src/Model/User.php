@@ -19,6 +19,7 @@ class User extends Model
 
     protected $primaryKey = 'user_id';
 
+
     /**
      * 用于设置查询条件为phone的快捷方法.
      *
@@ -40,9 +41,9 @@ class User extends Model
     {
         return $query->where('username', $username);
     }
-    
-    public function attachLinks()
+
+    public function attachs()
     {
-        return $this->hasMany(AttachLink::class);
+        return $this->belongsToMany(Attach::class, 'attach_links', 'user_id', 'attach_id');
     }
 } // END class User extends Eloquent
