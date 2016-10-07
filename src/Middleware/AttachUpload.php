@@ -30,19 +30,9 @@ class AttachUpload
         $attach = \Zank\Model\Attach::byMd5($md5)->first();
         if (!$attach) {
             try {
-                
                 $path = $this->getUploadPath($md5, $ext);
-
-                $attach = new \Zank\Model\Attach();
-                $attach->path = $path;
-                $attach->name = $file->getClientFilename();
-                $attach->type = $file->getClientMediaType();
-                $attach->size = $file->getSize();
-                $attach->md5 = $md5;
-                $attach->user_id = $this->ci->get('user')->user_id;
-
                 $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
-                $attach->save();
+                $attach = $this->savedToDatabase($file, $path, $md5);
             } catch (\Exception $e) {
                 return with(new \Zank\Common\Message($response, false, $e->getMessage()));
             }
@@ -59,6 +49,20 @@ class AttachUpload
             $md5,
             $ext
         );
+    }
+
+    protected function savedToDatabase(UploadedFileInterface $file, string $path, string $md5)
+    {
+        $attach = new \Zank\Model\Attach();
+        $attach->path = $path;
+        $attach->name = $file->getClientFilename();
+        $attach->type = $file->getClientMediaType();
+        $attach->size = $file->getSize();
+        $attach->md5 = $md5;
+        $attach->user_id = $this->ci->get('user')->user_id;
+        $attach->save();
+
+        return $attach;
     }
 
     /**
