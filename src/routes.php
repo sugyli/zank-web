@@ -4,6 +4,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
+Application::any('/test', function () {
+    $user = \Zank\Model\User::find(1);
+
+    var_dump($user->attachs);
+})
+->add(\Zank\Middleware\InitDb::class);;
+
 Application::group('/api', function () {
     // index
     $this->any('', function (Request $request, Response $response): Response {
