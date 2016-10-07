@@ -23,4 +23,9 @@ class Attach extends Model
     {
         return $query->where('md5', $md5);
     }
+
+    public function links()
+    {
+        return $this->hasMany(AttachLink::class);
+    }
 } // END class Attach extends Eloquent
