@@ -15,6 +15,8 @@ class Application
 
     private static $client;
 
+    private static $requireFiles = [];
+
     public function __construct($container)
     {
         if (!self::$application instanceof App) {
@@ -22,19 +24,41 @@ class Application
         }
     }
 
-    public function run()
+    public function run(array $requireFiles = [])
     {
+        self::requires($requireFiles);
+
         $slient = strtolower(PHP_SAPI) === 'cli';
         $client = [
             'web' => self::$application->run($slient),
         ];
 
-        if ($slient) {
+        if ($slient === true) {
             $client['cli'] = new Console\Application();
             $client['cli-return'] = $client['cli']->run();
         }
 
         return self::$client = $client;
+    }
+
+    public static function getClient()
+    {
+        return self::$client;
+    }
+
+    public static function requires(array $requireFiles = [], bool $notOne = false)
+    {
+        $rets = [];
+
+        foreach ($requireFiles as $key => $file) {
+            if (!isset(self::$requireFiles[$file]) || $notOne === true) {
+                self::$requireFiles[$file] = $rets[$key] = require $file;
+            } else {
+                $rets[$key] = self::$requireFiles[$file];
+            }
+        }
+
+        return $rets;
     }
 
     public static function __callStatic($funcname, $arguments)
