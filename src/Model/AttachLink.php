@@ -4,13 +4,12 @@ namespace Zank\Model;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AttachLink extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'attach_links';
+
+    protected $primaryKey = 'attach_link_id';
 
     public function scopeByUserId(Builder $query, $user_id)
     {
