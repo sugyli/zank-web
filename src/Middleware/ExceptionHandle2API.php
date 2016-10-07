@@ -30,10 +30,6 @@ class ExceptionHandle2API
             $message = $next($request, $response);
         } catch (\Exception $e) {
             $message = $e;
-        } catch (\OSS\OssException $e) {
-            $message = $e;
-        } catch (\Illuminate\Database\QueryException $e) {
-            $message = $e;
         }
 
         if ($message instanceof \Exception) {
