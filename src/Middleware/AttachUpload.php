@@ -64,24 +64,27 @@ class AttachUpload
     protected function saveAttachLink(\Zank\Model\Attach $attach)
     {
         $user = $this->ci->get('user');
-        $link = $user->attachLinks()->byAttachId($attach->attach_id)->first();
+        $link = \Zank\Model\AttachLink::byUserId($user->user_id)->byAttachId($attach->attach_id)->first();
 
         if (!$link) {
-            $link = new \Zank\Model\AttachLink();
-            $link->attach_id = $attach->attach_id;
-            $user->attachLinks()->save($link);
+            $link = $user->attachs()->attach($attach->attach_id);
         }
+
+        var_dump($link);
+        exit;
     }
 
     protected function savedToDatabase(UploadedFileInterface $file, string $path, string $md5)
     {
+        $user = $this->ci->get('user');
+
         $attach = new \Zank\Model\Attach();
         $attach->path = $path;
         $attach->name = $file->getClientFilename();
         $attach->type = $file->getClientMediaType();
         $attach->size = $file->getSize();
         $attach->md5 = $md5;
-        $attach->save();
+        $user->attachs()->save($attach);
 
         return $attach;
     }
