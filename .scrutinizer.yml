@@ -28,6 +28,7 @@ build:
 
         override:
             - composer update --prefer-source --no-progress
+            - php zank list
 
 checks:
     php: true
