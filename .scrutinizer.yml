@@ -23,7 +23,9 @@ build:
 
     dependencies:
         before:
+            - cp .zank.yaml.example .zank.yaml
             - composer install --prefer-source --no-progress
+            - mysql -e "CREATE DATABASE zank"
 
         override:
             - composer update --prefer-source --no-progress
