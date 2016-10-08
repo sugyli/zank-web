@@ -39,7 +39,7 @@ class TableImportCommand extends Command
             '--no-title' => true,
         ];
 
-        $input->getOption('y') === true && $arguments['--y'] => true;
+        $input->getOption('y') === true && $arguments['--y'] = true;
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
