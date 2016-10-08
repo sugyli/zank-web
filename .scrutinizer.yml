@@ -23,7 +23,6 @@ build:
 
     dependencies:
         before:
-            - composer self-update
             - composer install --prefer-source --no-progress
 
         override:
