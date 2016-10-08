@@ -40,8 +40,8 @@ class User extends Model
     /**
      * 用于查询username字段
      *
-     * @param Builder $query 查询构造器
-     * @param string $username 用户名
+     * @param  Builder $query    查询构造器
+     * @param  string  $username 用户名
      * @return Buolder
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
