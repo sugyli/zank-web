@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zank\Util\DatabaseTablesIterator;
 use Zank\Traits\InitDatabaseToConsole;
@@ -19,6 +20,7 @@ class TableImportCommand extends Command
     {
         $this
             ->setName('db:import')
+            ->addOption('y', 'y', InputOption::VALUE_NONE, '忽略删除警告询问.')
             ->setDescription('Import tables to database.')
             ->setHelp('This command allows you to import tables to database.');
     }
@@ -36,6 +38,9 @@ class TableImportCommand extends Command
             '--confirm-no-message' => '已经取消导入数据表结构.',
             '--no-title' => true,
         ];
+
+        $input->getOption('y') === true && $arguments['--y'] => true;
+
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
 
