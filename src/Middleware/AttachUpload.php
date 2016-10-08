@@ -21,7 +21,7 @@ class AttachUpload
         $this->ci = $ci;
     }
 
-    public function upload(UploadedFileInterface $file, Response $response)
+    public function upload(UploadedFileInterface $file)
     {
         $ext = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
         $ext = $ext ? '.'.$ext : '';
@@ -99,12 +99,10 @@ class AttachUpload
         } elseif (($file = current($files)) && $file->getError() !== UPLOAD_ERR_OK) {
             throw new \Zank\Exception\UploadException($file->getError());
 
-        // 执行上传操作，如果返回的是错误对象，则返回错误，否则，继续执行。
-        } elseif (($result = $this->upload($file, $response)) && $result instanceof \Zank\Common\Message) {
-            return $result->withJson();
         }
 
-        $this->ci->offsetSet('attach', $result);
+        $attach = $this->upload($file, $response)
+        $this->ci->offsetSet('attach', $attach);
 
         return $next($request, $response);
     }
