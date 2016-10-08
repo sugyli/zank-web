@@ -101,7 +101,7 @@ class AttachUpload
 
         }
 
-        $attach = $this->upload($file, $response)
+        $attach = $this->upload($file, $response);
         $this->ci->offsetSet('attach', $attach);
 
         return $next($request, $response);
