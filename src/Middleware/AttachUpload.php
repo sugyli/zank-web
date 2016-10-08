@@ -28,24 +28,10 @@ class AttachUpload
         $md5 = md5_file($file->file);
 
         $attach = \Zank\Model\Attach::byMd5($md5)->first();
-        $mode = false;
-
-        try {
-            if (!$attach) {
-                $path = $this->getUploadPath($md5, $ext);
-                $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
-                $attach = $this->savedToDatabase($file, $path, $md5);
-
-                $mode = true;
-            }
-
-            $this->saveAttachLink($attach);
-        } catch (\Exception $e) {
-            if ($mode === true) {
-                $attach->delete();
-            }
-
-            return with(new \Zank\Common\Message($response, false, $e->getMessage()));
+        if (!$attach) {
+            $path = $this->getUploadPath($md5, $ext);
+            $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
+            $attach = $this->savedToDatabase($file, $path, $md5);
         }
 
         return $attach;
@@ -111,12 +97,7 @@ class AttachUpload
 
         // 判断如果上传错误，将返回什么错误消息。
         } elseif (($file = current($files)) && $file->getError() !== UPLOAD_ERR_OK) {
-            try {
-                throw new \Zank\Exception\UploadException($file->getError());
-            } catch (\Zank\Exception\UploadException $e) {
-                return with(new \Zank\Common\Message($response, false, $e->getMessage()))
-                    ->withJson();
-            }
+            throw new \Zank\Exception\UploadException($file->getError());
 
         // 执行上传操作，如果返回的是错误对象，则返回错误，否则，继续执行。
         } elseif (($result = $this->upload($file, $response)) && $result instanceof \Zank\Common\Message) {
