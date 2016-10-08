@@ -98,7 +98,6 @@ class AttachUpload
         // 判断如果上传错误，将返回什么错误消息。
         } elseif (($file = current($files)) && $file->getError() !== UPLOAD_ERR_OK) {
             throw new \Zank\Exception\UploadException($file->getError());
-
         }
 
         $attach = $this->upload($file, $response);
