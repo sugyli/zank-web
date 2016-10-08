@@ -14,12 +14,20 @@ build:
 
             sites:
                 zank_web:
-                    web_root: 'public'
+                    web_root: 'public/'
                     host: 'zank.io'
+                    rules:
+                        - 'RewriteCond %{REQUEST_FILENAME} !-f'
+                        - 'RewriteCond %{REQUEST_FILENAME} !-d'
+                        - 'RewriteRule ^ index.php [QSA,L]'
 
     dependencies:
         before:
+            - composer self-update
             - composer install --prefer-source --no-progress
+
+        override:
+            - composer update --prefer-source --no-progress
 
 checks:
     php: true
