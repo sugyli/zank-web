@@ -99,7 +99,7 @@ class AttachUpload
             throw new \Zank\Exception\UploadException($file->getError());
         }
 
-        $attach = $this->upload($file, $response);
+        $attach = $this->upload($file);
         $this->ci->offsetSet('attach', $attach);
 
         return $next($request, $response);
