@@ -57,9 +57,6 @@ class AttachUpload
         if (!$link) {
             $link = $user->attachs()->attach($attach->attach_id);
         }
-
-        var_dump($link);
-        exit;
     }
 
     protected function savedToDatabase(UploadedFileInterface $file, string $path, string $md5)
