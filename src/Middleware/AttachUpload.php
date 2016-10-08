@@ -32,6 +32,8 @@ class AttachUpload
             $path = $this->getUploadPath($md5, $ext);
             $this->ci->get('oss')->multiuploadFile(get_oss_bucket_name(), $path, $file->file);
             $attach = $this->savedToDatabase($file, $path, $md5);
+        } else {
+            $this->saveAttachLink($attach);
         }
 
         return $attach;
