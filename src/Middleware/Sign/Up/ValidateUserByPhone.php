@@ -25,7 +25,8 @@ class ValidateUserByPhone
         $phone = $request->getParsedBodyParam('phone');
 
         if (!$phone) {
-            $response = new \Zank\Common\Message($response, false, '手机号码不正确。');
+            return with(new \Zank\Common\Message($response, false, '手机号码不正确。'))
+                ->withJson();
         }
 
         // 检查是否存在注入的用户信息，如果有，获取
