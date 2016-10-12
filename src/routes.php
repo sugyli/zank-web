@@ -5,7 +5,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
 Application::any('/test.html', function () {
-
     var_dump(1);
     // $user = \Zank\Model\User::find(1);
 
