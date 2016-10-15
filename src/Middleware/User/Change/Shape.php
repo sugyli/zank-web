@@ -17,7 +17,7 @@ class Shape
         $shape = $request->getParsedBodyParam('shape');
 
         if ($shape) {
-            if (!is_array($shape, $this->shapes)) {
+            if (!in_array($shape, $this->shapes)) {
                 return with(new \Zank\Common\Message($response, false, '设置的角色非法'))
                     ->withJson();
             }

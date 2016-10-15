@@ -30,15 +30,10 @@ class User extends Controller
 
     public function changeDate(Request $request, Response $response)
     {
-        var_dump($this->ci->user);
-        exit;
-        // $username = $request->getParsedBodyParam('username');
-        // $age = $request->getParsedBodyParam('age');
-        // $height = $request->getParsedBodyParam('height');
-        // $kg = $request->getParsedBodyParam('kg');
-        // $role = $request->getParsedBodyParam('role');
-        // $area_id = $request->getParsedBodyParam('area_id');
-        // $shape = $request->getParsedBodyParam('shape');
-        // $love = $request->getParsedBodyParam('love');
+        $user = $this->ci->get('user');
+        $user->save();
+
+        return with(new \Zank\Common\Message($response, true, '修改用户资料成功'))
+            ->withJson();
     }
 }

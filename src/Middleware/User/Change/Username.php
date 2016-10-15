@@ -33,7 +33,9 @@ class Username
         $user_id = $this->ci->get('user')->user_id;
         $old_username = $this->ci->get('user')->username;
 
-        if ($old_username != $username && !($user = Model\User::byUserName($username)->first())) {
+        $user = Model\User::byUserName($username)->first();
+
+        if ($old_username != $username && !$user) {
             return true;
         }
 

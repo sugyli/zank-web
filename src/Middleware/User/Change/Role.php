@@ -2,8 +2,8 @@
 
 namespace Zank\Middleware\User\Change;
 
-use Psr\Http\RequestInterface as Request;
-use Psr\Http\RequestInterface as Response;
+use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use Zank\Traits\Container;
 
 class Role
