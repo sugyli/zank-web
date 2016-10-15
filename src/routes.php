@@ -112,6 +112,7 @@ Application::group('/api', function () {
             // change data
             $this
                 ->post('/change', \Zank\Controller\Api\User::class.':changeDate')
+                ->add(\Zank\Middleware\User\Change\Shape::class)
                 ->add(\Zank\Middleware\User\Change\Role::class)
                 ->add(\Zank\Middleware\User\Change\Kg::class)
                 ->add(\Zank\Middleware\User\Change\Height::class)
