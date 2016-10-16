@@ -5,6 +5,7 @@ namespace Zank\Controller\Api;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Zank\Controller;
+use Zank\Model;
 
 class User extends Controller
 {
@@ -35,5 +36,18 @@ class User extends Controller
 
         return with(new \Zank\Common\Message($response, true, '修改用户资料成功'))
             ->withJson();
+    }
+
+    public function search(Request $request, Response, $response)
+    {
+        $key = $request->getParsedBodyParam('key');
+
+        if (!$key) {
+            return with(new \Zank\Common\Message($response, false, '请输入搜索关键词'))
+                ->withJson();
+        }
+
+        $users = Model\User::byUserName(sprintf('%%s%', $key))
+            ->get();
     }
 }

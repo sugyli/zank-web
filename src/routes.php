@@ -119,6 +119,11 @@ Application::group('/api', function () {
                 ->add(\Zank\Middleware\User\Change\Height::class)
                 ->add(\Zank\Middleware\User\Change\Age::class)
                 ->add(\Zank\Middleware\User\Change\Username::class);
+
+            //  搜索用户接口
+            $this
+                ->post('search', \Zank\Controller\Api\User::class.':search')
+            ;
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
