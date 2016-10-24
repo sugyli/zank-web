@@ -63,7 +63,7 @@ class Application
 
     public static function __callStatic($funcname, $arguments)
     {
-        if (self::$application instanceof app) {
+        if (self::$application instanceof App) {
             return call_user_func_array([self::$application, $funcname], $arguments);
         }
 
