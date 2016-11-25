@@ -36,8 +36,7 @@ class ValidateUserByPhone
 
         // 不存在注入信息，查询信息，并注入
         } else {
-            $user = \Zank\Model\User::withTrashed()
-                ->byPhone($phone)
+            $user = \Zank\Model\User::byPhone($phone)
                 ->first();
             $this->ci->offsetSet('user', $user);
         }
