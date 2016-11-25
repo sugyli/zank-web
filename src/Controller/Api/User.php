@@ -38,7 +38,7 @@ class User extends Controller
             ->withJson();
     }
 
-    public function search(Request $request, Response, $response)
+    public function search(Request $request, Response $response)
     {
         $key = $request->getParsedBodyParam('key');
 
