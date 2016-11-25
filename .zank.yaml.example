@@ -30,7 +30,7 @@ DB_USERNAME: root
 DB_PASSWORD: null
 # ----------------------------------
 
-# Eloquent settings for pgsql.
+# Eloquent settings for PostgreSQL.
 # ----------------------------
 # DB_HOST: localhost
 # DB_PORT: 3432
