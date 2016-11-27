@@ -53,9 +53,11 @@ class Application
         foreach ($requireFiles as $key => $file) {
             if (!isset(self::$requireFiles[$file]) || $notOne === true) {
                 self::$requireFiles[$file] = $rets[$key] = require $file;
-            } else {
-                $rets[$key] = self::$requireFiles[$file];
+
+                continue;
             }
+
+            $rets[$key] = self::$requireFiles[$file];
         }
 
         return $rets;
