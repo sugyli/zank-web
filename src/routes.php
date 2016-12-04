@@ -4,11 +4,17 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
-Application::any('/test.html', function () {
+Application::any('/test.html', function (Request $request, Response $response) {
     var_dump(1);
-    // $user = \Zank\Model\User::find(1);
+    $apiList = [
+        '/api/sign' => '用户注册｜登陆',
+        '/api/captcha' => '验证码',
+        '/api/upload' => '上传相关',
+        '/api/user' => '用户相关',
+    ];
+    $response->withJson($apiList);
 
-    // var_dump($user->attachs);
+    return $response;
 })
 ->add(\Zank\Middleware\InitDb::class);
 
