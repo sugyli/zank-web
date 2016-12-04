@@ -6,6 +6,7 @@ use Zank\Application;
 
 Application::any('/test', function (Request $request, Response $response) {
     $response = $response->withJson([1, 2, 3]);
+
     return $response;
 })
 ->add(\Zank\Middleware\InitDb::class);
@@ -19,7 +20,7 @@ Application::group('/api', function () {
             '/api/upload' => '上传相关',
             '/api/user' => '用户相关',
         ];
-        
+
         return $response->withJson($apiList);
     });
 
