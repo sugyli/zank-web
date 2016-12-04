@@ -22,11 +22,9 @@ class User extends Controller
      */
     public function __invoke(Request $request, Response $response)
     {
-        $response->withJson([
+        return $response->withJson([
             '/api/user/change' => '修改用户资料',
         ]);
-
-        return $response;
     }
 
     public function changeDate(Request $request, Response $response)

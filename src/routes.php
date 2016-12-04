@@ -19,9 +19,8 @@ Application::group('/api', function () {
             '/api/upload' => '上传相关',
             '/api/user' => '用户相关',
         ];
-        $response->withJson($apiList);
-
-        return $response;
+        
+        return $response->withJson($apiList);
     });
 
     // 用户注册｜登陆
