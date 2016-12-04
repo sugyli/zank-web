@@ -4,8 +4,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
-Application::any('/test.html', function (Request $request, Response $response) {
-    return '1111';
+Application::any('/test', function (Request $request, Response $response) {
+    return $response->withJson([1, 2, 3]);
 })
 ->add(\Zank\Middleware\InitDb::class);
 
