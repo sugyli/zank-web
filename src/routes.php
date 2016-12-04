@@ -9,7 +9,7 @@ Application::any('/test.html', function () {
     // $user = \Zank\Model\User::find(1);
 
     // var_dump($user->attachs);
-});
+})
 ->add(\Zank\Middleware\InitDb::class);
 
 Application::group('/api', function () {
