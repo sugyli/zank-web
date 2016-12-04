@@ -1,3 +1,19 @@
 machine:
-  php:
-    version: 7.0.4
+    php:
+        version: 7.0.4
+
+dependencies:
+    pre:
+        - cp .zank.yaml.example .zank.yaml
+        - perl -p -i -e "s/DB_DATABASE: zank/DB_DATABASE: circle_test/g" .zanl.yaml
+        - perl -p -i -e "s/DB_USERNAME: root/DB_USERNAME: ubuntu/g" .zanl.yaml
+
+database:
+    override:
+        - mysql -u ubuntu circle_test -e 'CREATE DATABASE zank'
+
+test:
+    override:
+        - php zank list
+        - php zank db:import --y
+    
