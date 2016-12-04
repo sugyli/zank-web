@@ -5,7 +5,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
 Application::any('/test', function (Request $request, Response $response) {
-    return $response->withJson([1, 2, 3]);
+    $response->withJson([1, 2, 3]);
+    return $response;
 })
 ->add(\Zank\Middleware\InitDb::class);
 
