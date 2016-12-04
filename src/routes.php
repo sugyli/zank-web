@@ -10,7 +10,7 @@ Application::any('/test.html', function () {
 
     // var_dump($user->attachs);
 });
-// ->add(\Zank\Middleware\InitDb::class);
+->add(\Zank\Middleware\InitDb::class);
 
 Application::group('/api', function () {
     // index
