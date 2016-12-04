@@ -5,16 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zank\Application;
 
 Application::any('/test.html', function (Request $request, Response $response) {
-    var_dump(1);
-    $apiList = [
-        '/api/sign' => '用户注册｜登陆',
-        '/api/captcha' => '验证码',
-        '/api/upload' => '上传相关',
-        '/api/user' => '用户相关',
-    ];
-    $response->withJson($apiList);
-
-    return $response;
+    return '1111';
 })
 ->add(\Zank\Middleware\InitDb::class);
 
