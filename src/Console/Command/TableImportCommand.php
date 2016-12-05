@@ -4,14 +4,14 @@ namespace Zank\Console\Command;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zank\Util\DatabaseTablesIterator;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Zank\Traits\InitDatabaseToConsole;
+use Zank\Util\DatabaseTablesIterator;
 
 class TableImportCommand extends Command
 {
@@ -41,11 +41,11 @@ class TableImportCommand extends Command
         $commandName = 'db:delet';
         $command = $this->getApplication()->find($commandName);
         $arguments = [
-            'command' => $commandName,
-            '--confirm' => '导入数据表会删除已有的数据表和数据,是否确定删除并导入？',
+            'command'              => $commandName,
+            '--confirm'            => '导入数据表会删除已有的数据表和数据,是否确定删除并导入？',
             '--confirm-no-message' => '已经取消导入数据表结构.',
-            '--no-title' => true,
-            'table' => $tableNames,
+            '--no-title'           => true,
+            'table'                => $tableNames,
         ];
 
         $input->getOption('y') === true && $arguments['--y'] = true;

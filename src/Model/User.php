@@ -19,7 +19,6 @@ class User extends Model
 
     protected $primaryKey = 'user_id';
 
-
     /**
      * 用于设置查询条件为phone的快捷方法.
      *
@@ -38,11 +37,13 @@ class User extends Model
     }
 
     /**
-     * 用于查询username字段
+     * 用于查询username字段.
      *
-     * @param  Builder $query    查询构造器
-     * @param  string  $username 用户名
+     * @param Builder $query    查询构造器
+     * @param string  $username 用户名
+     *
      * @return Buolder
+     *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn
      */
@@ -52,7 +53,7 @@ class User extends Model
     }
 
     /**
-     * 用户下的附件关联模型
+     * 用户下的附件关联模型.
      *
      * @author Seven Du <lovevipdsw@outlook.com>
      * @homepage http://medz.cn

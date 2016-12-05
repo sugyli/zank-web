@@ -92,7 +92,6 @@ class Sign extends Controller
         $token->token = \Zank\Model\SignToken::createToken();
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
 
-
         if (!$token->save()) {
             return with(new \Zank\Common\Message($response, false, '刷新token失败，请重新登陆。'))
                 ->withJson();
@@ -149,8 +148,8 @@ class Sign extends Controller
     public function __invoke(Request $request, Response $response)
     {
         return $response->withJson([
-            '/api/sign/in' => '用户登陆',
-            '/api/sign/up/base' => '用户基本信息注册',
+            '/api/sign/in'            => '用户登陆',
+            '/api/sign/up/base'       => '用户基本信息注册',
             '/api/sign/refresh-token' => '刷新token',
         ]);
     }

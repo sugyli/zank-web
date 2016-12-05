@@ -30,9 +30,9 @@ class Message
     public function withArray(): array
     {
         return [
-            'status' => $this->status,
+            'status'  => $this->status,
             'message' => $this->message,
-            'data' => $this->data,
+            'data'    => $this->data,
         ];
     }
 
