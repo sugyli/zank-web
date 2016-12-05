@@ -4,8 +4,8 @@ namespace Zank\Middleware\User\Change;
 
 use Psr\Http\RequestInterface as Request;
 use Psr\Http\RequestInterface as Response;
-use Zank\Traits\Container;
 use Zank\Model;
+use Zank\Traits\Container;
 
 /**
  * 修改用户信息，地区修改中间件。
@@ -22,7 +22,7 @@ class Area
         $area_id = $request->getParsedBodyParam('area_id');
 
         if ($area_id && ($area = Model\Area::find($area_id))) {
-            # code...
+            // code...
         }
     }
 } // END class Area

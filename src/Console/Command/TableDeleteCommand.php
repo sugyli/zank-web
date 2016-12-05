@@ -4,13 +4,13 @@ namespace Zank\Console\Command;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zank\Util\DatabaseTablesIterator;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Zank\Traits\InitDatabaseToConsole;
+use Zank\Util\DatabaseTablesIterator;
 
 class TableDeleteCommand extends Command
 {
@@ -71,7 +71,7 @@ class TableDeleteCommand extends Command
         $this->showTables($tables, $io);
     }
 
-    protected function showTables(array $tables = [], SymfonyStyle $io)
+    protected function showTables(array $tables, SymfonyStyle $io)
     {
         if (count($tables) > 0) {
             $io->table(
