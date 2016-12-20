@@ -1,0 +1,33 @@
+{% include 'global/wapuserhead1.html.twig' %} 
+<body>
+<header id="header" class="header dise">
+    <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
+    <div class="zhong homefont">{{title}}</div>
+    <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
+    <div class="cc"></div>
+    {% include 'global/wapsearch.html.twig' %} 
+    <div id="nav" class="top_menu">
+      <div class="top_menu_list">
+        <a href="/" class="btn item_0" scroll-left="0">首页</a>
+        {% for key,jieqiSort in jieqiSorts %}
+          <a href="{{ path_for('novelsort', { 'sortid': jieqiSort.sortid ,'page':1}) }}" class="btn item_{{ jieqiSort.sortid }}" scroll-left="0">{{ jieqiSort.shortname|e }}</a>
+        {% endfor %} 
+      </div>
+    </div> 
+</header>
+<div class="slist xbk" id="hdtop"> 
+<script>_17mb_top()</script>
+{%if res <= 0 %}
+<div class="stop fk">搜索“<font color=red>{{ search_key |slice(0, 20)}}</font>”无结果</div>
+{%else%}
+<div class="stop fk">搜索“<font color=red>{{ search_key |slice(0, 20)}}</font>”结果</div>
+    <ul class="fk">
+    {% for key,bookData in bookDatas %}
+    <li>[{{bookData.sortname}}]<a href="{{ path_for('novelinfo', { 'bookid': bookData.articleid }) }}" class="blue">{{bookData.articlename|slice(0, 15)}}</a>/{{bookData.author|slice(0, 10)}}</li>
+    {%endfor%}
+    </ul>
+{%endif%}   
+</div>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+</html>

@@ -4,6 +4,7 @@
 declare(strict_types=1);
 
 require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/src/main.php';
 
 $settings = require __DIR__.'/src/settings.php';
 $app = new \Zank\Application($settings);

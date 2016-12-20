@@ -1,6 +1,7 @@
 vendor
 composer.lock
-
+logs
+storage
 .env
 
 .env.yaml

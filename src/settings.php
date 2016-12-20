@@ -69,5 +69,13 @@ return [
             'sign'            => cfg('OSS_SOURCE_SIGN', false),
             'timeout'         => cfg('OSS_SIGN_TIMEOUT', 1800),
         ],
+        'cookie' => [
+            'cookieLifetime'     =>  '365 day',
+            'cookiePath' => '/',
+            'cookieDomain'        => null,
+            'cookieSecure'        => false,// HTTP 连接则不会传递该信息
+            'cookieHttpOnly'      => false,
+
+        ],
     ],
 ];

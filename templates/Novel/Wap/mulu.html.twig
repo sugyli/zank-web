@@ -1,0 +1,28 @@
+{% include 'global/waphead.html.twig' %} 
+<body>
+{% include 'global/wapnav.html.twig' %} 
+<section id="zjlb" class="zjlb">
+<script>_17mb_top()</script>
+  <div class="fenye">
+      <div class="fy">{{jumppage|raw}}</div>
+        <div class="desc"><span>{%if sort is null %}<a href="{{ path_for('novelmulu2', { 'bookid': infoData.bookInfo.articleid ,'page':1 , 'sort' : 1}) }}" class="dise r2">倒序</a>{%else%}<a href="{{ path_for('novelmulu1', { 'bookid': infoData.bookInfo.articleid ,'page':1 }) }}" class="dise r2">正序</a>{% endif %}</span></div>
+        <div class="cc"></div>
+    </div>
+    <ul class="lb fk">
+      {% for key,chapter in infoData.chapter %}
+        <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}"  class="xbk">{{ chapter.chaptername|slice(0, 20) }}</a></li>
+      {% endfor %} 
+        <li><a class="last tb">本页章节列表结束！</a></li>
+    </ul>
+  <div class="fenye">
+      <div class="fy">{{jumppage|raw}}</div>
+        <div class="desc"><span>{%if sort is null %}<a href="{{ path_for('novelmulu2', { 'bookid': infoData.bookInfo.articleid ,'page':1 , 'sort' : 1}) }}" class="dise r2">倒序</a>{%else%}<a href="{{ path_for('novelmulu1', { 'bookid': infoData.bookInfo.articleid ,'page':1 }) }}" class="dise r2">正序</a>{% endif %}</span></div>
+        <div class="cc"></div>
+    </div>
+</section>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+<script type="text/javascript">
+  {{ selectjs|raw }}
+</script>
+</html>

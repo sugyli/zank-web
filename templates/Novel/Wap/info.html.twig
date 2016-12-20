@@ -1,0 +1,51 @@
+{% include 'global/waphead.html.twig' %} 
+<body>
+{% include 'global/wapnav.html.twig' %} 
+<!--中部内容开始-->
+<div id="hdtop">
+<script>_17mb_top()</script>
+  <!--小说信息开始-->
+    <section id="xinxi" class="fk">
+    <div class="xsfm"><img src="{{ infoData.bookInfo.cover}}" onerror="this.src='/css/noimg.jpg'" /></div>
+        <div class="xx">
+          <ul>
+              <li>{{infoData.bookInfo.articlename|slice(0, 15)}}</li>
+                <li>分类：<a href="{{ path_for('novelsort', { 'sortid': infoData.bookInfo.sortid ,'page':1}) }}">{{ infoData.bookInfo.sortname}}</a></li>
+                <li>作者：{{ infoData.bookInfo.author|slice(0, 10)}}</li>
+                <li>更新：{{ infoData.bookInfo.time}}</li>
+            </ul>
+        </div>
+        <div class="cc"></div>
+        <div class="jrsj">
+          <a href="javascript:;" onclick='addbookcase({{infoData.bookInfo.articleid}},0)'  class="sj">加入书架</a>
+            <a title="{{ infoData.yuedu.chaptername }}" href="{{ path_for('novelcontent', { 'bid': infoData.yuedu.articleid ,'cid':infoData.yuedu.chapterid }) }}" class="dise">点击阅读</a>
+            <div class="cc"></div>
+        </div>
+        <div class="jianjie bk">{{ infoData.bookInfo.intro}}</div>
+    </section>
+    <!--小说信息结束-->
+  <script>_17mb_middle()</script>
+    <!--最新9章开始-->
+    <section class="zxjz fk">
+      <div class="b bk">最新9章</div>
+        <ul>
+          {% for key,chapter in infoData.chapter %}
+          <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}">{{ chapter.chaptername|slice(0, 20) }}</a><i></i></li>
+          {% else %} 
+          <li><a href="javascript:;">对不起章节丢失了...</a><i></i></li>
+          {% endfor %} 
+        </ul>
+        <div class="gengduo"><a href="{{ path_for('novelmulu1', { 'bookid': infoData.bookInfo.articleid , 'page' : 1}) }}">查看更多章节></a></div>
+    </section>
+    <!--最新9章结束-->
+</div>
+<!--百度推荐开始-->
+<div class="bdtj fk">
+  百度推荐区域
+</div>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+<script type="text/javascript">
+  {{ selectjs|raw }}
+</script>
+</html> 

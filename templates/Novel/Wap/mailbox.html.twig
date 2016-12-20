@@ -1,0 +1,34 @@
+{% include 'global/wapuserhead.html.twig' %} 
+<style>
+    .bookone{ width:100%;border-bottom:1px solid #D3FEDA}
+    .bookone .case_img{width:70px;}
+    .bookone .case_last a{font-size:14px;}
+
+</style>
+<div id="hdtop" class="users fk">
+    {% include 'global/wapusernav.html.twig' %}
+
+    <div style="margin:10px;">
+        {% for mesData in mesDatas %}
+        <table class='bookone' id="{{ mesData.messageid }}">
+            <tr>
+                <td>                 
+                    <table>
+                        <tr><td class='case_name'>标题：{{ mesData.title }}</td></tr>
+                        <tr><td class='case_last'>{%if mesData.fromid >0 %}收件人： 系统管理员 {%else%}发件人：系统管理员{%endif%}</td></tr>
+                        <tr><td class='case_shuqian'>内容：{{ mesData.content |nl2br }}</td></tr>
+                        <tr><td class='case_shuqian'>时间：{{ mesData.postdate | date('Y-m-d H:i:s') }}</td></tr>
+                        <tr><td class='case_del'><a href='javascript:;' onclick='mail_del({%if type > 0 %}{{ mesData.messageid }},{{type}}{% else %}{{ mesData.messageid }}{% endif %})'><span style="color:red">删除邮件</span></a></td></tr>
+                    </table>
+                    
+                </td>
+            </tr>
+        </table>
+        {% else %}
+        <div style='border:1px solid #18C2E7;background-color:#D3FEDA;margin:10px;padding:10px;'>没有数据！</div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+</html>

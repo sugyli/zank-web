@@ -1,0 +1,347 @@
+{% include 'global/wapuserhead1.html.twig' %} 
+<style type="text/css">
+.zphone{
+  width: 140px;
+  height:28px;
+  line-height: 28px;  
+  text-align: center;
+}
+</style>
+<body>
+<header id="header1" class="header dise">
+    <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
+    <div class="zhong homefont">请选择操作</div>
+    <div class="you pter" onClick="zuoyoufy('/')"><i class="fa fa-home fa-2x"></i></div>
+    <div class="cc"></div>
+</header>
+<nav id="nav1" class="bk">
+  <ul>
+    <li><a name="easytab" href='javascript:;' onclick="tabSwitch2(this,'easytab_content_',0);">登陆账户</a></li>
+    <li><a name="easytab" href='javascript:;' onclick="tabSwitch2(this,'easytab_content_',1);">注册账户</a></li>
+    <li><a name="easytab" href='javascript:;' onclick="tabSwitch2(this,'easytab_content_',2);">找回密码</a></li>
+  </ul>
+  <div class="cc"></div>
+</nav>
+<cbs id="easytab_content_0" style="display:none;">
+  <div class="fk login">
+    <div class="login_name">
+      <div class="l1">账户：</div>
+          <div class="l2"><input id="mobile_0" type="text"  size="20" maxlength="30" placeholder="手机号or老账户" /></div>
+      <div class="cc"></div>
+    </div>
+
+    <div class="login_pass">
+      <div class="l1">密码：</div>
+        <div class="l2"><input id="userpass_0" size="20" maxlength="30" type="password" placeholder="请输入密码" /></div>
+        <div class="cc"></div>
+    </div>
+
+    <div class="login_code">
+      <div class="l1">验证码：</div>
+      <div class="l2"><input type="text" id="novel_code" class="login_name" placeholder="请输入图形验证码" /></div>
+      <div class="cc"></div>
+    </div> 
+
+    <div class="login_code2"><img id="showcode" src="{{ path_for('usercode') }}" id="img" onclick="reloadcode()" width="100px" style="vertical-align:middle"/> <a href="javascript:;" onclick="reloadcode()" class="blue">看不清，点击刷新</a></div>
+
+    <div class="login_btn"><a id="bnt_0" href='javascript:;' onclick="login(0,0,0,1)" class="dise">确认登录</a></div>
+    <div class="login_btn"><a class="dise" href='javascript:;' onclick="toggle(2);">忘记账号？点击找回</a></div>
+    <div class="cc"></div>
+  </div>
+</cbs>
+
+<cbs id="easytab_content_1" style="display:none;">
+  <div class="login fk">
+    <div class="login_name">
+      <div class="l1">手机：</div>
+          <div class="l2"><input id="mobile_1" type="text"  size="20" maxlength="30" placeholder="只支持手机号注册" autocomplete="off"/></div>
+      <div class="cc"></div>
+    </div>
+
+    <div class="login_pass">
+      <div class="l1">密码：</div>
+        <div class="l2"><input id="userpass_1" size="20" maxlength="30" type="password" name="password" placeholder="请输入密码" /></div>
+        <div class="cc"></div>
+    </div>
+
+    <div class="login_code">
+      <div class="l1">验证码：</div>
+      <div class="l2"><input type="text" id= "phone_code_1" class="login_name" placeholder="请输入手机验证码" /></div>
+      <div class="cc"></div>
+    </div>    
+    <div class="login_code2"><input id="zphone1" class="zphone" type="button" value="点击获取验证" onClick="get_mobile_code(1)"/></td></div>
+    <div class="login_btn"><a id="bnt_1" href='javascript:;' onclick="login(1,1,1,2)" class="dise">点击注册</a></div>
+    <div class="login_btn"><a class="dise" href='javascript:;' onclick="toggle(0);">有账户了？点击登陆</a></div>
+    <div class="cc"></div>
+  </div>
+</cbs>
+
+<cbs id="easytab_content_2" style="display:none;">
+  <div class="login fk">
+    <div class="login_name">
+      <div class="l1">手机:</div>
+          <div class="l2"><input id="mobile_2" type="text"  size="20" maxlength="30" placeholder="只支持手机找回" autocomplete="off"/></div>
+      <div class="cc"></div>
+    </div>
+    <div class="login_pass" style="display:none;" id="show_login_pass">
+      <div class="l1">设置密码:</div>
+        <div class="l2"><input id="userpass_2" size="20" maxlength="30" type="password" placeholder="设置新密码" /></div>
+        <div class="cc"></div>
+    </div>
+
+    <div class="login_code">
+      <div class="l1">验证码：</div>
+      <div class="l2"><input type="text" id= "phone_code_2" class="login_name" placeholder="请输入手机验证码" /></div>
+      <div class="cc"></div>
+    </div>    
+    <div class="login_code2"><input id="zphone" class="zphone" type="button" value="点击获取验证" onClick="get_mobile_code(2,1);"/></td></div>
+    <div class="login_btn"><a id="bnt_2" href='javascript:;' onclick="login(2,2,2,3)" class="dise">点击确认</a></div>
+    <div class="login_btn"><a class="dise" href='javascript:;' onclick="toggle(1);">不想要了？点击注册</a></div>
+    <div class="cc"></div>
+  </div>
+</cbs>
+<input id="send_code" type="hidden" value="{{send_code}}"/>
+{% include 'global/wapfoot.html.twig' %} 
+<script type="text/javascript">
+  document.getElementsByName("easytab")[0].onclick();//页面加载完成后，点击第一个标签 
+  function tabSwitch2(_this,content_prefix,active) { 
+    var tabs = document.getElementsByName(_this.name); 
+    var number = tabs.length; 
+    for (var i=0; i < number; i++) { 
+      var tab = tabs[i]; 
+      tab.className = "pter";
+      $("#"+content_prefix+i).hide();
+      //document.getElementById(content_prefix+i).style.display = 'none'; 
+    } 
+    _this.className = "cur pter"; 
+    $("#"+content_prefix+active).show();
+    //document.getElementById(content_prefix+active).style.display = 'block';
+    //tabs[active].style.className = 'easytab_active';
+    //tabs[active].parentNode.className = 'li1';
+  } 
+  function reloadcode(){
+    var verify=document.getElementById('showcode');
+    verify.setAttribute('src','{{ path_for('usercode') }}?'+Math.random());
+  }
+
+  function get_mobile_code(active , type){
+       var mobile = jQuery.trim($('#mobile_' + active).val());
+       var send_code = jQuery.trim($('#send_code').val());
+       if (!mobile) {
+            mg.tishi('手机号码不能为空');
+            return;
+        }
+        if(!(/^1[34578]\d{9}$/.test(mobile))){ 
+            mg.tishi('手机号码非法，请重填');
+            return; 
+        }
+
+        if (type) {
+          type = 3
+        }else{
+
+          type = 0;
+        }
+
+        var verifyurl = config.api.base + config.api.verify;
+        mg.loading(); 
+        $.post(verifyurl, {mobile:mobile,send_code:send_code,type:type}, function(data) {
+            mg.close();
+            setTimeout(function(){
+                if (data && data.status) {
+                    mg.tishi(jQuery.trim(unescape(data.message)));
+                    if (type == 3) {
+                      $("#show_login_pass").show();
+                      iTime = data.data;
+                      RemainTime();
+                    }else{
+                      iTime1 = data.data;
+                      RemainTime1();
+                    }              
+                    return;
+                }
+
+                if (data && data.status == false) {
+
+                    mg.tishi(jQuery.trim(unescape(data.message)));
+
+                    if (data.data && data.data.codeAlreadySend) {
+                        if (type == 3) {
+                          $("#show_login_pass").show();
+                          iTime = data.data.seconds;
+                          RemainTime();
+                        }else{
+                          iTime1 = data.data.seconds;
+                          RemainTime1();
+                        }
+                    };
+
+                    return;
+                };
+                mg.tishi('服务器繁忙,请稍后再试'); 
+                return;
+
+            },config.questtime);
+            
+        }).error(function(xhr,errorText,errorType){
+            mg.close();
+            setTimeout("mg.tishi('网络太差了,稍后再试吧！')",config.questtime); 
+        });
+
+  };
+  //var iTime1 = iTime2 =config.sendtime;
+  var iTime = iTime1 = 0;
+  var Account1 ,Account;
+  function RemainTime1(){
+    document.getElementById("zphone1").disabled = true;//不给点击
+    var iSecond1;sSecond1="",sTime1="";
+    if (iTime1 >= 0){
+      iSecond1 = parseInt(iTime1%60);
+      iMinute1 = parseInt(iTime1/60)
+      if (iSecond1 >= 0){
+        if(iMinute1>0){
+          sSecond1 = iMinute1 + "分" + iSecond1 + "秒";
+        }else{
+          sSecond1 = iSecond1 + "秒";
+        }
+      }
+      sTime1 = sSecond1;
+      if(iTime1==0){
+        clearTimeout(Account1);
+        sTime1='获取手机验证码';
+        //iTime1 = config.sendtime;
+        document.getElementById("zphone1").disabled = false;
+      }else{
+        Account1 = setTimeout("RemainTime1()",1000);
+        iTime1=iTime1-1;
+      }
+    }else{
+      sTime1='没有倒计时';
+      document.getElementById("zphone1").disabled = false;
+    }
+    document.getElementById("zphone1").value = sTime1;
+
+  }
+//找回密码
+  function RemainTime(){
+    document.getElementById('zphone').disabled = true;
+    var iSecond,sSecond="",sTime="";
+    if (iTime >= 0){
+      iSecond = parseInt(iTime%60);
+      iMinute = parseInt(iTime/60)
+      if (iSecond >= 0){
+        if(iMinute>0){
+          sSecond = iMinute + "分" + iSecond + "秒";
+        }else{
+          sSecond = iSecond + "秒";
+        }
+      }
+      sTime=sSecond;
+      if(iTime==0){
+        clearTimeout(Account);
+        sTime='获取手机验证码';
+        //iTime = 59;
+        document.getElementById('zphone').disabled = false;
+      }else{
+        Account = setTimeout("RemainTime()",1000);
+        iTime=iTime-1;
+      }
+    }else{
+      sTime='没有倒计时';
+    }
+    document.getElementById('zphone').value = sTime;
+  }
+  function toggle(i)
+  {
+    document.getElementsByName("easytab")[i].onclick();
+  }
+
+  function login(mactive,uactive,pactive ,type)
+  {
+    var mobile = jQuery.trim($('#mobile_' + mactive).val());
+    var userpass = jQuery.trim($('#userpass_' + uactive).val());
+    var send_code = jQuery.trim($('#send_code').val());
+    if (type == 1) {
+          var novel_code = jQuery.trim($('#novel_code').val());
+          if (!mobile || !userpass || !novel_code) {
+              mg.tishi('账户或密码或验证码不能为空');
+              return ;
+          }
+
+      }else{//注册或找回密码
+          var phone_code = jQuery.trim($('#phone_code_' + pactive).val());
+          if (!mobile || !userpass || !phone_code) {
+              mg.tishi('手机号码或验证码或密码不能为空');
+              return ;
+          }
+
+            if(!(/^1[34578]\d{9}$/.test(mobile))){ 
+                mg.tishi('手机号码非法，请重填');
+                return; 
+            }
+      }
+      var url = config.api.base + config.api.sign; //默认是注册后登陆
+      var body = {
+          mobile: mobile,
+          userpass:userpass,
+          phone_captcha :phone_code,
+          send_code:send_code,
+      }
+      if (type == 3) {
+
+          url = config.api.base + config.api.forgetpass;   
+          body = {
+              mobile: mobile,
+              userpass:userpass,
+              phone_captcha :phone_code,
+              send_code:send_code,
+              type: 3,
+          }     
+      }
+
+      if (type == 1) {//登陆
+
+          url = config.api.base + config.api.login; 
+           body = {
+              mobile: mobile,
+              userpass:userpass,
+              novel_code :novel_code,
+              send_code:send_code,
+          }  
+
+        }
+      mg.loading();  
+      
+      $.post(url, body, function(data) {
+            mg.close();
+            setTimeout(function(){
+                if (data && data.status) {                 
+                    //$.cookie("zank-token",data.data.token,{path:'/',expires:365});
+                    // zuoyoufy(config.api.base + config.api.user);                                 
+                   tiaozhuan();
+                   
+                    return;
+                }
+
+                if (data && data.status == false) {
+                    mg.tishi(jQuery.trim(unescape(data.message))); 
+                    return;
+                };
+
+                mg.tishi('服务器繁忙,请稍后再试'); 
+                return;
+
+            },config.questtime);
+
+          
+      }).error(function(xhr,errorText,errorType){
+            mg.close();
+            setTimeout("mg.tishi('网络太差了,稍后再试吧！')",config.questtime);
+        });
+      
+  }
+
+
+</script>
+</body>
+</html>

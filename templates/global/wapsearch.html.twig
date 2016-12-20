@@ -1,0 +1,9 @@
+<section id="search" class="bk">
+  <form id="formsearch" name="articlesearch" method="post" action="{{ path_for('search') }}">  
+          <input name="submit" type="submit" value="" class="go dise">
+          <select id=searchType name=type hidden="true"><option value="articlename"></option><option value="author"></option></select>
+          <input id="s_key" class="bk" name="s" type="text" onclick="this.value=''" value="输入搜索词"/>
+          <div id="type" class="bk pter">书名</div>
+  </form>
+  <div class="cc"></div>
+</section>

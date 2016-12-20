@@ -1,0 +1,54 @@
+{% include 'global/waphead.html.twig' %} 
+<body id="zj">
+<header id="header" class="header dise">
+    <div class="zuo pter" onClick="zuoyoufy('/');"><i class="fa fa-home fa-2x"></i></div>
+    <div class="zhong pter" onClick="zuoyoufy('{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}');">{{contentData.chapter.chaptername|slice(0, 12)}}</div>
+    <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
+    <div class="cc"></div>
+    {% include 'global/wapsearch.html.twig' %} 
+</header>
+<section class="zj" >
+  <div class="nr_shezhi bk1" style="margin-top: 60px">
+  <script>_17mb_top()</script>
+      <div class="shezhi1" style="margin-top: 5px">
+          <div class="dise">字体</div><div id="b" class="dise pter">大</div> <div id="m" class="dise pter">中</div> <div id="s" class="dise pter">小</div>
+      </div>
+      <div class="shezhi2">
+        <div class="dise pter" onClick="mg.qtemail('{{ contentData.chapter.articlename }}' , '{{ contentData.chapter.chaptername }}','{{ path_for('novelcontent', { 'bid': contentData.chapter.articleid ,'cid' :  contentData.chapter.chapterid }) }}' );" >报错</div>
+        <div id="light" class="dise pter">关灯</div>
+      </div>
+    <div class="cc"></div>
+  </div>
+  
+    <div class="nr_page">
+        <a id="shuqian" class="dise" href="javascript:;" onclick='addbookcase({{ contentData.chapter.articleid }},{{contentData.chapter.chapterid}})'><font>&nbsp;&nbsp;&nbsp;存书签</font></a>
+        <a class="dise" href="{{ path_for('bookcase')}}?url={{ path_for('novelcontent', { 'bid': contentData.chapter.articleid ,'cid':contentData.chapter.chapterid }) }}">书架管理</a>
+        <a class="dise" href="{{ path_for('novelmulu1', { 'bookid': contentData.chapter.articleid ,'page':contentData.page }) }}">返回目录</a>
+        <div class="cc"></div>
+    </div>
+
+    <article id="nr">
+      {{ contentData.content |nl2br }}
+        <div id="zuoyoufy">
+            <div class="zuo" onClick="zuoyoufy('{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
+            <div class="you" onClick="zuoyoufy('{%if contentData.next != "" %}{{ path_for('novelcontent', { 'bid': contentData.next.articleid ,'cid':contentData.next.chapterid }) }}{%else%}{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
+        </div>
+    </article>
+
+  <script>_17mb_middle()</script>
+    <div class="nr_page">
+      <a class="dise" href="{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}">上一章</a>
+        <a class="dise" href="{{ path_for('novelmulu1', { 'bookid': contentData.chapter.articleid ,'page':contentData.page }) }}">目录</a>
+        <a class="dise" href="{%if contentData.next != "" %}{{ path_for('novelcontent', { 'bid': contentData.next.articleid ,'cid':contentData.next.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}">下一章</a>
+        <div class="cc"></div>
+    </div>
+</section>
+<div id="back-to-top">
+  <a class="stop" href="javascript:"><span></span></a>
+</div>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+<script type="text/javascript">
+  {{ selectjs|raw }}
+</script>
+</html>

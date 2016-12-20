@@ -57,6 +57,6 @@ class SignToken extends Model
 
     public function user()
     {
-        return $this->hasOne(\Zank\Model\User::class, 'user_id', 'user_id');
+        return $this->hasOne(\Zank\Model\Novel\Wap\SystemUsers::class, 'uid', 'user_id');//第一个参数关联的 第2个是自己要和对面关联的
     }
 } // END class SignToken extends Model

@@ -1,0 +1,32 @@
+{% include 'global/wapuserhead.html.twig' %} 
+<style>
+    .bookone{ width:100%;border-bottom:1px solid #D3FEDA}
+    .bookone .case_img{width:70px;}
+    .bookone .case_last a{font-size:14px;}
+</style>
+<div id="hdtop" class="users fk">
+    {% include 'global/wapusernav.html.twig' %}
+
+    <div style="margin:10px;">
+        {% for caseData in caseDatas %}
+            <table class='bookone' id="{{ caseData.caseid }}">
+                <tr>
+                    <td>
+                        <table>
+                            <tr><td class='case_name'>书名：<a href='{{ path_for('novelinfo', { 'bookid': caseData.articleid }) }}'><font color=>{{ caseData.articlename }}</font></a>{%if caseData.lastvisit < caseData.lastupdate  %}<img src="/css/novel/wap/new.gif" />{% endif %}</td></tr>
+                            <tr><td class='case_last'>最新：{%if caseData.lastchapterid>0 %}<a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.lastchapterid}) }}'>{{ caseData.lastchapter }}</a>{% endif %}</td></tr>
+                            <tr><td class='case_shuqian'>书签：{%if caseData.chapterid>0 %}<a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.chapterid}) }}'>{{ caseData.chaptername }}</a>{% endif %}</td></tr>
+                            <tr><td class='case_shuqian'>更新时间：{{ caseData.lastupdate | date('Y-m-d H:i:s') }}</td></tr>
+                            <tr><td class='case_del'><a href='javascript:;' onclick='case_del({{ caseData.caseid }})'><span style="color:red">删除本书</span></a></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        {% else %}
+            <div style='border:1px solid #18C2E7;background-color:#D3FEDA;margin:10px;padding:10px;'>没有数据！</div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'global/wapfoot.html.twig' %} 
+</body>
+</html>

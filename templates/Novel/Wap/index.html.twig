@@ -1,0 +1,67 @@
+{% include 'global/waphead.html.twig' %}   
+<body>
+<header id="header" class="header dise">
+    <div class="zuo pter" onClick="zuoyoufy('{{ path_for('usercore') }}')"><i class="fa fa-user fa-2x"></i></div>
+    <div class="zhong homefont">{{webname}}</div>
+    <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
+    <div class="cc"></div>
+    {% include 'global/wapsearch.html.twig' %} 
+    <div id="nav" class="top_menu">
+      <div class="top_menu_list">
+        <a href="/" class="btn item_0" scroll-left="0">首页</a>
+        {% for key,jieqiSort in jieqiSorts %}
+          <a href="{{ path_for('novelsort', { 'sortid': jieqiSort.sortid ,'page':1}) }}" class="btn item_{{ jieqiSort.sortid }}" scroll-left="0">{{ jieqiSort.shortname|e }}</a>
+        {% endfor %} 
+      </div>
+    </div>
+</header>
+<section id="tj" class="fk">
+<script>_17mb_top()</script>
+  <div class="tjtop xbk">新书推荐</div>
+    <ul>
+      {% for key,picTuiJian in picTuiJians %}
+      <li{%if loop.last %} class="tjlast"{% endif %}><a href="{{ path_for('novelinfo', { 'bookid': picTuiJian.articleid }) }}"><img src="{{picTuiJian.cover}}" onerror="this.src='/css/noimg.jpg'" alt="{{picTuiJian.articlename}}" /></a><br/><span><a href="{{ path_for('novelinfo', { 'bookid': picTuiJian.articleid }) }}">{{picTuiJian.articlename}}</a></span></li>
+      {% endfor %} 
+        <div class="cc"></div>
+    </ul>
+</section>
+<script>_17mb_middle()</script>
+<section id="rmtj" class="fk">
+    <div class="xbk">{{ sortname ? sortname : '最新更新' }} </div>
+      <gundong id="content_list">
+        {% for key,articleData in articleDatas %}
+          <ul class="xbk" onClick="window.location.href='{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}'">
+            <li class="tjimg"><img src="{{articleData.cover}}" onerror="this.src='/css/noimg.jpg'" /></li>
+            <li class="tjxs">
+              <span class="xsm"><a href="{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}">{{articleData.articlename|slice(0, 15)}}</a></span>
+              <span class="">作者：{{articleData.author|slice(0, 12)}}</span>
+              <span class="">{{articleData.intro}}</span>
+              <span class="tjrs"><i>{{articleData.allvote}}</i>次推荐</span>
+            </li>
+          </ul>
+        {% endfor %} 
+      </gundong>
+
+      <more class="list_more" id="loading">上滑加载更多 &darr;</more>
+      <more class="list_more" id="nomoreresults" style="display:none">所有内容加载完毕</more>
+
+    </section>
+
+{%if sortid ==0 %}
+  <section class="youlian">
+    <span>友情链接</span>
+      <div class="yl bk">2222222<div class="cc"></div></div>
+  </section>
+{% endif %}
+{% include 'global/wapfoot.html.twig' %} 
+<script type="text/javascript">
+  {{ selectjs|raw }}
+  var dwtime = {{ ajaxPage }};
+  var sortajax = '{{ sortid }}';
+  var geturl = '{{ ajaxpath|e }}';
+  var islast = false;
+</script>
+</body>
+<script type="text/javascript" charset="UTF-8"  src="/js/scrollpagination.js" ></script>
+</html> 
+

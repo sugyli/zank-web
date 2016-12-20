@@ -21,7 +21,13 @@
         "symfony/finder": "^3.1",
         "nesbot/carbon": "^1.21",
         "symfony/yaml": "^3.1",
-        "medz/oss-stream-wrapper": "^1.0"
+        "medz/oss-stream-wrapper": "^1.0",
+        "akrabat/rka-ip-address-middleware": "^0.5.0",
+        "slim/twig-view": "^2.1",
+        "zguillez/slim-mobile-detect": "^1.0",
+        "ark/filecache": "^0.1.0",
+        "slim/http-cache": "^0.3.0",
+        "curl/curl": "^1.5"
     },
     "autoload": {
         "files": [
