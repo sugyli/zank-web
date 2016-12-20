@@ -348,13 +348,7 @@ class Control extends UserController
         $cid = intval($cid);
         if ($this->ci->has('user') && $bid > 0){
             $user = $this->ci->get('user');
-            $total = $user->bookcase()->count();
-
-            if ($total >= $user->bookcount) {
-                return with(new \Zank\Common\Message($response, false, "您目前等级最多有{$user->bookcount}本收藏,请清理书架！"))
-                                        ->withJson();
-            }
-            
+            //检查这本是不是正常
             $articleArticle = \Zank\Model\Novel\Wap\ArticleArticle::BaseBook()
                                     ->where('articleid' , $bid)
                                     ->first();
@@ -412,8 +406,12 @@ class Control extends UserController
 
                     }
 
-                }else{
-
+                }else{//收藏没有要加入收藏的时候判断下是不是 满了
+                    $total = $user->bookcase()->count();
+                    if ($total >= $user->bookcount) {
+                        return with(new \Zank\Common\Message($response, false, "您目前等级最多有{$user->bookcount}本收藏,请清理书架！"))
+                                ->withJson();
+                    }
 
                     if ($cid > 0) {
                         $articleChapter = 

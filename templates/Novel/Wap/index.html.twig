@@ -33,10 +33,10 @@
           <ul class="xbk" onClick="window.location.href='{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}'">
             <li class="tjimg"><img src="{{articleData.cover}}" onerror="this.src='/css/noimg.jpg'" /></li>
             <li class="tjxs">
-              <span class="xsm"><a href="{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}">{{articleData.articlename|slice(0, 15)}}</a></span>
+              <span class="xsm"><a href="{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}" title="{{articleData.articlename}}">{{articleData.articlename|slice(0, 7)}}</a></span>
               <span class="">作者：{{articleData.author|slice(0, 12)}}</span>
               <span class="">{{articleData.intro}}</span>
-              <span class="tjrs"><i>{{articleData.allvote}}</i>次推荐</span>
+              <span class="tjrs"><i>{{articleData.time}}</i></span>
             </li>
           </ul>
         {% endfor %} 

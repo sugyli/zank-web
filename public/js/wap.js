@@ -69,7 +69,9 @@ var createFragment = function(data) {
     var html = "";
     if (data && data.length > 0) {
         for (var i = 0; i < data.length; i++) {
+            if (data[i]['author'].length > 12) { data[i]['author'] = data[i]['author'].substring(0,12)};
             data[i]['author'] = html_encode(data[i]['author']);
+            if (data[i]['articlename'].length > 8) { data[i]['articlename'] = data[i]['articlename'].substring(0,8)};
             data[i]['articlename'] = html_encode(data[i]['articlename']);
             data[i]['intro'] = html_encode(data[i]['intro']);
 
@@ -79,7 +81,7 @@ var createFragment = function(data) {
             html +=            '<span class="xsm"><a href="/info-'  + data[i]['articleid']  + '/">' + data[i]['articlename'] + '</a></span>';
             html +=             '<span class="">作者：' + data[i]['author'] +'</span>';
             html +=             '<span class="">' + data[i]['intro'] +'</span>';
-            html +=             '<span class="tjrs"><i>'+ data[i]['allvote'] +'</i>次推荐</span>';
+            html +=             '<span class="tjrs"><i>'+ data[i]['time'] +'</i></span>';
             html +=        '</li>';
             html +=  '</ul>';
                       

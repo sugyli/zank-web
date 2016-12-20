@@ -30,7 +30,7 @@
       <div class="b bk">最新9章</div>
         <ul>
           {% for key,chapter in infoData.chapter %}
-          <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}">{{ chapter.chaptername|slice(0, 20) }}</a><i></i></li>
+          <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}" title="{{ chapter.chaptername }}">{{ chapter.chaptername|slice(0, 20) }}</a><i></i></li>
           {% else %} 
           <li><a href="javascript:;">对不起章节丢失了...</a><i></i></li>
           {% endfor %} 

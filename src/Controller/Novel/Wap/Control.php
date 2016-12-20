@@ -67,7 +67,7 @@ class Control extends PublicController
             $lastData = end($articleDatas);
             $router = $this->ci->get('router');
             $ajaxpath = $router->pathFor('mindexpost'); //获取AJAX请求路径
-                 
+                // daying($articleDatas);
             return $this->ci->view
                     ->render($response, $this->mbPath.'index.html.twig', [
                         'jieqiSorts' => $jieqiSorts,

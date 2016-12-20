@@ -10,7 +10,7 @@
     </div>
     <ul class="lb fk">
       {% for key,chapter in infoData.chapter %}
-        <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}"  class="xbk">{{ chapter.chaptername|slice(0, 20) }}</a></li>
+        <li><a href="{{ path_for('novelcontent', { 'bid': chapter.articleid ,'cid':chapter.chapterid }) }}" title="{{ chapter.chaptername}}" class="xbk">{{ chapter.chaptername|slice(0, 20) }}</a></li>
       {% endfor %} 
         <li><a class="last tb">本页章节列表结束！</a></li>
     </ul>
