@@ -1,7 +1,7 @@
 <?php
 
     /*******************************常用*************************************/    
-    define("NOVELURL", "http://www.dashubao.co");
+    define("NOVELURL", "http://www.dashubao.co");//设置一些基础的
     define("WEBNAME", "大书包");
     define("DS", DIRECTORY_SEPARATOR);
     define('ROOT',str_replace('\\',DS,realpath(dirname(__FILE__).'/../')).DS);
@@ -9,7 +9,7 @@
     define('NOFENMIAN', "/css/noimg.jpg"); 
     define('TXTDIR', "http://txt.dashubao.co/"); 
     define('PAGENUM', 40);//目录默认多少分页
-    define('SPRIT', 'sugyli.com');//兼容大书包
+    define('SPRIT', 'sugyli.com');//兼容大书包处理/的问题
     define('NOVELMB', 'Novel/Wap/');//小说模板
     define('PAGESIZE', 30);//首页加载多少条
     define('NOVELMAX', 15000);//最大章节

@@ -105,7 +105,7 @@ class SourceUtil
                           return empty($item);
                       });
 
-      if (!$collection->isEmpty()) {
+      if ($collection && !$collection->isEmpty()) {
 
           return $collection->first();
       }

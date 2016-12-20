@@ -75,7 +75,7 @@ class NovelFunction
                           return empty($item);
                       });
 
-      if (!$collection->isEmpty()) {
+      if ($collection && !$collection->isEmpty()) {
 
           return $collection->first();
       }
@@ -269,7 +269,7 @@ class NovelFunction
                           ->reject(function ($item) {
                               return empty($item);
                           });
-            if (!$collection->isEmpty()) {
+            if ($collection && !$collection->isEmpty()) {
 
                 return $collection->first();
             }

@@ -39,6 +39,7 @@ class Control extends UserController
                 ->render($response, NOVELMB.'login.html.twig', [
                     'title' =>'用户登陆',
                     'send_code' => $send_code,
+                    'webconfig' => WEBCONFIG,
                 ]);
     }
 
