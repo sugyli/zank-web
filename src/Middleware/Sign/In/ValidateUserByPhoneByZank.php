@@ -56,7 +56,7 @@ class ValidateUserByPhoneByZank
 
         // 如果用户不存在
         if (!$user) {
-            $response = new \Zank\Common\Message($response, false, '该手机用户不存在。');
+            $response = new \Zank\Common\Message($response, false, '您输入的账户有误。');
 
             return $response->withJson();
         }
