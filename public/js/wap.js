@@ -141,7 +141,8 @@ var mg = {
                             }
 
                             if (data && data.status == false && data.data < 0) {
-                                zuoyoufy(config.api.base + config.api.user); 
+                                location.reload();
+                                //zuoyoufy(config.api.base + config.api.user); 
                                 return;
                             };
                             if (data && data.status == false) {
@@ -196,7 +197,8 @@ var mg = {
                             }
 
                             if (data && data.status == false && data.data < 0) {
-                                zuoyoufy(config.api.base + config.api.user); 
+                                mg.ts('请先登陆账户！'); 
+                               // zuoyoufy(config.api.base + config.api.user); 
                                 return;
                             };
                             if (data && data.status == false) {
@@ -265,7 +267,7 @@ function mail_del(id ,type){
         }
 
         if (data && data.status == false && data.data < 0) {
-            zuoyoufy(config.api.base + config.api.user); 
+            location.reload();
             return;
         };
         if (data && data.status == false) {
