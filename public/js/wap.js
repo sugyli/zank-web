@@ -313,6 +313,59 @@ function case_del(id){
     });
 }
 
+$(function() {
+    $.fn.fadeInWithDelay = function() {
+        var delay = 0;
+        return this.each(function() {
+            $(this).delay(delay).animate({
+                opacity: 1
+            }, 300);
+            delay += 100
+        })
+    }
+    
+});
+function loadingbook(){
+    if (islast) {
+        $('#loading').fadeOut();
+        $('#nomoreresults').fadeIn();
+    };
+    $('#loading').fadeOut();
+    $('#content_list').children().attr('rel', 'loaded');
+    $.ajax({
+        type: 'post',
+        //url: opts.contentPage + curpage,
+        url: geturl,
+        //data: opts.contentData,
+        data: {
+            'dwtime': dwtime,
+            'sortajax': sortajax
+         },
+        success: function(data) {
+            if(data.status){
+                dwtime = data.data.ajaxPage ;
+                var html = createFragment(data['data']['items']);                      
+                $('#content_list').append(html);
+                if (data.data.islast) { islast = true; };
+                var objectsRendered = $('#content_list').children('[rel!=loaded]');
+                $(objectsRendered).fadeInWithDelay();
+                $('#loading').fadeIn();              
+            }else{
+                //isLoadingTail = true;
+                $('#loading').fadeOut();
+                $('#nomoreresults').fadeIn();
+
+            }            
+        },
+        error: function(err){
+            console.log('ajax失败 ' + err);
+            return;
+        },
+        dataType: 'json'
+    })
+
+}
+
 function clock(){
 
     var clock = config.api.base + config.api.clock;
