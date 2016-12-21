@@ -257,3 +257,8 @@ a:hover{color:red}
 textarea.userselect {
     height: 100px;
 }
+
+.contentText img {
+    max-width: 100%!important;
+    height: auto!important;
+}

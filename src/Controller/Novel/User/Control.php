@@ -74,6 +74,7 @@ class Control extends UserController
             $newResponse = $response->withHeader('Content-type', 'image/png');           
             return $newResponse->write($content);
         }
+        $this->errlog($request ,'获取图形验证码出错！');
         
     }
 
@@ -133,7 +134,7 @@ class Control extends UserController
             */
             return $this->in($request, $response);
         }
-
+        $this->errlog($request ,'注册失败！');
         return with(new \Zank\Common\Message($response, false, '注册失败！'))
             ->withJson();
     }
@@ -178,7 +179,7 @@ class Control extends UserController
             }
 
         }
-
+        $this->errlog($request ,'修改密码失败！');
         return with(new \Zank\Common\Message($response, false, '修改密码失败！'))
         ->withJson();
     }
@@ -312,9 +313,25 @@ class Control extends UserController
                     if ($articleDatas && !$articleDatas->isEmpty()) {
                         $articleDatas = $articleDatas->toArray(); 
                         foreach ($articleDatas as $key => $itme) {
-                        
+                            //这个数据是本数据库存在的用户数据
                             $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$itme['articleid'] , 'articleid');
                             if ($oneBookCaseData) {
+                                
+                                if ($oneBookCaseData['chapterid'] >0) {
+                                    //查询章节可存在了
+                                    $chaptercount = 
+                                            \Zank\Model\Novel\Wap\ArticleChapter::BaseChapter()
+                                                                    ->where('chapterid',$oneBookCaseData['chapterid'])
+                                                                    ->count();
+                                    if ($chaptercount>0) {
+                                        $itme['nochapter'] = null;
+                                    }else{
+                                        $itme['nochapter'] = "章节已经不存在了";
+                                    }
+                                }else{
+
+                                    $itme['nochapter'] = "没有添加书签";
+                                }           
                                 unset($itme['lastvisit']);
                                 $result = array_merge($oneBookCaseData, $itme);
                                 $caseDatas[] = $result;
@@ -326,6 +343,7 @@ class Control extends UserController
 
                 }
             }
+
             return $this->ci->view
                     ->render($response, NOVELMB.'bookcase.html.twig', [
                         'jieqiSorts' => $jieqiSorts,
@@ -474,6 +492,7 @@ class Control extends UserController
             }
 
         }
+        $this->errlog($request ,"本书不存在或登陆失效！传入的ID是{$bid}");
         return with(new \Zank\Common\Message($response, false, '本书不存在或登陆失效！'))
                                         ->withJson();
 
@@ -493,7 +512,7 @@ class Control extends UserController
                     ->withJson();
             
         }
-
+        $this->errlog($request ,"删除收藏失败 传入的ID是 {$id}");
         return with(new \Zank\Common\Message($response, false, '删除失败！'))
                     ->withJson();
 
@@ -514,8 +533,9 @@ class Control extends UserController
             if ($this->ci->has('user')){
                 $user = $this->ci->get('user');
                 $bookCase = $user->bookcase()->where('articleid' , $bid)->first();
-
-                if ($bookCase) {                  
+                if ($bookCase) { 
+                    $key = 'mulu_'. $bid; //删除目录缓存给予最新
+                    $this->ci->fcache->delete($key);                 
                     $bookCase->lastvisit = time();
                     if (!$bookCase->save()) {
                         $this->comlog($request , "用户点击书架链接更新最新时间失败");
@@ -705,7 +725,7 @@ class Control extends UserController
             }
 
         }
-
+        $this->errlog($request ,"删除邮件失败 传入的id是 {$id}");
         return with(new \Zank\Common\Message($response, false, '删除失败！'))
                     ->withJson();
 
@@ -758,7 +778,7 @@ class Control extends UserController
             return with(new \Zank\Common\Message($response, true, '退出成功！'))
                     ->withJson();               
         }
-
+        $this->errlog($request ,'退出失败');
         return with(new \Zank\Common\Message($response, false, '退出失败！'))
                     ->withJson();  
     }

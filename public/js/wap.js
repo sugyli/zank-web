@@ -14,7 +14,7 @@ $(function(){
     $("#formsearch").submit(function(){if($("#s_key").val() == "输入搜索词" || !$("#s_key").val()){mg.tishi("请输入搜索词！");return false;}});
 })
 $(function(){
-    var b = "20px";var m = "16px"; var s = "12px";
+    var b = "22px";var m = "16px"; var s = "12px";
     if($.cookie("fontSise")){font($.cookie("type"),$.cookie("fontSise"));}
     if($.cookie("light")){light($.cookie("light"));}    
     $("#b").click(function(){font("#b",b);});

@@ -28,7 +28,8 @@
     </div>
 
     <article id="nr">
-      {{ contentData.content |nl2br }}
+        {%if contentData.isimg > 0%}{{ contentData.content |raw }}{%else%}{{ contentData.content |nl2br }}{%endif%}
+      
         <div id="zuoyoufy">
             <div class="zuo" onClick="zuoyoufy('{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
             <div class="you" onClick="zuoyoufy('{%if contentData.next != "" %}{{ path_for('novelcontent', { 'bid': contentData.next.articleid ,'cid':contentData.next.chapterid }) }}{%else%}{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
@@ -43,12 +44,10 @@
         <div class="cc"></div>
     </div>
 </section>
+{#回顶部的标签#}
 <div id="back-to-top">
   <a class="stop" href="javascript:"><span></span></a>
 </div>
 {% include 'global/wapfoot.html.twig' %} 
 </body>
-<script type="text/javascript">
-  {{ selectjs|raw }}
-</script>
 </html>

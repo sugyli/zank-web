@@ -258,13 +258,14 @@ class Control extends PublicController
 
     }
 
-
+//围绕目录数据做计算
     public function mContent(Request $request, Response $response,$args)
     {
 
         $bid  = isset($args['bid']) ? intval($args['bid']) : 0;
         $cid  = isset($args['cid']) ? intval($args['cid']) : 0;
         $txtfind = 0;//判断是否抓取到了内容
+        $isimg = 0;//判断是否附件
         if ($bid >0 && $cid>0) {
 
             $mContentKey = 'nr_'. $bid . $cid;
@@ -272,6 +273,7 @@ class Control extends PublicController
             if (!$contentData) {
                             
                 $bookData = NovelFunction::getInfoDataBySql($bid);
+
                 if ($bookData) {
                     $router = $this->ci->get('router');
                     $contentData['content'] = "章节丢失了,欢迎举报让我们修复,非常感谢！！！";
@@ -294,21 +296,40 @@ class Control extends PublicController
                     }
                     //在章节存在的情况下再去查内容
                     if (isset($contentData['chapter'])) {
-                        $txtDir = TXTDIR .$shortid .'/'.$bid."/{$cid}.txt";
-                        $curl = new \Curl\Curl();
-                        $curl->setOpt(CURLOPT_TIMEOUT, 5);
-                        $curl->get($txtDir);
                         
-                        if ($curl->http_status_code == '200') {
-                            $txt = $curl->response;
-                            $txt = trim($txt);
-                            if (!empty($txt)) {
-                                $txtfind = 1;
-                                $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
-                                //$txt = @str_replace("\r\n","<br/>",$txt);
-                                $txt = @str_replace("&nbsp;"," ",$txt); 
-                                $contentData['content'] =  $txt;
+                        $puDIR = $shortid .'/'.$bid;
+                        $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
+                        
+                        //做了附件区别
+
+                        if (!empty($contentData['chapter']['attachment'])) {
+                            $imgobj = unserialize($contentData['chapter']['attachment']);
+                            $imghtml = "<myimgs class='contentText'>";
+                            foreach ($imgobj as  $item) {
+                                $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
+                                $imghtml .= "<img src='{$img}' />";
                             }
+                            $imghtml .= '</myimgs>';
+                            $txtfind = 1;
+                            $isimg = 1;
+                            $contentData['content'] = $imghtml;    
+                        }else{
+
+                            $curl = new \Curl\Curl();
+                            $curl->setOpt(CURLOPT_TIMEOUT, 5);
+                            $curl->get($txtDir);
+                            
+                            if ($curl->http_status_code == '200') {
+                                $txt = $curl->response;
+                                $txt = trim($txt);
+                                if (!empty($txt)) {
+                                    $txtfind = 1;
+                                    $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
+                                    //$txt = @str_replace("\r\n","<br/>",$txt);
+                                    $txt = @str_replace("&nbsp;"," ",$txt); 
+                                    $contentData['content'] =  $txt;
+                                }
+                            }                     
                         }
                         
                         $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
@@ -318,6 +339,7 @@ class Control extends PublicController
                         $contentData['page'] =ceil( ($key+1)/PAGENUM );
                         $contentData['sortname'] = $bookData['bookInfo']['sortname'] ;
                         $contentData['author'] = $bookData['bookInfo']['author'] ;
+                        $contentData['isimg'] = $isimg;
                         if ($txtfind == 1) {
                             //写缓存
                             $this->ci->fcache->set($mContentKey, $contentData ,[                 
@@ -401,7 +423,7 @@ class Control extends PublicController
                                 ArticleArticle::BaseBook()
                                                 ->where($type , 'like', "%{$s}%")
                                                 ->orderBy('articleid', 'desc')
-                                                ->take(30)
+                                                ->take(50)
                                                 ->get();
                                               
                     if ($articleArticle && !$articleArticle->isEmpty()) {

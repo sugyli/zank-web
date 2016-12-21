@@ -198,13 +198,12 @@ class NovelFunction
     //介绍加目录总数据来源
     public static function getInfoDataBySql(int $id)
     {
-      
+        //和用户书架做了耦合
         $ci  = Application::getContainer();
         $key = 'mulu_'. $id;
         $bookData = $ci->fcache->get($key);
 
         if (!$bookData) {
-
             $oneBook = \Zank\Model\Novel\Wap\ArticleArticle::getOneBook($id);
             $bookData = []; 
             $maxCount = NOVELMAX;//章节最多数量    

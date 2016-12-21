@@ -15,7 +15,7 @@
                         <table>
                             <tr><td class='case_name'>书名：<a href='{{ path_for('novelinfo', { 'bookid': caseData.articleid }) }}'><font color=>{{ caseData.articlename }}</font></a>{%if caseData.lastvisit < caseData.lastupdate  %}<img src="/css/novel/wap/new.gif" />{% endif %}</td></tr>
                             <tr><td class='case_last'>最新：{%if caseData.lastchapterid>0 %}<a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.lastchapterid}) }}'>{{ caseData.lastchapter }}</a>{% endif %}</td></tr>
-                            <tr><td class='case_shuqian'>书签：{%if caseData.chapterid>0 %}<a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.chapterid}) }}'>{{ caseData.chaptername }}</a>{% endif %}</td></tr>
+                            <tr><td class='case_shuqian'>书签：{%if caseData.nochapter is not null %} {{caseData.nochapter}} {%else%} <a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.chapterid}) }}'>{{ caseData.chaptername }}</a> {%endif%}</td></tr>
                             <tr><td class='case_shuqian'>更新时间：{{ caseData.lastupdate | date('Y-m-d H:i:s') }}</td></tr>
                             <tr><td class='case_del'><a href='javascript:;' onclick='case_del({{ caseData.caseid }})'><span style="color:red">删除本书</span></a></td></tr>
                         </table>
