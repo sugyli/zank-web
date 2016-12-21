@@ -7,18 +7,18 @@ use Zank\Application;
 Application::any('/', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800));
+->add(new \Slim\HttpCache\Cache('private', WEBCASE));
 
 
 Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelsort');
 
 Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 /*
@@ -31,12 +31,12 @@ Application::post('/novel/sort/mindexpost', \Zank\Controller\Novel\Wap\Control::
 Application::any('/info-{bookid:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':info')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelinfo');
 
 Application::any('/info-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':info')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //目录
@@ -47,19 +47,19 @@ Application::any('/info-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wa
 Application::any('/wapbook-{bookid:[1-9]\d*}[_{page:[1-9]\d*}[/]]', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelmulu1');
 
 //http://www.sugyli.com/wapbook-53530/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //http://www.sugyli.com/wapbook-53530_1/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 
@@ -69,31 +69,31 @@ Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}/index.html', \Zank\
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}_{sort:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelmulu2');
 
 //http://www.sugyli.com/wapbook-53530_1_1/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}_{sort:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //内容
 Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':content')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelcontent');
 
 Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':content')
 ->add(\Zank\Middleware\InitDb::class)
-->add(new \Slim\HttpCache\Cache('private', 28800))
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 
 Application::group('/novel', function () {
     $this->any('', function (Request $request, Response $response): Response {
-        return $response->withRedirect((string) "/", 301);
+        return $response->withRedirect((string) "/", 302);
     });
 
     $this

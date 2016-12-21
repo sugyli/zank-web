@@ -23,7 +23,7 @@
 <div class="stop fk">搜索“<font color=red>{{ search_key |slice(0, 20)}}</font>”结果</div>
     <ul class="fk">
     {% for key,bookData in bookDatas %}
-    <li>[{{bookData.sortname}}]<a href="{{ path_for('novelinfo', { 'bookid': bookData.articleid }) }}" class="blue">{{bookData.articlename|slice(0, 15)}}</a>/{{bookData.author|slice(0, 10)}}</li>
+    <li>[{{bookData.sortname}}]<a href="{{ path_for('novelinfo', { 'bookid': bookData.articleid }) }}" class="blue">{{bookData.articlename|slice(0, 12)}}</a>/{{bookData.author|slice(0, 8)}}</li>
     {%endfor%}
     </ul>
 {%endif%}   

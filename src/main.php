@@ -25,5 +25,6 @@
     define('NRCASE', 7200);
     define('SCASE', 300);//搜索缓存
     define('YS', true);//开启gzcompress
+    define('WEBCASE', 14400);//开启gzcompress
     define('WEBCONFIG', ['weburl'=>NOVELURL,'webtitle'=>WEBNAME."小说网手机版",'link'=>"<a href='" .NOVELWAPURL ."'>" . WEBNAME ."</a>"]);
     define('CHANGECOOK', false);//用户每次操作是否改变COOK
