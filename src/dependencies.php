@@ -87,7 +87,3 @@ $container['fcache'] = function (Container $c) {
     return $fcache;
 };
 
-$container['cache'] = function (Container $c) {
-  
-    return new \Slim\HttpCache\CacheProvider();
-};

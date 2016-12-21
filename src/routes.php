@@ -6,17 +6,19 @@ use Zank\Application;
 
 Application::any('/', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
-->add(\Zank\Middleware\ExceptionHandle2API::class);
-//->add(new \Slim\HttpCache\Cache('public', 86400));
+->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800));
 
 
 Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->setName('novelsort');
 
 Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 /*
@@ -29,10 +31,12 @@ Application::post('/novel/sort/mindexpost', \Zank\Controller\Novel\Wap\Control::
 Application::any('/info-{bookid:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':info')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->setName('novelinfo');
 
 Application::any('/info-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':info')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //目录
@@ -43,16 +47,19 @@ Application::any('/info-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wa
 Application::any('/wapbook-{bookid:[1-9]\d*}[_{page:[1-9]\d*}[/]]', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->setName('novelmulu1');
 
 //http://www.sugyli.com/wapbook-53530/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //http://www.sugyli.com/wapbook-53530_1/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 
@@ -62,21 +69,25 @@ Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}/index.html', \Zank\
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}_{sort:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->setName('novelmulu2');
 
 //http://www.sugyli.com/wapbook-53530_1_1/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}_{page:[1-9]\d*}_{sort:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //内容
 Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':content')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->setName('novelcontent');
 
 Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':content')
 ->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', 28800))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 
