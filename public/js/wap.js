@@ -329,6 +329,7 @@ function loadingbook(){
     if (islast) {
         $('#loading').fadeOut();
         $('#nomoreresults').fadeIn();
+        return;
     };
     $('#loading').fadeOut();
     $('#content_list').children().attr('rel', 'loaded');
