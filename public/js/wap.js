@@ -444,17 +444,57 @@ $(function(){
 
 //广告开始
 function _17mb_top(){//顶部广告
-    
+    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
+    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+    document.writeln("<!-- dashubao移动1 -->");
+    document.writeln("<ins class=\"adsbygoogle\"");
+    document.writeln("     style=\"display:block\"");
+    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
+    document.writeln("     data-ad-slot=\"2258046049\"");
+    document.writeln("     data-ad-format=\"auto\"></ins>");
+    document.writeln("<script>");
+    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    document.writeln("</script>");
+    document.writeln("</div>");
 }
 
 function _17mb_middle(){//中间广告
-    
+    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
+    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+    document.writeln("<!-- 大书包移动2 -->");
+    document.writeln("<ins class=\"adsbygoogle\"");
+    document.writeln("     style=\"display:block\"");
+    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
+    document.writeln("     data-ad-slot=\"5211512441\"");
+    document.writeln("     data-ad-format=\"auto\"></ins>");
+    document.writeln("<script>");
+    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    document.writeln("</script>");
+    document.writeln("</div>");
 }
 
 function _17mb_bottom(){//底端广告
+    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
+    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+    document.writeln("<!-- 大书包移动3 -->");
+    document.writeln("<ins class=\"adsbygoogle\"");
+    document.writeln("     style=\"display:block\"");
+    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
+    document.writeln("     data-ad-slot=\"1839243643\"");
+    document.writeln("     data-ad-format=\"auto\"></ins>");
+    document.writeln("<script>");
+    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    document.writeln("</script>");
+    document.writeln("</div>");
     
 }
 function _17mb_tj(){//统计代码
-    
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5fa0598362a3c28fb1c1a612d70a0f9c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
 }
 
