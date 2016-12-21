@@ -359,6 +359,7 @@ function loadingbook(){
         },
         error: function(err){
             console.log('ajax失败 ' + err);
+            $('#loading').fadeIn();   
             return;
         },
         dataType: 'json'
