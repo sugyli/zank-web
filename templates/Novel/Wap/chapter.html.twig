@@ -2,7 +2,7 @@
 <body id="zj">
 <header id="header" class="header dise">
     <div class="zuo pter" onClick="zuoyoufy('/');"><i class="fa fa-home fa-2x"></i></div>
-    <div class="zhong pter" onClick="zuoyoufy('{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}');">{{contentData.chapter.chaptername|slice(0, 12)}}</div>
+    <div class="zhong pter" onClick="zuoyoufy('{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}');">{{contentData.chapter.chaptername|slice(0, 10)}}</div>
     <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
     <div class="cc"></div>
     {% include 'global/wapsearch.html.twig' %} 
