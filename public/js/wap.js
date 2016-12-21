@@ -141,8 +141,8 @@ var mg = {
                             }
 
                             if (data && data.status == false && data.data < 0) {
-                                location.reload();
-                                //zuoyoufy(config.api.base + config.api.user); 
+                                //location.reload();
+                                zuoyoufy(config.api.base + config.api.user); 
                                 return;
                             };
                             if (data && data.status == false) {
@@ -267,7 +267,7 @@ function mail_del(id ,type){
         }
 
         if (data && data.status == false && data.data < 0) {
-            location.reload();
+            zuoyoufy(config.api.base + config.api.user); 
             return;
         };
         if (data && data.status == false) {
@@ -298,7 +298,7 @@ function case_del(id){
         }
 
         if (data && data.status == false && data.data < 0) {
-            location.reload();
+            zuoyoufy(config.api.base + config.api.user); 
             return;
         };
         if (data && data.status == false) {
@@ -325,7 +325,7 @@ function clock(){
 
         if (data && data.status == false && data.data < 0) {
            
-            location.reload();
+            zuoyoufy(config.api.base + config.api.user); 
             return;
         };
         if (data && data.status == false) {
@@ -401,12 +401,12 @@ function exitweb() {
             var body = {};     
             $.post(exitweb, body, function(data) {
                 if (data && data.status) {                 
-                    location.reload();
+                    zuoyoufy(config.api.base + config.api.user); 
                     return;
                 }
 
                 if (data && data.status == false && data.data < 0) {                  
-                    location.reload();
+                    zuoyoufy(config.api.base + config.api.user); 
                     return;
                 };
                 if (data && data.status == false) {
