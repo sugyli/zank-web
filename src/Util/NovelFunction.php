@@ -251,6 +251,56 @@ class NovelFunction
           
         return $bookData;
     }
+
+    //介绍加目录总数据来源
+    public static function getInfoDataBySql2(int $id)
+    {
+        //和用户书架做了耦合
+        $ci  = Application::getContainer();
+        $key = 'mulu_'. $id;
+        $oneBook = \Zank\Model\Novel\Wap\ArticleArticle::getOneBook($id);
+        $bookData = []; 
+        $maxCount = NOVELMAX;//章节最多数量    
+
+        if ($oneBook) 
+        {               
+            $total = $oneBook->ArticleChapter()
+                            ->BaseChapter()
+                            ->count();
+
+            if ($total>0 && $total <=$maxCount) 
+            {
+                $chapter = 
+                        $oneBook->ArticleChapter()
+                            ->BaseChapter()
+                            ->orderBy('chapterorder','asc')
+                            ->get();
+
+                if ($chapter && !$chapter->isEmpty()) 
+                {   
+                    //要放最前面
+                    $bookData['bookInfo'] =  $oneBook->toArray();
+                    $bookData = \Zank\Util\SourceUtil::formatNoveInfoData($bookData);
+                    $bookData['chapter'] = $chapter->toArray();
+                    $bookData['total'] = $total;
+                    //写缓存
+                    $ci->fcache->set($key, $bookData ,[                 
+                                'ttl' => MLCASE,                    
+                                'compress' => YS,             
+                            ]); 
+                }                  
+                  
+            }else{
+
+                $ci  = Application::getContainer();
+
+                $ci->importantlogger->debug("本书章节小于0或大于了{$maxCount} 一般是大于 来源2号",['bookid'=>$id]);
+
+            }
+
+        }
+
+    }
     //根据积分查等级
     public static function getNoveTitle($score)
     {

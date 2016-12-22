@@ -594,9 +594,10 @@ class Control extends UserController
             if ($this->ci->has('user')){
                 $user = $this->ci->get('user');
                 $bookCase = $user->bookcase()->where('articleid' , $bid)->first();
-                if ($bookCase) { 
-                    $key = 'mulu_'. $bid; //删除目录缓存给予最新
-                    $this->ci->fcache->delete($key);                 
+                if ($bookCase) {                    
+                    NovelFunction::getInfoDataBySql2($bid);
+                    //$key = 'mulu_'. $bid; //删除目录缓存给予最新
+                    //$this->ci->fcache->delete($key);                 
                     $bookCase->lastvisit = time();
                     if (!$bookCase->save()) {
                         $this->comlog($request , "用户点击书架链接更新最新时间失败");
