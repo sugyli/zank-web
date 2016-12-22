@@ -198,5 +198,6 @@ Application::group('/novel', function () {
     });
 
 })
+->add(\Zank\Middleware\SetNoHttpCache::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
