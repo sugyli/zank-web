@@ -315,8 +315,7 @@ class Control extends UserController
                         foreach ($articleDatas as $key => $itme) {
                             //这个数据是本数据库存在的用户数据
                             $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$itme['articleid'] , 'articleid');
-                            if ($oneBookCaseData) {
-                                
+                            if ($oneBookCaseData) {                              
                                 if ($oneBookCaseData['chapterid'] >0) {
                                     //查询章节可存在了
                                     $chaptercount = 

@@ -44,11 +44,17 @@ Application::any('/info-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wa
 //http://www.sugyli.com/wapbook-53530_1
 //http://www.sugyli.com/wapbook-53530_1/
 
+
 Application::any('/wapbook-{bookid:[1-9]\d*}[_{page:[1-9]\d*}[/]]', \Zank\Controller\Novel\Wap\Control::class.':mulu')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
 ->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->setName('novelmulu1');
+//http://www.sugyli.com/wapbook-53530/
+Application::any('/wapbook-{bookid:[1-9]\d*}/', \Zank\Controller\Novel\Wap\Control::class.':mulu')
+->add(\Zank\Middleware\InitDb::class)
+->add(\Zank\Middleware\ExceptionHandle2API::class)
+->add(new \Slim\HttpCache\Cache('private', WEBCASE));
 
 //http://www.sugyli.com/wapbook-53530/index.html
 Application::any('/wapbook-{bookid:[1-9]\d*}/index.html', \Zank\Controller\Novel\Wap\Control::class.':mulu')
