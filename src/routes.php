@@ -139,9 +139,10 @@ Application::group('/novel', function () {
         ->get('/user/usercore', \Zank\Controller\Novel\User\Control::class.':usercore')
         ->add(\Zank\Middleware\AuthenticationUserTokenByZank::class)
         ->add(\Zank\Middleware\InitDb::class)
-        ->setName('usercore');   
+        ->setName('usercore'); 
+    //用户书架  
     $this
-        ->get('/user/bookcase', \Zank\Controller\Novel\User\Control::class.':bookcase')
+        ->get('/user/bookcase[/{bookcasepage:[1-9]\d*}]', \Zank\Controller\Novel\User\Control::class.':bookcase')
         ->add(\Zank\Middleware\AuthenticationUserTokenByZank::class)
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('bookcase');

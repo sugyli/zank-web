@@ -8,6 +8,7 @@
     {% include 'global/wapusernav.html.twig' %}
 
     <div style="margin:10px;">
+        <boocase id="boocase">
         {% for caseData in caseDatas %}
             <table class='bookone' id="{{ caseData.caseid }}">
                 <tr>
@@ -25,8 +26,34 @@
         {% else %}
             <div style='border:1px solid #18C2E7;background-color:#D3FEDA;margin:10px;padding:10px;'>没有数据！</div>
         {% endfor %}
+        </boocase>
+        {% if caseDatas %}
+            {%if bookcasepage == 0 %}
+                {%if lastpage >1 %}
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': 1}) }}');">点击回到第一页</more>
+                    <table class='bookone'></table>
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}');">点击回到上一页 &uarr;</more>
+                {%elseif lastpage == 1 %}
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}');">点击回到上一页 &uarr;</more>
+                {%else%}
+                    <more class="list_more pter" >没有更多数据了</more>
+                {% endif %}
+            {% elseif bookcasepage == 1 %}
+                <more class="list_more pter" >没有更多数据了</more>
+            {% elseif bookcasepage > 1 %}
+                {%if lastpage >0 %}
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': 1}) }}');">点击回到第一页</more>
+                    <table class='bookone'></table>
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}');">点击回到上一页 &uarr;</more>
+                    <table class='bookone'></table>               
+                {% endif %}
+                <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': bookcasepage} ) }}');">点击刷新下一页 &darr;</more>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 {% include 'global/wapfoot.html.twig' %} 
+
+</script>
 </body>
 </html>

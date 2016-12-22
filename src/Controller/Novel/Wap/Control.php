@@ -290,7 +290,7 @@ class Control extends PublicController
                             if ($v['chapterid'] == $cid) {
                                 $contentData['chapter'] = $v;
                                 $key = $k;
-                                continue;
+                                break;
                             }
                         }               
                     }

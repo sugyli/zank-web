@@ -291,6 +291,9 @@ class Control extends UserController
 
     public function mbookcase(Request $request, Response $response,$args)
     {
+        $bookcasepage  = isset($args['bookcasepage']) ? intval($args['bookcasepage']) : 1;
+        $bookcasepage > 0 or $bookcasepage = 1;
+        $lastpage = 0;
         if ($this->ci->has('user')){
             $user = $this->ci->get('user');
             $jieqiSorts = NovelFunction::getNovelSort();//获取所有小说分类
@@ -312,9 +315,65 @@ class Control extends UserController
                                             
                     if ($articleDatas && !$articleDatas->isEmpty()) {
                         $articleDatas = $articleDatas->toArray(); 
+                        $offset = ($bookcasepage - 1) * USERBOOKCASEC;
+                        $count=0;
+                        $index = count($articleDatas);
+                        if ($offset >= $index){
+                            $offset = $index-1;
+
+                        }
+                         
+                        for ($i=0; $i < $index; $i++) { 
+                            
+                            if ($i >=$offset && $count<USERBOOKCASEC) {
+                                //这个数据是本数据库存在的用户数据
+                                $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$articleDatas[$i]['articleid'] , 'articleid');
+                                
+                                if ($oneBookCaseData) {                              
+                                    if ($oneBookCaseData['chapterid'] >0) {
+                                        //查询章节可存在了
+                                        $chaptercount = 
+                                                \Zank\Model\Novel\Wap\ArticleChapter::BaseChapter()
+                                                                        ->where('chapterid',$oneBookCaseData['chapterid'])
+                                                                        ->count();
+                                        if ($chaptercount>0) {
+                                            $articleDatas[$i]['nochapter'] = null;
+                                        }else{
+                                            $articleDatas[$i]['nochapter'] = "章节已经不存在了";
+                                        }
+                                    }else{
+
+                                        $articleDatas[$i]['nochapter'] = "没有添加书签";
+                                    }           
+                                    unset($articleDatas[$i]['lastvisit']);
+                                    $result = array_merge($oneBookCaseData, $articleDatas[$i]);
+                                    $caseDatas[] = $result;
+                                }
+                                $count++;
+                            }
+                            //循环20次后才会进来
+                            if ($count >=USERBOOKCASEC) {
+                                if ($i != ($index-1)) {
+                                    $lastpage = $bookcasepage -1;
+                                    $bookcasepage = $bookcasepage +1;
+                                }else{
+                                
+                                    $lastpage = $bookcasepage -1;
+                                    $bookcasepage = 0;                                   
+                                }                                
+                                break;
+                            }
+
+                        }
+                        
+                        
+                        /*
                         foreach ($articleDatas as $key => $itme) {
+
+
                             //这个数据是本数据库存在的用户数据
                             $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$itme['articleid'] , 'articleid');
+                            
                             if ($oneBookCaseData) {                              
                                 if ($oneBookCaseData['chapterid'] >0) {
                                     //查询章节可存在了
@@ -337,15 +396,18 @@ class Control extends UserController
                             }
 
                         }
-
+                        */
+                        
                     }
 
                 }
             }
-
+            
             return $this->ci->view
                     ->render($response, NOVELMB.'bookcase.html.twig', [
                         'jieqiSorts' => $jieqiSorts,
+                        'lastpage' => $lastpage,
+                        'bookcasepage'=>$bookcasepage,
                         'caseDatas' => $caseDatas,
                         'title' =>"书架(总容量{$user->bookcount}本)",
                         'webconfig' => WEBCONFIG,
@@ -584,12 +646,14 @@ class Control extends UserController
                             ->where('fromdel',0)
                             ->where('toid' , 0)
                             ->orderBy('postdate','desc') 
+                            ->take(MBOX)
                             ->get();
             }else{//收件
                 $mesDatas = $user->messages('toid')
                                 ->where('todel',0)
                                  ->where('fromid' , 0)
-                                 ->orderBy('postdate','desc') 
+                                 ->orderBy('postdate','desc')
+                                 ->take(MBOX) 
                                  ->get();
 
             }
