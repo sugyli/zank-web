@@ -21,12 +21,7 @@ Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}/index.html', \Zank\Con
 ->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
-/*
-Application::post('/novel/sort/mindexpost', \Zank\Controller\Novel\Wap\Control::class.':mIndexPost')
-->add(\Zank\Middleware\InitDb::class)
-->add(\Zank\Middleware\ExceptionHandle2API::class)
-->setName('mindexpost');
-*/
+
 //介绍
 Application::any('/info-{bookid:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':info')
 ->add(\Zank\Middleware\InitDb::class)
