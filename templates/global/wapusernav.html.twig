@@ -1,15 +1,15 @@
 <div class="usertop">
     <ul>
-        <li><a href="{{ path_for('usercore')}}" class="dise">个人信息</a></li>
-        <li><a href="{{ path_for('bookcase')}}" class="dise">我的书架</a></li>
+        <li><a href="{{ path_for('usercore')}}?{{random()}}" class="dise">个人信息</a></li>
+        <li><a href="{{ path_for('bookcase')}}?{{random()}}" class="dise">我的书架</a></li>
         <li><a href="javascript:;" onClick="clock();" class="dise">签到打卡</a></li>
     </ul>
     <div class="cc"></div>
 </div>
 <div class="usertop">
     <ul>
-        <li><a href="{{ path_for('mailbox',{'type' :1})}}" class="dise">发件箱</a></li>
-        <li><a href="{{ path_for('mailbox')}}" class="dise">收件箱</a></li>
+        <li><a href="{{ path_for('mailbox',{'type' :1})}}?{{random()}}" class="dise">发件箱</a></li>
+        <li><a href="{{ path_for('mailbox')}}?{{random()}}" class="dise">收件箱</a></li>
         <li><a href="javascript:;" onClick="mg.htemail();" class="dise">发邮件</a></li>
     </ul>
     <div class="cc"></div>
