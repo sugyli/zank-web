@@ -28,6 +28,6 @@
     define('YS', true);//开启gzcompress
     define('WEBCASE', 14400);
     define('CHANGECOOK', false);//用户每次操作是否改变COOK
-    define('USERBOOKCASEC', 30);//书架数目
+    define('USERBOOKCASEC', 20);//书架数目
     define('MBOX', 200);//邮件列出数目
     define('WEBCONFIG', ['weburl'=>NOVELURL,'mbox'=>MBOX,'webtitle'=>WEBNAME."小说网手机版",'link'=>"<a href='" .NOVELWAPURL ."'>" . WEBNAME ."</a>"]);
