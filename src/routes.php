@@ -91,7 +91,6 @@ Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}/index.html', \Zank\Cont
 ->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
-
 Application::group('/novel', function () {
     $this->any('', function (Request $request, Response $response): Response {
         return $response->withRedirect((string) "/", 302);
@@ -101,11 +100,14 @@ Application::group('/novel', function () {
         ->post('/sort/mindexpost', \Zank\Controller\Novel\Wap\Control::class.':mIndexPost')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('mindexpost');
+    $this
+        ->get('/checkup/{bookid:[1-9]\d*}', \Zank\Controller\Novel\Wap\Control::class.':upsqldata')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('checkupsql');
 
     $this
         ->any('/search', \Zank\Controller\Novel\Wap\Control::class.':search')
         ->add(\Zank\Middleware\InitDb::class)
-        ->add(\Zank\Middleware\ExceptionHandle2API::class)
         ->setName('search');
 
     $this

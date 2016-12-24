@@ -301,6 +301,27 @@ class NovelFunction
         }
 
     }
+    public static function checkUpSql(int $bookid)
+    {
+      $key = 'mulu_'. $bookid;
+      $ci  = Application::getContainer();
+      $bookData = $ci->fcache->get($key);
+      if (!$bookData) {
+          self::getInfoDataBySql2($bookid);
+      }else{
+
+          $cCount = 
+                  \Zank\Model\Novel\Wap\ArticleChapter::BaseChapter()
+                                                      ->where('articleid',$bookid)
+                                                      ->count();
+          if ($cCount>0 && $bookData['total'] != $cCount) 
+          {
+              self::getInfoDataBySql2($bookid);
+          }
+
+          unset($bookData);
+      }
+    }
     //根据积分查等级
     public static function getNoveTitle($score)
     {

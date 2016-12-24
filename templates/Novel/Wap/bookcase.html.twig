@@ -8,6 +8,7 @@
     {% include 'global/wapusernav.html.twig' %}
 
     <div style="margin:10px;">
+        <table class='bookone'><tr><font color='red'>友情提示: 默认缓存为2小时, 手动刷新会提前更新, 如果上下页无法到达, 最好手动刷新目录,从目录选择章节名然后进入内容</font></tr></table>
         <boocase id="boocase">
         {% for caseData in caseDatas %}
             <table class='bookone' id="{{ caseData.caseid }}">

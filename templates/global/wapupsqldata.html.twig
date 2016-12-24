@@ -1,0 +1,3 @@
+{%if bookid %}
+<script defer src="{{ path_for('checkupsql',{'bookid': bookid}) }}?{{random()}}"></script>
+{% endif %}

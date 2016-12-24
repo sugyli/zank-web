@@ -595,7 +595,7 @@ class Control extends UserController
                 $user = $this->ci->get('user');
                 $bookCase = $user->bookcase()->where('articleid' , $bid)->first();
                 if ($bookCase) {                    
-                    NovelFunction::getInfoDataBySql2($bid);
+                    NovelFunction::checkUpSql($bid);
                     //$key = 'mulu_'. $bid; //删除目录缓存给予最新
                     //$this->ci->fcache->delete($key);                 
                     $bookCase->lastvisit = time();

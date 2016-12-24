@@ -164,6 +164,7 @@ class Control extends PublicController
                 return $this->ci->view
                         ->render($response, $this->mbPath.'info.html.twig', [
                             'jieqiSorts' => $jieqiSorts,
+                            'bookid' => $bookid,
                             'infoData' => $infoData,
                             'webconfig' => $this->webconfig,
                             'selectjs'=> $infoData['bookInfo']['sortname'] != DFSORT ? '$(".item_'. $infoData['bookInfo']['sortid'] .'").addClass("cur");' : "",
@@ -227,6 +228,7 @@ class Control extends PublicController
                         ->render($response, $this->mbPath.'mulu.html.twig', [
                             'jieqiSorts' => $jieqiSorts,
                             'infoData' => $infoData,
+                            'bookid' => $bookid,
                             'webconfig' => $this->webconfig,
                             'jumppage' => $pageset,
                             'sort' => $sort,
@@ -351,6 +353,7 @@ class Control extends PublicController
                         return $this->ci->view
                             ->render($response, $this->mbPath.'chapter.html.twig', [
                                 'contentData' => $contentData,
+                                'bookid' => $bid,
                                 'webconfig' => $this->webconfig,
                                 'title' => "{$contentData['chapter']['chaptername']}_{$contentData['chapter']['articlename']}_{$contentData['sortname']}-{$this->title}",
                                 'keywords' => "{$contentData['chapter']['chaptername']},{$contentData['chapter']['articlename']}",
@@ -369,6 +372,7 @@ class Control extends PublicController
                 return $this->ci->view
                             ->render($response, $this->mbPath.'chapter.html.twig', [
                                 'contentData' => $contentData,
+                                'bookid' => $bid,
                                 'webconfig' => $this->webconfig,
                                 'title' => "{$contentData['chapter']['chaptername']}_{$contentData['chapter']['articlename']}_{$contentData['sortname']}-{$this->title}",
                                 'keywords' => "{$contentData['chapter']['chaptername']},{$contentData['chapter']['articlename']}",
@@ -462,6 +466,17 @@ class Control extends PublicController
                             ]);
 
 
+    }
+
+    //判断是否更新
+    public function upsqldata(Request $request, Response $response,$args)
+    {
+
+        $bookid  = isset($args['bookid']) ? intval($args['bookid']) : 0;
+        if ($bookid>0) {
+            NovelFunction::checkUpSql($bookid);
+        }
+        //return $response->write('console.log("1");');
     }
     
 } // END class Sign

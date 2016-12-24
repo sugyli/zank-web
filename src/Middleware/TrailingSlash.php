@@ -28,8 +28,18 @@ class TrailingSlash
         $uri = $request->getUri();
         $path = $uri->getPath();
         $host = $uri->getHost();
+        $in = 0;
+        foreach (SPRIT as $itme) {
+            
+            if (stristr($host, $itme)) {//存在
 
-        if (!stristr($host, SPRIT)) {//不存在
+                $in++;
+            }
+        }
+
+
+        if ($in == 0) {//不存在
+
             if ($path != '/' && substr($path, -1) == '/') {
                 // permanently redirect paths with a trailing slash
                 // to their non-trailing counterpart
@@ -38,6 +48,7 @@ class TrailingSlash
                 return $response->withRedirect((string) $uri, 301);
             }
         }
+              
 
         return $next($request, $response);
     }

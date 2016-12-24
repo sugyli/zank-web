@@ -234,7 +234,7 @@ var mg = {
 
 var config={
     api:{
-        base:'http://m.dashubao.co/',
+        base:'//www.dashubao.co/',
         verify:'novel/api/phone/get/verify',//获取验证
         forgetpass:'novel/user/forgetpass',//找回密码
         sign :'novel/user/sign',//注册
