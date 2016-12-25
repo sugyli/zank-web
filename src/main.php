@@ -13,6 +13,7 @@
     define('PAGENUM', 40);//目录默认多少分页
     define('SPRIT', ['dashubao.co','sugyli.com']);//兼容大书包处理/的问题
     define('NOVELMB', 'Novel/Wap/');//小说模板
+    define('NOVELWEBMB', 'Novel/Web/');//小说模板
     define('PAGESIZE', 30);//首页加载多少条
     define('NOVELMAX', 10001);//最大章节
     define('DFSORT', "未知分类");
