@@ -293,7 +293,8 @@ class Control extends UserController
     {
         $bookcasepage  = isset($args['bookcasepage']) ? intval($args['bookcasepage']) : 1;
         $bookcasepage > 0 or $bookcasepage = 1;
-        $lastpage = 0;
+        $lastpage = $bookcasepage -1;
+        $coming = 0;
         if ($this->ci->has('user')){
             $user = $this->ci->get('user');
             $jieqiSorts = NovelFunction::getNovelSort();//获取所有小说分类
@@ -319,8 +320,10 @@ class Control extends UserController
                         $count=0;
                         $index = count($articleDatas);
                         if ($offset >= $index){
-                            $offset = $index-1;
-
+                            $router = $this->ci->get('router');
+                            $jupurl = $router->pathFor('bookcase', ['bookcasepage'=>1]);
+                            //越界就跳转第一页
+                            return $response->withRedirect((string) $jupurl, 302);
                         }
                          
                         for ($i=0; $i < $index; $i++) { 
@@ -353,13 +356,10 @@ class Control extends UserController
                             }
                             //循环20次后才会进来
                             if ($count >=USERBOOKCASEC) {
-                                if ($i != ($index-1)) {
-                                    $lastpage = $bookcasepage -1;
+                                if ($i  < ($index-1)) {
+                                    //$lastpage = $bookcasepage -1;
+                                    $coming = 1;
                                     $bookcasepage = $bookcasepage +1;
-                                }else{
-                                
-                                    $lastpage = $bookcasepage -1;
-                                    $bookcasepage = 0;                                   
                                 }                                
                                 break;
                             }
@@ -402,6 +402,10 @@ class Control extends UserController
 
                 }
             }
+            $islastdata = 0 ;
+            if ($bookcasepage >1 && $coming ==0) {
+                $islastdata = 1;
+            }
             
             return $this->ci->view
                     ->render($response, NOVELMB.'bookcase.html.twig', [
@@ -411,6 +415,7 @@ class Control extends UserController
                         'caseDatas' => $caseDatas,
                         'title' =>"书架(总容量{$user->bookcount}本)",
                         'webconfig' => WEBCONFIG,
+                        'islastdata' => $islastdata
                     ]);
 
         }

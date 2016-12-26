@@ -196,7 +196,7 @@ class Control extends PublicController
         
         $bookid  = isset($args['bookid']) ? intval($args['bookid']) : 0;
         $page  = isset($args['page']) ? intval($args['page']) : 1;
-        $page <= 0 or  $pid = 1;
+        $page > 0 or  $page = 1;
         $sort  = isset($args['sort']) ? 'desc' : null ; //false正序
         $pagenum = PAGENUM ;//默认多少数量一页
         $router = $this->ci->get('router');

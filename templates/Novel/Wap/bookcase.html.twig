@@ -15,7 +15,7 @@
                 <tr>
                     <td>
                         <table>
-                            <tr><td class='case_name'>书名：<a href='{{ path_for('novelinfo', { 'bookid': caseData.articleid }) }}'><font color=>{{ caseData.articlename }}</font></a>{%if caseData.lastvisit < caseData.lastupdate  %}<img src="/css/novel/wap/new.gif" />{% endif %}</td></tr>
+                            <tr><td class='case_name'>书名：<a href='{{ path_for('novelinfo', { 'bookid': caseData.articleid }) }}'><font color="red">{{ caseData.articlename }}</font></a>{%if caseData.lastvisit < caseData.lastupdate  %}<img src="/css/novel/wap/new.gif" />{% endif %}</td></tr>
                             <tr><td class='case_last'>最新：{%if caseData.lastchapterid>0 %}<a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.lastchapterid}) }}'>{{ caseData.lastchapter }}</a>{% endif %}</td></tr>
                             <tr><td class='case_shuqian'>书签：{%if caseData.nochapter is not null %} {{caseData.nochapter}} {%else%} <a href='{{ path_for('readbookcase', { 'bid': caseData.articleid,'cid' : caseData.chapterid}) }}'>{{ caseData.chaptername }}</a> {%endif%}</td></tr>
                             <tr><td class='case_shuqian'>更新时间：{{ caseData.lastupdate | date('Y-m-d H:i:s') }}</td></tr>
@@ -29,27 +29,24 @@
         {% endfor %}
         </boocase>
         {% if caseDatas %}
-            {%if bookcasepage == 0 %}
-                {%if lastpage >1 %}
+
+            {%if bookcasepage > 1 %}
+                {%if islastdata > 0 %}
                     <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': 1}) }}?{{random()}}');">点击回到第一页</more>
                     <table class='bookone'></table>
                     <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}?{{random()}}');">点击回到上一页 &uarr;</more>
-                {%elseif lastpage == 1 %}
-                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}?{{random()}}');">点击回到上一页 &uarr;</more>
+                      
+                {%elseif lastpage == 0 %}
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': bookcasepage} ) }}?{{random()}}');">点击刷新下一页 &darr;</more>
                 {%else%}
-                    <more class="list_more pter" >没有更多数据了</more>
-                {% endif %}
-            {% elseif bookcasepage == 1 %}
-                <more class="list_more pter" >没有更多数据了</more>
-            {% elseif bookcasepage > 1 %}
-                {%if lastpage >0 %}
                     <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': 1}) }}?{{random()}}');">点击回到第一页</more>
                     <table class='bookone'></table>
                     <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': lastpage} ) }}?{{random()}}');">点击回到上一页 &uarr;</more>
-                    <table class='bookone'></table>               
-                {% endif %}
-                <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': bookcasepage} ) }}?{{random()}}');">点击刷新下一页 &darr;</more>
+                    <table class='bookone'></table>  
+                    <more class="list_more pter" onClick="zuoyoufy('{{ path_for('bookcase', { 'bookcasepage': bookcasepage} ) }}?{{random()}}');">点击刷新下一页 &darr;</more>  
+                {% endif %}                                
             {% endif %}
+
         {% endif %}
     </div>
 </div>
