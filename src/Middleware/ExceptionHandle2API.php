@@ -32,7 +32,15 @@ class ExceptionHandle2API
             $message = $e;
         }
 
+
         if ($message instanceof \Exception) {
+            
+            $ci  = \Zank\Application::getContainer();
+            $getRequestTarget = $request->getRequestTarget();//来路
+            $ipAddress = $request->getAttribute('ip_address')?:"未获取到IP";//Ip地址
+            $host = $request->getUri()->getHost();
+            $ci->importantlogger->debug($message,['HOST'=>$host,'请求'=>$getRequestTarget,'IP'=>$ipAddress]);
+            
             return with(new \Zank\Common\Message($response, false, $message->getMessage()))
                 ->withJson();
         }
