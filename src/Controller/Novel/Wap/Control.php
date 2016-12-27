@@ -318,7 +318,7 @@ class Control extends PublicController
                         }else{
 
                             $curl = new \Curl\Curl();
-                            $curl->setOpt(CURLOPT_TIMEOUT, 5);
+                            $curl->setOpt(CURLOPT_TIMEOUT, 5);                           
                             $curl->get($txtDir);
                             
                             if ($curl->http_status_code == '200') {
@@ -328,6 +328,10 @@ class Control extends PublicController
                                     $txtfind = 1;
                                     $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
                                     //$txt = @str_replace("\r\n","<br/>",$txt);
+                                    $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
                                     $txt = @str_replace("&nbsp;"," ",$txt); 
                                     $contentData['content'] =  $txt;
                                 }
