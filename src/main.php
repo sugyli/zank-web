@@ -24,7 +24,7 @@
     define('DAKA', 5);//打卡积分
     define('TJCASE', 180);//推荐封面缓存
     define('MLCASE', 3600);
-    define('NRCASE', 7200);
+    define('NRCASE', 3600);
     define('SCASE', 300);//搜索缓存
     define('YS', true);//开启gzcompress
     define('WEBCASE', 14400);

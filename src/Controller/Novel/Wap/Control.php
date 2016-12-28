@@ -266,57 +266,57 @@ class Control extends PublicController
 
         $bid  = isset($args['bid']) ? intval($args['bid']) : 0;
         $cid  = isset($args['cid']) ? intval($args['cid']) : 0;
-        $txtfind = 0;//判断是否抓取到了内容
+        //$txtfind = 0;//判断是否抓取到了内容
         $isimg = 0;//判断是否附件
         if ($bid >0 && $cid>0) {
+                           
+            $bookData = NovelFunction::getInfoDataBySql($bid);
 
-            $mContentKey = 'nr_'. $bid . $cid;
-            $contentData = $this->ci->fcache->get($mContentKey);
-            if (!$contentData) {
-                            
-                $bookData = NovelFunction::getInfoDataBySql($bid);
-
-                if ($bookData) {
-                    $router = $this->ci->get('router');
-                    $contentData['content'] = "章节丢失了,欢迎举报让我们修复,非常感谢！！！";
-                    $shortid = intval($bid/1000);
-                    //上下翻页
+            if ($bookData) {
+                $router = $this->ci->get('router');
+                $contentData['content'] = "章节丢失了,欢迎举报让我们修复,非常感谢！！！";
+                $shortid = intval($bid/1000);
+                //上下翻页
+                
+                $key = 0; //章节所在的索引
+                Switch($bookData['total']){
+                    case 1:                           
+                    $contentData['chapter'] = $bookData['chapter'][0];
+                    break;
+                    default:
+                    foreach($bookData['chapter'] as $k=>$v){
+                        if ($v['chapterid'] == $cid) {
+                            $contentData['chapter'] = $v;
+                            $key = $k;
+                            break;
+                        }
+                    }               
+                }
+                //在章节存在的情况下再去查内容
+                if (isset($contentData['chapter'])) {
                     
-                    $key = 0; //章节所在的索引
-                    Switch($bookData['total']){
-                        case 1:                           
-                        $contentData['chapter'] = $bookData['chapter'][0];
-                        break;
-                        default:
-                        foreach($bookData['chapter'] as $k=>$v){
-                            if ($v['chapterid'] == $cid) {
-                                $contentData['chapter'] = $v;
-                                $key = $k;
-                                break;
-                            }
-                        }               
-                    }
-                    //在章节存在的情况下再去查内容
-                    if (isset($contentData['chapter'])) {
-                        
-                        $puDIR = $shortid .'/'.$bid;
-                        $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
-                        
-                        //做了附件区别
+                    $puDIR = $shortid .'/'.$bid;
+                    $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
+                    
+                    //做了附件区别
 
-                        if (!empty($contentData['chapter']['attachment'])) {
-                            $imgobj = unserialize($contentData['chapter']['attachment']);
-                            $imghtml = "<myimgs class='contentText'>";
-                            foreach ($imgobj as  $item) {
-                                $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
-                                $imghtml .= "<img src='{$img}' />";
-                            }
-                            $imghtml .= '</myimgs>';
-                            $txtfind = 1;
-                            $isimg = 1;
-                            $contentData['content'] = $imghtml;    
-                        }else{
+                    if (!empty($contentData['chapter']['attachment'])) {
+                        $imgobj = unserialize($contentData['chapter']['attachment']);
+                        $imghtml = "<myimgs class='contentText'>";
+                        foreach ($imgobj as  $item) {
+                            $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
+                            $imghtml .= "<img src='{$img}' />";
+                        }
+                        $imghtml .= '</myimgs>';
+                        //$txtfind = 1;
+                        $isimg = 1;
+                        $contentData['content'] = $imghtml;    
+                    }else{
 
+                        $mContentKey = 'nr_'. $bid . $cid . $contentData['chapter']['lastupdate'].$contentData['chapter']['chapterorder'];
+
+                        $txt = $this->ci->fcache->get($mContentKey);
+                        if (!$txt) {
                             $curl = new \Curl\Curl();
                             $curl->setOpt(CURLOPT_TIMEOUT, 5);                           
                             $curl->get($txtDir);
@@ -325,7 +325,7 @@ class Control extends PublicController
                                 $txt = $curl->response;
                                 $txt = trim($txt);
                                 if (!empty($txt)) {
-                                    $txtfind = 1;
+                                    //$txtfind = 1;
                                     $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
                                     //$txt = @str_replace("\r\n","<br/>",$txt);
                                     $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
@@ -333,57 +333,49 @@ class Control extends PublicController
                                     $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
                                     $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
                                     $txt = @str_replace("&nbsp;"," ",$txt); 
-                                    $contentData['content'] =  $txt;
+                                    //写缓存
+                                    $this->ci->fcache->set($mContentKey, $txt ,[                 
+                                                            'ttl' => NRCASE,                    
+                                                            'compress' => YS,             
+                                                        ]);
+                                    $contentData['content'] =  $txt;  
+                                    
                                 }
-                            }                     
+                            }  
+                        }else{
+                            
+                            $contentData['content'] =  $txt;  
                         }
-                        
-                        $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
-                        $contentData['next'] = isset($bookData['chapter'][$key+1]) ? $bookData['chapter'][$key+1] : "";
-                        //计算所目录
-                        
-                        $contentData['page'] =ceil( ($key+1)/PAGENUM );
-                        $contentData['sortname'] = $bookData['bookInfo']['sortname'] ;
-                        $contentData['author'] = $bookData['bookInfo']['author'] ;
-                        $contentData['isimg'] = $isimg;
-                        if ($txtfind == 1) {
-                            //写缓存
-                            $this->ci->fcache->set($mContentKey, $contentData ,[                 
-                                                    'ttl' => NRCASE,                    
-                                                    'compress' => YS,             
-                                                ]);
-                        }
-                          
-                        return $this->ci->view
-                            ->render($response, $this->mbPath.'chapter.html.twig', [
-                                'contentData' => $contentData,
-                                'bookid' => $bid,
-                                'webconfig' => $this->webconfig,
-                                'title' => "{$contentData['chapter']['chaptername']}_{$contentData['chapter']['articlename']}_{$contentData['sortname']}-{$this->title}",
-                                'keywords' => "{$contentData['chapter']['chaptername']},{$contentData['chapter']['articlename']}",
-                                'description' =>  "{$contentData['chapter']['articlename']}是由{$contentData['author']}所写的{$contentData['sortname']}类小说， {$contentData['chapter']['chaptername']}是小说{$contentData['chapter']['articlename']}的最新章节。",    
-                            ]);
+                                         
                     }
-
-                    //章节不存在
-                    $bakurl = $router->pathFor('novelinfo', ['bookid'=>$bid]);
-                    return $response->withRedirect($bakurl, 302);
                     
+                    $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
+                    $contentData['next'] = isset($bookData['chapter'][$key+1]) ? $bookData['chapter'][$key+1] : "";
+                    //计算所目录
+                    
+                    $contentData['page'] =ceil( ($key+1)/PAGENUM );
+                    $contentData['sortname'] = $bookData['bookInfo']['sortname'] ;
+                    $contentData['author'] = $bookData['bookInfo']['author'] ;
+                    $contentData['isimg'] = $isimg;
+                
+                      
+                    return $this->ci->view
+                        ->render($response, $this->mbPath.'chapter.html.twig', [
+                            'contentData' => $contentData,
+                            'bookid' => $bid,
+                            'webconfig' => $this->webconfig,
+                            'title' => "{$contentData['chapter']['chaptername']}_{$contentData['chapter']['articlename']}_{$contentData['sortname']}-{$this->title}",
+                            'keywords' => "{$contentData['chapter']['chaptername']},{$contentData['chapter']['articlename']}",
+                            'description' =>  "{$contentData['chapter']['articlename']}是由{$contentData['author']}所写的{$contentData['sortname']}类小说， {$contentData['chapter']['chaptername']}是小说{$contentData['chapter']['articlename']}的最新章节。",    
+                        ]);
                 }
 
-            }else{
-
-                return $this->ci->view
-                            ->render($response, $this->mbPath.'chapter.html.twig', [
-                                'contentData' => $contentData,
-                                'bookid' => $bid,
-                                'webconfig' => $this->webconfig,
-                                'title' => "{$contentData['chapter']['chaptername']}_{$contentData['chapter']['articlename']}_{$contentData['sortname']}-{$this->title}",
-                                'keywords' => "{$contentData['chapter']['chaptername']},{$contentData['chapter']['articlename']}",
-                                'description' =>  "{$contentData['chapter']['articlename']}是由{$contentData['author']}所写的{$contentData['sortname']}类小说， {$contentData['chapter']['chaptername']}是小说{$contentData['chapter']['articlename']}的最新章节。",    
-                            ]);
-
-            }      
+                //章节不存在
+                $bakurl = $router->pathFor('novelinfo', ['bookid'=>$bid]);
+                return $response->withRedirect($bakurl, 302);
+                
+            }
+              
             //书不存在也跳首页
 
         }
