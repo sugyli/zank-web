@@ -313,8 +313,7 @@ class Control extends PublicController
                         $contentData['content'] = $imghtml;    
                     }else{
 
-                        $mContentKey = 'nr_'. $bid . $cid . $contentData['chapter']['lastupdate'].$contentData['chapter']['chapterorder'];
-
+                        $mContentKey = 'nr_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'].$contentData['chapter']['chapterorder'];
                         $txt = $this->ci->fcache->get($mContentKey);
                         if (!$txt) {
                             $curl = new \Curl\Curl();
