@@ -252,53 +252,80 @@ class NovelFunction
         return $bookData;
     }
 
-    //介绍加目录总数据来源
+    //jS判断用
     public static function getInfoDataBySql2(int $id)
     {
-        //和用户书架做了耦合
-        $ci  = Application::getContainer();
+
+      $isuse = 
+          \Zank\Model\Novel\Wap\Mulu::where('articleid',$id)
+                                    ->where('is_use',1)
+                                    ->count();
+      $bookData = [];
+      $ci  = Application::getContainer();                             
+      if ($isuse <= 0) {
+
         $key = 'mulu_'. $id;
-        $oneBook = \Zank\Model\Novel\Wap\ArticleArticle::getOneBook($id);
-        $bookData = []; 
+        $oneBook = \Zank\Model\Novel\Wap\ArticleArticle::getOneBook($id);        
         $maxCount = NOVELMAX;//章节最多数量    
 
         if ($oneBook) 
         {               
-            $total = $oneBook->ArticleChapter()
-                            ->BaseChapter()
-                            ->count();
+            
+          $mulu = 
+                \Zank\Model\Novel\Wap\Mulu::where('articleid',$id)
+                                            ->first();
+          if ($mulu) {
+               $mulu->is_use = 1;
+          }else{
 
-            if ($total>0 && $total <=$maxCount) 
-            {
-                $chapter = 
-                        $oneBook->ArticleChapter()
-                            ->BaseChapter()
-                            ->orderBy('chapterorder','asc')
-                            ->get();
+            $mulu = new \Zank\Model\Novel\Wap\Mulu();
+            $mulu->articleid = $id;
+            $mulu->is_use = 1;
+          } 
+          if (!$mulu->save()) {
+              $ci->importantlogger->debug("监控目录生成出现故障",['bookid'=>$id]);
+          }
 
-                if ($chapter && !$chapter->isEmpty()) 
-                {   
-                    //要放最前面
-                    $bookData['bookInfo'] =  $oneBook->toArray();
-                    $bookData = \Zank\Util\SourceUtil::formatNoveInfoData($bookData);
-                    $bookData['chapter'] = $chapter->toArray();
-                    $bookData['total'] = $total;
-                    //写缓存
-                    $ci->fcache->set($key, $bookData ,[                 
-                                'ttl' => MLCASE,                    
-                                'compress' => YS,             
-                            ]); 
-                }                  
-                  
-            }else{
 
-                $ci  = Application::getContainer();
+          $total = $oneBook->ArticleChapter()
+                          ->BaseChapter()
+                          ->count();
 
-                $ci->importantlogger->debug("本书章节小于0或大于了{$maxCount} 一般是大于 来源2号",['bookid'=>$id]);
+          if ($total>0 && $total <=$maxCount) 
+          {
+              $chapter = 
+                      $oneBook->ArticleChapter()
+                          ->BaseChapter()
+                          ->orderBy('chapterorder','asc')
+                          ->get();
 
-            }
+              if ($chapter && !$chapter->isEmpty()) 
+              {   
+                  //要放最前面
+                  $bookData['bookInfo'] =  $oneBook->toArray();
+                  $bookData = \Zank\Util\SourceUtil::formatNoveInfoData($bookData);
+                  $bookData['chapter'] = $chapter->toArray();
+                  $bookData['total'] = $total;
+                  //写缓存
+                  $ci->fcache->set($key, $bookData ,[                 
+                              'ttl' => MLCASE,                    
+                              'compress' => YS,             
+                          ]); 
+              }                  
+                
+          }else{
 
+              $ci->importantlogger->debug("本书章节小于0或大于了{$maxCount} 一般是大于",['bookid'=>$id]);
+
+          }
+          $mulu->is_use = 0;
+          if (!$mulu->save()) {
+              $ci->importantlogger->debug("监控目录生成出现故障在底部",['bookid'=>$id]);
+          }
         }
+
+      }
+      return $bookData;  
 
     }
     public static function checkUpSql(int $bookid)
@@ -306,9 +333,10 @@ class NovelFunction
       $key = 'mulu_'. $bookid;
       $ci  = Application::getContainer();
       $bookData = $ci->fcache->get($key);
+      
       if (!$bookData) {
           self::getInfoDataBySql2($bookid);
-      }else{
+      }else{ 
 
           $cCount = 
                   \Zank\Model\Novel\Wap\ArticleChapter::BaseChapter()
