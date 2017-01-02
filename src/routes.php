@@ -9,6 +9,12 @@ Application::any('/', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
+//兼容总榜
+Application::any('/top-{topname}-{id}[/]', \Zank\Controller\Novel\Wap\Control::class.':home')
+->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
+->add(\Zank\Middleware\ExceptionHandle2API::class);
+
 
 Application::any('/sort-{sortid:[1-9]\d*}-{page:[1-9]\d*}[/]', \Zank\Controller\Novel\Wap\Control::class.':home')
 ->add(\Zank\Middleware\InitDb::class)
