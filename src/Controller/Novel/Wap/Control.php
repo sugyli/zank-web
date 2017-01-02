@@ -200,7 +200,7 @@ class Control extends PublicController
         $sort  = isset($args['sort']) ? 'desc' : null ; //false正序
         $pagenum = PAGENUM ;//默认多少数量一页
         $router = $this->ci->get('router');
-        if ($bookid > 0  && $page > 0) 
+        if ($bookid > 0) 
         {
 
             $infoData = NovelFunction::getMuluData($bookid ,$page,$sort,$pagenum);
