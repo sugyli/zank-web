@@ -91,4 +91,18 @@ $container['cache'] = function (Container $c) {
     return new \Slim\HttpCache\CacheProvider();
 };
 
+$container['notFoundHandler'] = function (Container $c) {
+    return function ($request, $response) use ($c) {
+        $getRequestTarget = $request->getRequestTarget();//来路
+        $ipAddress = $request->getAttribute('ip_address')?:"未获取到IP";//Ip地址
+        $host = $request->getUri()->getHost();
+        $msg = "host:{$host} ip:{$ipAddress} 来路:{$getRequestTarget} 出现问题请检查 \n\t";
+        mylog($msg,"404.log");
+        return $c['response']
+            ->withStatus(404)
+            ->withHeader('Content-Type', 'text/html')
+            ->write("<a href='/'>本页面丢失请返回首页</a>");
+    };
+};
+
 

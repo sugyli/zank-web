@@ -2,8 +2,8 @@
 
 use Zank\Util\Yaml;
 
-function mylog($data){
-    $ts = fopen(ROOT.'/logs/syslog.log',"a+");
+function mylog($data,$fname='syslog.txt'){
+    $ts = fopen(ROOT."/logs/{$fname}","a+");
     fputs($ts,date("Y-m-d H:i:s", time())." : ".$data . PHP_EOL);
     fclose($ts);
 }
