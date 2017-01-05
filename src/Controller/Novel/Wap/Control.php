@@ -299,53 +299,52 @@ class Control extends PublicController
                     $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
                     
                     //做了附件区别
+                    $mContentKey = 'nr_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'];
+                    $txt = $this->ci->fcache->get($mContentKey);
+                    if (!$txt) {
+                        $curl = new \Curl\Curl();
+                        $curl->setOpt(CURLOPT_TIMEOUT, 5);                           
+                        $curl->get($txtDir);
+                        
+                        if ($curl->http_status_code == '200') {
+                            $txt = $curl->response;
+                            $txt = trim($txt);
+                            if (!empty($txt)) {
+                                //$txtfind = 1;
+                                $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
+                                //$txt = @str_replace("\r\n","<br/>",$txt);
+                                $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
+                                $txt = preg_replace('/<\/br\\s*?\/??>/i',PHP_EOL,$txt);
+                                $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
+                                $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
+                                $txt = @str_replace("&nbsp;"," ",$txt); 
+                                //写缓存
+                                $this->ci->fcache->set($mContentKey, $txt ,[                 
+                                                        'ttl' => NRCASE,                    
+                                                        'compress' => YS,             
+                                                    ]);
+                                $contentData['content'] =  $txt;  
+                                
+                            }else{
 
-                    if (!empty($contentData['chapter']['attachment'])) {
-                        $imgobj = unserialize($contentData['chapter']['attachment']);
-                        $imghtml = "<myimgs class='contentText'>";
-                        foreach ($imgobj as  $item) {
-                            $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
-                            $imghtml .= "<img src='{$img}' />";
-                        }
-                        $imghtml .= '</myimgs>';
-                        //$txtfind = 1;
-                        $isimg = 1;
-                        $contentData['content'] = $imghtml;    
-                    }else{
-
-                        $mContentKey = 'nr_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'];
-                        $txt = $this->ci->fcache->get($mContentKey);
-                        if (!$txt) {
-                            $curl = new \Curl\Curl();
-                            $curl->setOpt(CURLOPT_TIMEOUT, 5);                           
-                            $curl->get($txtDir);
-                            
-                            if ($curl->http_status_code == '200') {
-                                $txt = $curl->response;
-                                $txt = trim($txt);
-                                if (!empty($txt)) {
+                                if (!empty($contentData['chapter']['attachment'])) {
+                                    $imgobj = unserialize($contentData['chapter']['attachment']);
+                                    $imghtml = "<myimgs class='contentText'>";
+                                    foreach ($imgobj as  $item) {
+                                        $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
+                                        $imghtml .= "<img src='{$img}' />";
+                                    }
+                                    $imghtml .= '</myimgs>';
                                     //$txtfind = 1;
-                                    $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
-                                    //$txt = @str_replace("\r\n","<br/>",$txt);
-                                    $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
-                                    $txt = preg_replace('/<\/br\\s*?\/??>/i',PHP_EOL,$txt);
-                                    $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
-                                    $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
-                                    $txt = @str_replace("&nbsp;"," ",$txt); 
-                                    //写缓存
-                                    $this->ci->fcache->set($mContentKey, $txt ,[                 
-                                                            'ttl' => NRCASE,                    
-                                                            'compress' => YS,             
-                                                        ]);
-                                    $contentData['content'] =  $txt;  
-                                    
+                                    $isimg = 1;
+                                    $contentData['content'] = $imghtml;    
                                 }
-                            }  
-                        }else{
-                            
-                            $contentData['content'] =  $txt;  
-                        }
-                                         
+
+                            }
+                        }  
+                    }else{
+                        
+                        $contentData['content'] =  $txt;  
                     }
                     
                     $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
@@ -473,5 +472,42 @@ class Control extends PublicController
         }
         //return $response->write('console.log("1");');
     }
+
+/*
+    public function mSiteMap(Request $request, Response $response,$args)
+    {
+        $newResponse = $response->withHeader('Content-type', 'text/xml');
+
+        $pagesize = 500; //每页输出几条记录
+        $page =  isset($args['page']) ? intval($args['page']) : 0;
+        if ($page > 0) {
+
+        }else{
+
+            $total = \Zank\Model\Cms::count();//总数
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
+*/
     
 } // END class Sign
