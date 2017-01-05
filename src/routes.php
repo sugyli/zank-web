@@ -106,6 +106,12 @@ Application::group('/novel', function () {
         ->post('/sort/mindexpost', \Zank\Controller\Novel\Wap\Control::class.':mIndexPost')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('mindexpost');
+    //M搜索地图
+    $this
+        ->get('/map/msitemap[/{page:[1-9]\d*}]', \Zank\Controller\Novel\Wap\Control::class.':mSiteMap')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('msitemap');
+
     $this
         ->get('/checkup/{bookid:[1-9]\d*}', \Zank\Controller\Novel\Wap\Control::class.':upsqldata')
         ->add(\Zank\Middleware\InitDb::class)

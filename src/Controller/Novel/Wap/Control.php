@@ -473,41 +473,100 @@ class Control extends PublicController
         //return $response->write('console.log("1");');
     }
 
-/*
+
     public function mSiteMap(Request $request, Response $response,$args)
     {
         $newResponse = $response->withHeader('Content-type', 'text/xml');
 
         $pagesize = 500; //每页输出几条记录
+        $router = $this->ci->get('router');
+        $url = "http://m.dashubao.co";
         $page =  isset($args['page']) ? intval($args['page']) : 0;
         if ($page > 0) {
 
+            $total = ArticleArticle::BaseBook()->count();//总数
+            //计算总页数
+            $pagenum = ceil( $total / $pagesize );//当没有数据的时候 计算出来为0
+            if ($page > $pagenum)
+            {
+                $page = $pagenum;//分页越界
+
+            } 
+            //下一页开始的ID (0)开始
+            $offset = ($page - 1) * $pagesize;
+            $articleArticle = 
+                            ArticleArticle::BaseBook()
+                                    ->orderBy('articleid','desc')
+                                    ->skip($offset)   //偏移(Offset)
+                                    ->take($pagesize)   //限制(Limit)
+                                    ->get();
+            if ($articleArticle && !$articleArticle->isEmpty()) {
+                $articleArticle = $articleArticle->toArray(); 
+                $articleArticle = SourceUtil::formatNoveInfoData($articleArticle);
+                
+                $xml = 
+                    '<?xml version="1.0"  encoding="UTF-8" ?>
+                        <urlset>
+                        ';
+                foreach ($articleArticle as $key => $row) {
+                    $row['intro'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['intro']);
+                    $row['articlename'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['articlename']);
+                    $xml .= 
+                         '<url>
+                            <loc>' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).'</loc>
+                            <changefreq>monthly</changefreq>
+                            <priority>0.5</priority>
+                            <data>
+                            <display>
+                            <title>' . htmlspecialchars($row['articlename']) . '</title>
+                            <content>' . htmlspecialchars($row['intro']) . '</content>
+                            <pubTime>' . date('Y-m-d', $row['lastupdate']) . 'T' . date('H:i:s', $row['lastupdate']) . '</pubTime>
+                            ';
+
+                    $xml .= '<thumbnail loc="' . $row['cover'] .'" />';
+                    $xml .= '<image loc="' . $row['cover'] .'" title="' . htmlspecialchars($row['articlename']) . '"/>';
+
+
+                    $xml .= '
+                            </display>
+                            </data>
+                            </url>
+                            ';
+                            
+                            
+                }
+                $xml .= '</urlset>';
+                return $newResponse->write($xml);
+            }             
         }else{
 
-            $total = \Zank\Model\Cms::count();//总数
+            $total = ArticleArticle::BaseBook()->count();//总数
 
+            if($total >0){
+                //计算总页数
+                $pagenum = ceil( $total / $pagesize );//当没有数据的时候 计算出来为0
+                $xml = 
+                    '<?xml version="1.0"  encoding="UTF-8" ?>
+                        <sitemapindex>
+                        ';
+                for($p = 1; $p <= $pagenum; $p++)
+                {
+                    $url1 = $url . $router->pathFor('msitemap', ['page'=>$p]);
+                    $xml .=
+                            '<sitemap>
+                            <loc>' . $url1 . '</loc>
+                            </sitemap>
+                            ';
+                }        
+                $xml .= '</sitemapindex>';
+                return $newResponse->write($xml);
 
-
-
-
-
-
-
-
-
+            }
         }
 
-
-
-
-
-
-
-
-
-
+        $this->comlog($request ,'搜索地图出现BUG');
 
     }
-*/
+
     
 } // END class Sign
