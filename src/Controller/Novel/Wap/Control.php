@@ -478,7 +478,7 @@ class Control extends PublicController
     {
         $newResponse = $response->withHeader('Content-type', 'text/xml');
 
-        $pagesize = 500; //每页输出几条记录
+        $pagesize = 300; //每页输出几条记录
         $router = $this->ci->get('router');
         $url = "http://m.dashubao.co";
         $page =  isset($args['page']) ? intval($args['page']) : 0;
@@ -503,7 +503,6 @@ class Control extends PublicController
             if ($articleArticle && !$articleArticle->isEmpty()) {
                 $articleArticle = $articleArticle->toArray(); 
                 $articleArticle = SourceUtil::formatNoveInfoData($articleArticle);
-                
                 $xml = 
                     '<?xml version="1.0"  encoding="UTF-8" ?>
                         <urlset>
@@ -511,27 +510,44 @@ class Control extends PublicController
                 foreach ($articleArticle as $key => $row) {
                     $row['intro'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['intro']);
                     $row['articlename'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['articlename']);
+                    $row['author'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['author']);
                     $xml .= 
                          '<url>
-                            <loc>' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).'</loc>
-                            <changefreq>monthly</changefreq>
-                            <priority>0.5</priority>
+                            <loc><![CDATA[' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).']]></loc>
+                            <lastmod>'. date('Y-m-d', $row['lastupdate']) . 'T' . date('H:i:s', $row['lastupdate']) . '</lastmod>
+                            <changefreq>always</changefreq>
+                            <priority>1.0</priority>
                             <data>
-                            <display>
-                            <title>' . htmlspecialchars($row['articlename']) . '</title>
-                            <content>' . htmlspecialchars($row['intro']) . '</content>
-                            <pubTime>' . date('Y-m-d', $row['lastupdate']) . 'T' . date('H:i:s', $row['lastupdate']) . '</pubTime>
-                            ';
-
-                    $xml .= '<thumbnail loc="' . $row['cover'] .'" />';
-                    $xml .= '<image loc="' . $row['cover'] .'" title="' . htmlspecialchars($row['articlename']) . '"/>';
-
-
-                    $xml .= '
-                            </display>
+                                <name>'. htmlspecialchars($row['articlename']) .'</name>
+                                <author>
+                                    <name>'. htmlspecialchars($row['author']) .'</name>
+                                </author>    
+                                <image><![CDATA['. $row['cover'] .']]></image>
+                                <description><![CDATA['. htmlspecialchars($row['intro']) .']]></description>
+                                <alternativeHeadline/>
+                                <genre>'.$row['sortname'].'</genre>
+                                <url><![CDATA[' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).']]></url>
+                                <updateStatus>更新中</updateStatus>
+                                <trialStatus>免费</trialStatus>
+                                <keywords/>
+                                <newestChapter>
+                                    <articleSection>'. htmlspecialchars($row['articlename']) .'</articleSection>
+                                    <headline>'.htmlspecialchars($row['lastchapter']).'</headline>
+                                    <url>
+                                        <![CDATA['. $url . $router->pathFor('novelcontent', ['bid'=>$row['articleid'] , 'cid'=>$row['lastchapterid']]).']]>
+                                    </url>
+                                    <dateModified>'.date('Y-m-d', $row['lastupdate']) .'</dateModified>
+                                </newestChapter>    
+                                <dateModified>'.date('Y-m-d', $row['lastupdate']) .'</dateModified>
+                                <listPage>
+                                    <headline>'. htmlspecialchars($row['articlename']) .'</headline>
+                                    <url>
+                                        <![CDATA[' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).']]>
+                                    </url>
+                                    <itemCount>1</itemCount>
+                                </listPage>
                             </data>
-                            </url>
-                            ';
+                          </url>';
                             
                             
                 }
