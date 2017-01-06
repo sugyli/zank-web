@@ -98,7 +98,7 @@ Application::any('/wapbook-{bid:[1-9]\d*}-{cid:[1-9]\d*}/index.html', \Zank\Cont
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
 //M搜索地图
-Application::any('/map/msitemap[/{page:[1-9]\d*}]', \Zank\Controller\Novel\Wap\Control::class.':mSiteMap')
+Application::any('/map/msitemap/[{page:[1-9]\d*}]', \Zank\Controller\Novel\Wap\Control::class.':mSiteMap')
 ->add(\Zank\Middleware\InitDb::class)
 ->add(new \Slim\HttpCache\Cache('private', WEBCASE))
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
