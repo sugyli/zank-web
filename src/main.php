@@ -31,4 +31,4 @@
     define('CHANGECOOK', false);//用户每次操作是否改变COOK
     define('USERBOOKCASEC', 20);//书架数目
     define('MBOX', 200);//邮件列出数目
-    define('WEBCONFIG', ['weburl'=>NOVELURL,'mbox'=>MBOX,'webtitle'=>WEBNAME."小说网手机版",'link'=>"<a href='" .NOVELWAPURL ."'>" . WEBNAME ."</a>"]);
+    define('WEBCONFIG', [ 'murl'=>NOVELWAPURL,'weburl'=>NOVELURL,'mbox'=>MBOX,'webtitle'=>WEBNAME."小说网手机版",'link'=>"<a href='" .NOVELWAPURL ."'>" . WEBNAME ."</a>"]);

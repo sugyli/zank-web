@@ -355,8 +355,8 @@ class Control extends PublicController
                     $contentData['sortname'] = $bookData['bookInfo']['sortname'] ;
                     $contentData['author'] = $bookData['bookInfo']['author'] ;
                     $contentData['isimg'] = $isimg;
-                
-                      
+                    $contentData['cover'] = $bookData['bookInfo']['cover'];
+                    unset($bookData);
                     return $this->ci->view
                         ->render($response, $this->mbPath.'chapter.html.twig', [
                             'contentData' => $contentData,

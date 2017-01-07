@@ -29,12 +29,34 @@
 
     <article id="nr">
         {%if contentData.isimg > 0%}{{ contentData.content |raw }}{%else%}{{ contentData.content |nl2br }}{%endif%}
-      
+
         <div id="zuoyoufy">
             <div class="zuo" onClick="zuoyoufy('{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
             <div class="you" onClick="zuoyoufy('{%if contentData.next != "" %}{{ path_for('novelcontent', { 'bid': contentData.next.articleid ,'cid':contentData.next.chapterid }) }}{%else%}{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}')"></div>
         </div>
     </article>
+    <div class='share'>
+        <span class='bdsharebuttonbox'> 
+            <a href='javascript:;' class='bds_tsina' data-cmd='tsina' title='分享到新浪微博'></a>
+            <a href="javascript:;" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+            <a href="javascript:;" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+        </span>
+    </div>
+    <script type='text/javascript'>
+        window._bd_share_config = {
+                common : {
+                    bdText : "{{ contentData.chapter.articlename }} 这本小说实在太好看,我连续看了几天都没睡觉了,有喜欢看小说的朋友可以看看,强烈推荐!", 
+                    bdDesc : "{{ contentData.chapter.articlename }} 这本小说实在太好看,我连续看了几天都没睡觉了,有喜欢看小说的朋友可以看看,强烈推荐。", 
+                    bdUrl : "{{ webconfig.murl }}{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}",     
+                    bdPic : "{{ contentData.cover }}"
+                },
+                share : [{
+                    'bdSize' : 32
+                }],
+        }
+        //百度分享
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
 
   <script>_17mb_middle()</script>
     <div class="nr_page">
@@ -47,6 +69,7 @@
 {#回顶部的标签#}
 <div id="back-to-top">
   <a class="stop" href="javascript:"><span></span></a>
+  {#<a class="scmt" href="javascript:"><span></span></a>#}
 </div>
 {% include 'global/wapfoot.html.twig' %} 
 </body>
