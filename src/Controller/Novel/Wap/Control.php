@@ -511,6 +511,7 @@ class Control extends PublicController
                     $row['intro'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['intro']);
                     $row['articlename'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['articlename']);
                     $row['author'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['author']);
+                    $row['lastchapter'] = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/', '', $row['lastchapter']);
                     $xml .= 
                          '<url>
                             <loc><![CDATA[' . $url . $router->pathFor('novelinfo', ['bookid'=>$row['articleid']]).']]></loc>
