@@ -567,7 +567,7 @@ class Control extends PublicController
                         ';
                 for($p = 1; $p <= $pagenum; $p++)
                 {
-                    $url1 = $url . $router->pathFor('msitemap', ['page'=>$p]);
+                    $url1 = $url . $router->pathFor('mbookmap', ['page'=>$p]);
                     $xml .=
                             '<sitemap>
                             <loc>' . $url1 . '</loc>
