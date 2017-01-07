@@ -110,6 +110,11 @@ Application::any('/map/mbookmap/{page:[1-9]\d*}', \Zank\Controller\Novel\Wap\Con
 ->add(\Zank\Middleware\ExceptionHandle2API::class)
 ->setName('mbookmap');
 
+Application::any('/map/mnewbookmap/{page:[1-9]\d*}', \Zank\Controller\Novel\Wap\Control::class.':mSiteMap')
+->add(\Zank\Middleware\InitDb::class)
+->add(new \Slim\HttpCache\Cache('private', WEBCASE))
+->add(\Zank\Middleware\ExceptionHandle2API::class);
+
 Application::group('/novel', function () {
     $this->any('', function (Request $request, Response $response): Response {
         return $response->withRedirect((string) "/", 302);
