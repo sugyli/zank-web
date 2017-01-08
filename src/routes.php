@@ -139,7 +139,7 @@ Application::get('/attach/{id:\d+}[/{type:[0|1]}]', function (Request $request, 
     if (!$attach/* || file_exists(($ossPath = 'oss://'.$attach->path)) === false*/) {
         return $response
             ->withStatus(404)
-            ->write('Page not found.');
+            ->write('not found.');
     }
 
     $url = attach_url($attach->path);
