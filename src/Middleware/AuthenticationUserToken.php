@@ -31,7 +31,7 @@ class AuthenticationUserToken
                 ->withJson();
 
         // 是否过期
-        } elseif ($token->updated_at->diffInSeconds(Carbon::now()) >= (60 * 60 * 24)) {
+        } elseif ($token->updated_at->diffInSeconds(Carbon::now()) >= (60 * 60 * 24 * 7)) {
             return with(new \Zank\Common\Message($response, false, '登陆过期', -2))
                 ->withJson();
 
