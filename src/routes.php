@@ -125,7 +125,10 @@ Application::group('/api', function () {
         ->add(\Zank\Middleware\InitDb::class);
 
     // 首页用户
-    // $this->any('/users', \Zank\Controller)
+    $this->post('/users', \Zank\Controller\Api\User::class.':gets')
+        ->add(\Zank\Middleware\AuthenticationUserToken::class)
+        ->add(\Zank\Middleware\InitDb::class);
+
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
