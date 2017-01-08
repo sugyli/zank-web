@@ -45,7 +45,10 @@ class User extends Controller
                 ->withJson();
         }
 
-        $users = Model\User::byUserName(sprintf('%%s%', $key))
+        $users = Model\User::where('username', 'like', '%'.$key.'%')
             ->get();
+
+        return with(new \Zank\Common\Message($response, true, '', $users->toArray()))
+            ->withJson();
     }
 }

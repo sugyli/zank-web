@@ -119,12 +119,14 @@ Application::group('/api', function () {
                 ->add(\Zank\Middleware\User\Change\Username::class);
 
             //  搜索用户接口
-            $this
-                ->post('search', \Zank\Controller\Api\User::class.':search')
-            ;
+            $this->post('/search', \Zank\Controller\Api\User::class.':search');
         })
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
+
+    // 首页用户
+    // $this->any('/users', \Zank\Controller)
+
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 

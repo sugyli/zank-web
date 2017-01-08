@@ -19,6 +19,8 @@ class User extends Model
 
     protected $primaryKey = 'user_id';
 
+    protected $hidde = ['password', 'hash'];
+
 
     /**
      * 用于设置查询条件为phone的快捷方法.
