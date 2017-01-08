@@ -133,7 +133,7 @@ class User extends Controller
             });
         }
 
-        $users = $users->toSql();
+        $users = $users->get();
 
         if (!$users->count()) {
             return with(new \Zank\Common\Message($response, false, '没有用户'))->withJson();
