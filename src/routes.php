@@ -126,7 +126,6 @@ Application::group('/api', function () {
 
     // 首页用户
     // $this->any('/users', \Zank\Controller)
-
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
