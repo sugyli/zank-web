@@ -2,12 +2,12 @@
 
 namespace Zank\Controller\Api;
 
+use Geohash\Geohash;
+use Illuminate\Database\Eloquent\Builder;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Zank\Controller;
 use Zank\Model;
-use Geohash\Geohash;
-use Illuminate\Database\Eloquent\Builder;
 
 class User extends Controller
 {

@@ -128,7 +128,6 @@ Application::group('/api', function () {
     $this->post('/users', \Zank\Controller\Api\User::class.':gets')
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
-
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
