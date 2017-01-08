@@ -512,8 +512,8 @@ $(function(){
     }); 
 });
 
-//广告开始
-function _17mb_top(){//顶部广告
+
+function _17mb_shouyetop(){//顶部广告
     document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
     document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
     document.writeln("<!-- dashubao移动1 -->");
@@ -526,6 +526,16 @@ function _17mb_top(){//顶部广告
     document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
     document.writeln("</script>");
     document.writeln("</div>");
+}
+function _17mb_shouyemiddle(){//顶部广告
+    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+}
+
+//广告开始
+function _17mb_top(){//顶部广告
+
+    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+
 }
 
 function _17mb_middle(){//中间广告
