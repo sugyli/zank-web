@@ -1,0 +1,19 @@
+# zank - 头像上传
+
+## 接口
+```
+/upload/avatar
+```
+
+## 请求体
+附件文件
+
+
+## 返回体
+```json5
+{
+  "status": true, // 是否成功
+  "message": "更新成功", // 消息
+  "data": null
+}
+```
