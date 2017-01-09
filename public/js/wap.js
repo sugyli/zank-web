@@ -535,7 +535,7 @@ function _17mb_shouyetop(){//顶部广告
     document.writeln("</div>");
 }
 function _17mb_shouyemiddle(){//顶部广告
-    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+    document.writeln("<script async src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
 }
 
 function _17mb_shouyebottom(){//底端广告
@@ -556,7 +556,7 @@ function _17mb_shouyebottom(){//底端广告
 //info
 function _17mb_infotop(){//顶部广告
 
-    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+    document.writeln("<script async src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
 
 }
 
@@ -626,7 +626,7 @@ function _17mb_mulubottom(){//底端广告
 //nr
 function _17mb_nrtop(){//顶部广告
 
-    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+    document.writeln("<script async src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
 
 }
 
@@ -664,7 +664,7 @@ function _17mb_nrbottom(){//底端广告
 //通用
 function _17mb_top(){//顶部广告
 
-    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+   document.writeln("<script async src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
 
 }
 
