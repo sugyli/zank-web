@@ -16,7 +16,7 @@
     </div>
 </header>
 <section id="tj" class="fk">
-<script>_17mb_shouyetop()</script>
+<addiv><script>_17mb_shouyetop()</script></addiv>
   <div class="tjtop xbk">新书推荐</div>
     <ul>
       {% for key,picTuiJian in picTuiJians %}
@@ -25,27 +25,26 @@
         <div class="cc"></div>
     </ul>
 </section>
-<script>_17mb_shouyemiddle()</script>
+<addiv><script>_17mb_shouyemiddle()</script></addiv>
 <section id="rmtj" class="fk">
-    <div class="xbk">{{ sortname ? sortname : '最新更新' }} </div>
-      <gundong id="content_list">
-        {% for key,articleData in articleDatas %}
-          <ul class="xbk" onClick="window.location.href='{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}'">
-            <li class="tjimg"><img src="{{articleData.cover}}" onerror="this.src='/css/noimg.jpg'" /></li>
-            <li class="tjxs">
-              <span class="xsm"><a href="{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}" title="{{articleData.articlename}}">{{articleData.articlename|slice(0, 7)}}</a></span>
-              <span class="">作者：{{articleData.author|slice(0, 12)}}</span>
-              <span class="">{{articleData.intro}}</span>
-              <span class="tjrs"><i>{{articleData.time}}</i></span>
-            </li>
-          </ul>
-        {% endfor %} 
-      </gundong>
-
-      <more class="list_more pter" id="loading" onClick="loadingbook();">点击加载更多 &darr;</more>
-      <more class="list_more" id="nomoreresults" style="display:none">所有内容加载完毕</more>
-
-    </section>
+  <div class="xbk">{{ sortname ? sortname : '最新更新' }} </div>
+  <gundong id="content_list">
+    {% for key,articleData in articleDatas %}
+      <ul class="xbk" onClick="window.location.href='{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}'">
+        <li class="tjimg"><img src="{{articleData.cover}}" onerror="this.src='/css/noimg.jpg'" /></li>
+        <li class="tjxs">
+          <span class="xsm"><a href="{{ path_for('novelinfo', { 'bookid': articleData.articleid }) }}" title="{{articleData.articlename}}">{{articleData.articlename|slice(0, 7)}}</a></span>
+          <span class="">作者：{{articleData.author|slice(0, 12)}}</span>
+          <span class="">{{articleData.intro}}</span>
+          <span class="tjrs"><i>{{articleData.time}}</i></span>
+        </li>
+      </ul>
+    {% endfor %} 
+  </gundong>
+  <more class="list_more pter" id="loading" onClick="loadingbook();">点击加载更多 &darr;</more>
+  <more class="list_more" id="nomoreresults" style="display:none">所有内容加载完毕</more>
+</section>
+<addiv><script>_17mb_shouyebottom();</script></addiv>
 
 {%if sortid ==0 %}
   <section class="youlian">

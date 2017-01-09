@@ -9,7 +9,7 @@
 </header>
 <section class="zj" >
   <div class="nr_shezhi bk1" style="margin-top: 60px">
-  <script>_17mb_top()</script>
+  <addiv><script>_17mb_nrtop()</script></addiv>
       <div class="shezhi1" style="margin-top: 5px">
           <div class="dise">字体</div><div id="b" class="dise pter">大</div> <div id="m" class="dise pter">中</div> <div id="s" class="dise pter">小</div>
       </div>
@@ -58,7 +58,7 @@
         with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
     </script>
 
-  <script>_17mb_middle()</script>
+  <addiv><script>_17mb_nrmiddle()</script></addiv>
     <div class="nr_page">
       <a class="dise" href="{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}">上一章</a>
         <a class="dise" href="{{ path_for('novelmulu1', { 'bookid': contentData.chapter.articleid ,'page':contentData.page }) }}">目录</a>
@@ -66,6 +66,7 @@
         <div class="cc"></div>
     </div>
 </section>
+<addiv><script>_17mb_nrbottom();</script></addiv>
 {#回顶部的标签#}
 <div id="back-to-top">
   <a class="stop" href="javascript:"><span></span></a>

@@ -2,7 +2,7 @@
 <body>
 {% include 'global/wapnav.html.twig' %} 
 <section id="zjlb" class="zjlb">
-<script>_17mb_top()</script>
+<addiv><script>_17mb_mulutop()</script></addiv>
   <div class="fenye">
       <div class="fy">{{jumppage|raw}}</div>
         <div class="desc"><span>{%if sort is null %}<a href="{{ path_for('novelmulu2', { 'bookid': infoData.bookInfo.articleid ,'page':1 , 'sort' : 1}) }}" class="dise r2">倒序</a>{%else%}<a href="{{ path_for('novelmulu1', { 'bookid': infoData.bookInfo.articleid ,'page':1 }) }}" class="dise r2">正序</a>{% endif %}</span></div>
@@ -20,6 +20,7 @@
         <div class="cc"></div>
     </div>
 </section>
+<addiv><script>_17mb_mulubottom();</script></addiv>
 {% include 'global/wapupsqldata.html.twig' %} 
 {% include 'global/wapfoot.html.twig' %} 
 </body>
