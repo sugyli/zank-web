@@ -475,7 +475,7 @@ class Control extends PublicController
             } 
 
         }else{
-            $search_key = "请输入查询条件";
+            $search_key = "没有输入查询条件将会是";
         }
         $jieqiSorts = NovelFunction::getNovelSort();  
         return $this->ci->view
