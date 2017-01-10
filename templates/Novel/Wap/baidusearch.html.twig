@@ -34,7 +34,9 @@
    <script>_17mb_tj();</script>
 </section> 
 <script type="text/javascript">
-    
+    if(navigator.userAgent.indexOf('UCBrowser') > -1) {
+        zuoyoufy("{{ path_for('search') }}");
+    }
     var cse;
     var curpage = 1;
     var isstop = false;
