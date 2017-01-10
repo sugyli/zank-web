@@ -29,7 +29,7 @@ a:hover{color:red}
 .page2{border-width:1px;border-style:solid; text-align:center;margin:2%;border-radius:2px;padding:5px 0px;}
 
 
-#header{color:#fff;height:46px; line-height:46px;position:fixed; z-index:1;top:0; width:100%;}
+#header{color:#fff;height:46px; line-height:46px;position:fixed; z-index:2147483647;top:0; width:100%;}
 #header .zuo{float:left;width:50px; text-align:center;}
 #header .zuo i , #header .you i{vertical-align: middle;}
 #header .zhong{ position:absolute;left:100px;right:100px;text-align:center;font-weight:bold;}
@@ -48,11 +48,12 @@ a:hover{color:red}
 #header .indexyou .search{background-image:url('search.png');}
 #nav{border-bottom-width:1px;border-bottom-style:solid; background-color:#fff}
 #nav ul li{float:left;width:25%;margin:10px 0px; text-align:center}
-#search{display:none;width:100%;float:right;padding:10px;}
-#search #type{color: blue;font-weight:bold;border-width:1px;border-style:solid;float:right;width:18%;height:30px; line-height:30px; text-align:center;border-radius:2px;margin-right:1%}
-#search #s_key{display:block;float:right;width:55%;padding:0px 1%;margin-top:0px;height:30px;text-align:left;border-radius:2px 0px 0px 2px;border-width:1px;color:#999}
+#search{width:100%;float:right;padding:10px;}
+#search #type{color: blue;font-weight:bold;border-width:1px;border-style:solid;float:right;width:25%;height:30px; line-height:30px; text-align:center;border-radius:2px;margin-right:1%}
+#search #type1{color: blue;font-weight:bold;border-width:1px;border-style:solid;float:right;width:25%;height:30px; line-height:30px; text-align:center;border-radius:2px;margin-right:1%}
+#search #s_key{display:block;float:right;width:50%;padding:0px 1%;margin-top:0px;height:30px;text-align:left;border-radius:2px 0px 0px 2px;border-width:1px;color:#999}
 #search .go{display:block;float:right;width:15%;height:32px;border-width:0px;background-image:url('search.png'); background-repeat:no-repeat; background-position:center;border-radius:0px 2px 2px 0px;}
-#tj {margin-top: 115px;}
+
 #tj ul{margin:10px;}
 #tj .tjtop{border-bottom-width:1px; border-bottom-style:solid;padding:5px 10px;}
 #tj ul li{float:left;overflow:hidden;text-align:center;width:32%;margin-right:2%;}
@@ -109,17 +110,17 @@ a:hover{color:red}
 .zxjz .gengduo a{color:#666; font-family:Verdana, Geneva, sans-serif; display:block}
 #xinxi .jianjie{border-top-width:1px;border-top-style:dashed;margin-top:8px;padding-top:8px;}
 .bdtj{padding:5px;}
-.zjlb{margin-top: 115px;}
+
 .zjlb .lb a{ display:block;border-bottom-width:1px;border-bottom-style:solid; height:35px;line-height:35px;margin:0px 5px;}
 .zjlb .lb .last{border-bottom-width:0px;}
 .fenye{margin:10px;}
 .fenye .fy{float:left;width:75%;margin-left:1%;margin-right:2%;margin-left:0px;}
-.fenye .showpage{position:fixed;display:none;width:80%;height:60%;top:15%;left:10%;background-color:#fff;z-index:9999}
+.fenye .showpage{position:fixed;display:none;width:80%;height:60%;top:15%;left:10%;background-color:#fff;z-index:2147483647}
 .fenye .showpage ul{ position:absolute;top:40px;bottom:0px;left:10px;right:10px;overflow:auto;}
 .fenye .showpage .this{ background:right center no-repeat url('yes.gif')}
 .fenye .showpage div{border-bottom-style:solid;border-bottom-width:1px; height:40px; line-height:40px; text-align:center}
 .fenye .showpage a{ display:block;border-bottom-style:solid;border-bottom-width:1px; height:40px; line-height:40px;margin:0px 10px; font-size:12px;}
-#spagebg{display:none;position:absolute;left:0px;right:0px;top:0px;background-color:#000;z-index:999;}
+#spagebg{display:none;position:absolute;left:0px;right:0px;top:0px;background-color:#000;z-index:2147483647;}
 .spage{width:100%; height:30px; line-height:30px;border-style:solid;border-width:1px;padding:0px 5px; text-align:center;border-color:#1ABC9C;background:#fff no-repeat center right url('list2.png');border-radius:3px;}
 .fenye .desc{float:right;width:18%;margin-right:0%;}
 .fenye .desc a{display:block;color:#fff; text-align:center;height:30px; line-height:30px;}
@@ -175,12 +176,15 @@ a:hover{color:red}
 #footer{ text-align:center;padding:10px;margin:10px;}
 #footer a{padding:0 10px;}
 /*分界*/
+#tool{display:none;width:100%;float:right;padding:10px;}
+.nav{border-bottom-width:1px;border-bottom-style:solid; background-color:#fff}
+.nav ul li{float:left;width:25%;margin:10px 0px; text-align:center}
 .top_menu{  
     overflow: hidden;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     position:relative;
-    z-index:100000;
+    z-index:0;
     width:100%;
     border-bottom:1px solid #ddd;
     border-color: #CCC;
@@ -195,8 +199,8 @@ a:hover{color:red}
     color: #505050;
     text-decoration: none;
     font-size: 17px;
-    line-height: 26px;
-    height: 26px;
+    line-height: 40px;
+    height: 40px;
     padding:  margin:10px 0px;
     -webkit-tap-highlight-color: rgba(0,0,0,.3);
 }
@@ -212,8 +216,10 @@ a:hover{color:red}
     padding: 10px 0px;
 }
 .cur{color: #f85959;}
+.curfontweight{font-weight:bold}
 .pter{cursor:pointer;}
 .homefont{font-size: 18px}
+
 /*返回顶部*/
 #back-to-top{ position:fixed; bottom:20px; right:20px; display:none;}
 #back-to-top a{background:#D43D3D; opacity:0.8;filter:alpha(opacity=80); display:block; height:40px; width:40px;margin-bottom:10px;}
@@ -268,3 +274,4 @@ textarea.userselect {
 .share .bdsharebuttonbox a.bds_tsina{background:url(sina.png) no-repeat;background-size:50px; }
 .share .bdsharebuttonbox a.bds_tqq{background:url(tqq.png) no-repeat;background-size:50px;margin:0px 20px;}
 .share .bdsharebuttonbox a.bds_qzone{background:url(qzone.png) no-repeat;background-size:50px;}
+

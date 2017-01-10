@@ -1,22 +1,15 @@
 {% include 'global/waphead.html.twig' %}   
 <body>
-<header id="header" class="header dise">
+<header id="header1" class="dise">
     <div class="zuo pter" onClick="zuoyoufy('{{ path_for('usercore') }}?{{random()}}')"><i class="fa fa-user fa-2x"></i></div>
     <div class="zhong homefont">{{webname}}</div>
-    <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
+    <div class="you pter" id="showtool"><i class="fa fa-server fa-2x"></i></div>
     <div class="cc"></div>
-    {% include 'global/wapsearch.html.twig' %} 
-    <div id="nav" class="top_menu">
-      <div class="top_menu_list">
-        <a href="/" class="btn item_0" scroll-left="0">首页</a>
-        {% for key,jieqiSort in jieqiSorts %}
-          <a href="{{ path_for('novelsort', { 'sortid': jieqiSort.sortid ,'page':1}) }}" class="btn item_{{ jieqiSort.sortid }}" scroll-left="0">{{ jieqiSort.shortname|e }}</a>
-        {% endfor %} 
-      </div>
-    </div>
 </header>
+{% include 'global/waptool.html.twig' %} 
+{% include 'global/wapfenlei.html.twig' %} 
+<script>_17mb_shouyetop()</script>
 <section id="tj" class="fk">
-<addiv><script>_17mb_shouyetop()</script></addiv>
   <div class="tjtop xbk">新书推荐</div>
     <ul>
       {% for key,picTuiJian in picTuiJians %}
@@ -25,7 +18,7 @@
         <div class="cc"></div>
     </ul>
 </section>
-<addiv><script>_17mb_shouyemiddle()</script></addiv>
+<script>_17mb_shouyemiddle()</script>
 <section id="rmtj" class="fk">
   <div class="xbk">{{ sortname ? sortname : '最新更新' }} </div>
   <gundong id="content_list">
@@ -44,7 +37,7 @@
   <more class="list_more pter" id="loading" onClick="loadingbook();">点击加载更多 &darr;</more>
   <more class="list_more" id="nomoreresults" style="display:none">所有内容加载完毕</more>
 </section>
-<addiv><script>_17mb_shouyebottom();</script></addiv>
+<script>_17mb_shouyebottom();</script>
 
 {%if sortid ==0 %}
   <section class="youlian">

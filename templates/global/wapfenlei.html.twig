@@ -1,0 +1,8 @@
+<div class="nav top_menu">
+  <div class="top_menu_list">
+    <a href="/" class="btn item_0" scroll-left="0">首页</a>
+    {% for key,jieqiSort in jieqiSorts %}
+      <a href="{{ path_for('novelsort', { 'sortid': jieqiSort.sortid ,'page':1}) }}" class="btn item_{{ jieqiSort.sortid }}" scroll-left="0">{{ jieqiSort.shortname|e }}</a>
+    {% endfor %} 
+  </div>
+</div>

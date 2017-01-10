@@ -356,9 +356,14 @@ class Control extends PublicController
                     $contentData['author'] = $bookData['bookInfo']['author'] ;
                     $contentData['isimg'] = $isimg;
                     $contentData['cover'] = $bookData['bookInfo']['cover'];
+                    //判断属于哪个分类
+                    $selectjs= $bookData['bookInfo']['sortname'] != DFSORT ? '$(".item_'. $bookData['bookInfo']['sortid'] .'").addClass("cur");' : "";
                     unset($bookData);
+                    $jieqiSorts = NovelFunction::getNovelSort();//获取所有小说分类
                     return $this->ci->view
                         ->render($response, $this->mbPath.'chapter.html.twig', [
+                            'jieqiSorts' => $jieqiSorts,
+                            'selectjs' => $selectjs,
                             'contentData' => $contentData,
                             'bookid' => $bid,
                             'webconfig' => $this->webconfig,
@@ -379,6 +384,30 @@ class Control extends PublicController
         }
         //全不对跳首页
         return $response->withRedirect((string) "/", 302);
+
+    }
+
+    public function baidusearch(Request $request, Response $response,$args)
+    {
+        $jieqiSorts = NovelFunction::getNovelSort();
+        return $this->ci->view
+                            ->render($response, $this->mbPath.'baidusearch.html.twig', [
+                                'jieqiSorts' => $jieqiSorts,
+                                'webconfig' => $this->webconfig,
+                                'title' =>"站内搜索"
+                            ]);
+
+    }
+
+    public function linshishujia(Request $request, Response $response,$args)
+    {
+        $jieqiSorts = NovelFunction::getNovelSort();
+        return $this->ci->view
+                            ->render($response, $this->mbPath.'hislogs.html.twig', [
+                                'jieqiSorts' => $jieqiSorts,
+                                'webconfig' => $this->webconfig,
+                                'title' =>"临时书架"
+                            ]);
 
     }
 

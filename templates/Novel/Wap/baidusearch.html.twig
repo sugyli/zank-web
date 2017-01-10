@@ -1,0 +1,134 @@
+{% include 'global/wapuserhead1.html.twig' %} 
+<body>
+<header id="header" class="dise">
+    <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
+    <div class="zhong homefont">站内搜索</div>
+    <div class="you pter" onClick="zuoyoufy('/');"><i class="fa fa-home fa-2x"></i></div>
+    <div class="cc"></div>
+    <section id="search" class="bk">
+        <form id="baidusearch">  
+          <input name="submit" type="submit" value="" class="go dise">
+          <input id="s_key" class="bk" name="s" type="text" onclick="this.value=''" value="输入搜索词"/>
+          <div id="type1" class="bk">书名/作者</div>
+        </form>
+  <div class="cc"></div>
+</section> 
+</header>
+<div id="hdtop">
+    <section id="rmtj" class="fk">
+        <div class="xbk" id="sotitle"><font color=red>请输入您要搜索的词组</font></div> 
+        <gundong id="content_list">          
+        </gundong>
+        <more class="list_more pter" id="loading" style="display:none" onClick="jiazaibook();">点击加载更多 &darr;</more>
+        <more class="list_more" id="nomoreresults" style="display:none">所有内容加载完毕</more>
+    </section>        
+</div>
+
+<script>_17mb_bottom()</script>
+
+<section id="footer">
+    搜索技术由 <img src="/css/novel/wap/Baidu_LOGO.png" /> 提供
+   <script>_17mb_tj();</script>
+</section> 
+<script type="text/javascript">
+    
+    var cse;
+    var curpage = 1;
+    var isstop = false;
+    var loading = true;
+    var ss;
+    var v;
+    $("#baidusearch").submit(
+        function(){
+            ss = jQuery.trim($("#s_key").val());
+            if(ss == "输入搜索词" || !ss || ss.length <= 0){
+                mg.tishi("请输入搜索词！");
+                return false;
+            }
+            $('#content_list').empty();
+            $("#sotitle").html("您搜索的 <font color=red>" + ss + "</font> 结果如下");
+            curpage =1;
+            isstop = false;
+            loading = true;
+            v=0;
+            loadScript();
+            return false;
+        }
+        
+    );
+    function jiazaibook(){
+
+        if(loading)return;
+        loadScript();   
+    }
+        //处理结果回调函数示例
+    function display (data) {
+        var elements = createHtml(data);
+        if (elements) {
+            $('#loading').fadeOut();
+            $('#content_list').children().attr('rel', 'loaded');
+            $('#content_list').append(elements);
+            var objectsRendered = $('#content_list').children('[rel!=loaded]');
+            $(objectsRendered).fadeInWithDelay();
+            $('#loading').fadeIn();              
+            curpage = curpage + 1;
+            loading =false;
+        }else{
+            $('#loading').fadeOut();
+            $('#nomoreresults').fadeIn();
+            isstop = true;
+        }
+    }
+         //初始化回调函数示例
+    function init () {
+        cse = new BCse.Search("2444252857864475638"); //参数为您的 API
+        cse.setResultType(2);
+        //cse.openFieldOrder({'dateModified':0});
+        cse.setSearchRange(2,['m.dashubao.co']);
+        cse.getResult(ss, display,curpage); 
+    }
+    
+    function loadScript () {
+        if (v != curpage || !isstop) { 
+            v = curpage;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.charset = "utf-8";
+            script.src ="http://zhannei.baidu.com/api/customsearch/apiaccept?sid=2444252857864475638&v=2.0&callback=init";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(script, s);
+        }
+     } 
+
+     var createHtml = function(data) {
+        var html = "";
+        if (data && data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+               
+                //if (data[i]['author'].length > 12) { data[i]['author'] = data[i]['author'].substring(0,12)};
+                //data[i]['author'] = html_encode(data[i]['author']);
+                //if (data[i]['title'].length > 8) { data[i]['title'] = data[i]['title'].substring(0,8)};
+                //data[i]['title'] = html_encode(data[i]['title']);
+                //data[i]['abstract'] = html_encode(data[i]['abstract']);
+
+                html += '<ul class="xbk" onClick="window.location.href=' +  "'"  + data[i]['linkUrl'] + "'"  + '">';
+                html +=    '<li class="tjimg"><img onerror="this.src=' + "'/css/noimg.jpg'"  + '" src="' + data[i]['image'] + '" /></li>';
+                html +=        '<li class="tjxs">';
+                html +=            '<span class="xsm"><a href="'  + data[i]['linkUrl']  + '">' + data[i]['title'] + '</a></span>';
+                html +=             '<span class="">作者：' + data[i]['author'] +'</span>';
+                html +=             '<span class="">' + data[i]['abstract'] +'</span>';
+                html +=             '<span class="tjrs"><i>'+ data[i]['dateModified'] +'</i></span>';
+                html +=        '</li>';
+                html +=  '</ul>';
+                             
+            } 
+               
+            
+        }
+
+        return html;  
+    }
+ 
+</script>
+</body>
+</html> 

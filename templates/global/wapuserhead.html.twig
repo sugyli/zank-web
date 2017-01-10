@@ -3,9 +3,17 @@
 <header id="header" class="dise">
     <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
     <div class="zhong homefont">{{title}}</div>
-    <div class="you pter" onClick="exitweb();"><i class="fa fa-repeat fa-2x"></i></div>
+    <div class="you pter" id="showtool"><i class="fa fa-server fa-2x"></i></div>
     <div class="cc"></div>
-    {% include 'global/wapsearch.html.twig' %} 
+    <nav id="tool" class="nav bk">
+      <ul>
+            <li><a href="/">返回首页</a></li>
+            <li><a href="{{ path_for('linshishujia') }}">临时书架</a></li>
+            <li><a href="{{ path_for('baidusearch') }}" class="cur curfontweight">站内搜索</a></li>
+            <li><a href="javascript:;" onClick="exitweb();">退出登陆</a></li>
+        </ul>
+        <div class="cc"></div>
+    </nav>
     <div id="nav" class="top_menu">
       <div class="top_menu_list">
         <a href="/" class="btn item_0" scroll-left="0">首页</a>

@@ -1,0 +1,49 @@
+{% include 'global/wapuserhead1.html.twig' %} 
+<body>
+{% include 'global/wapnav.html.twig' %} 
+<script>_17mb_top()</script>
+<div>
+    <section id="rmtj" class="fk">
+        <div class="xbk" id="sotitle"><font color=red>临时书架只能存储10本书,可注册会员永久保存</font></div> 
+        <gundong id="content_list">          
+        </gundong>
+    </section>        
+</div>
+<script>_17mb_bottom()</script>
+
+{% include 'global/wapfoot.html.twig' %} 
+<script type="text/javascript">
+    var str = $.cookie("hislogs");
+    if (str !=null){
+        var hislogs = JSON.parse(str);
+        var lengths=hislogs.length;
+        //翻转数组
+        hislogs=$.map(hislogs,function(v,i){// map方法匿名函数传的值v是值、i是索引。  
+            return hislogs[lengths-1-i];  
+        }); 
+        var html = "";
+        $.each(hislogs, function(i,val){
+            if (val.bookName.length > 8) { val.bookName = val.bookName.substring(0,8)};
+
+            if (val.author.length > 12) { val.author = val.author.substring(0,12)};
+                
+            html += '<ul class="xbk" onClick="window.location.href=' +  "'"  + val.thisUrl + "'"  + '">';
+            html +=    '<li class="tjimg"><img onerror="this.src=' + "'/css/noimg.jpg'"  + '" src="' + val.cover + '" /></li>';
+            html +=        '<li class="tjxs">';
+            html +=            '<span class="xsm"><a href="'  + val.thisUrl  + '">' + val.bookName + '</a></span>';
+            html +=             '<span class="">作者：' + val.author +'</span>';
+            html +=             '<span class="">章节：' + val.chapterName +'</span>';
+            html +=        '</li>';
+            html +=  '</ul>';
+        });
+
+        $("#content_list").html(html);
+
+    }else{
+        var html = '<font color=red>您还没有浏览记录</font>';
+        $("#sotitle").html(html);
+
+    }
+</script>
+</body>
+</html> 

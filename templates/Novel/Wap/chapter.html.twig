@@ -1,15 +1,16 @@
 {% include 'global/waphead.html.twig' %} 
 <body id="zj">
-<header id="header" class="header dise">
-    <div class="zuo pter" onClick="zuoyoufy('/');"><i class="fa fa-home fa-2x"></i></div>
+<header id="header1" class="dise">
+    <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
     <div class="zhong pter" onClick="zuoyoufy('{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}');">{{contentData.chapter.chaptername|slice(0, 8)}}</div>
-    <div class="you pter" id="showsearch"><i class="fa fa-search fa-2x"></i></div>
+    <div class="you pter" id="showtool"><i class="fa fa-server fa-2x"></i></div>
     <div class="cc"></div>
-    {% include 'global/wapsearch.html.twig' %} 
 </header>
-<section class="zj" >
-  <div class="nr_shezhi bk1" style="margin-top: 60px">
-  <addiv><script>_17mb_nrtop()</script></addiv>
+{% include 'global/waptool.html.twig' %} 
+{% include 'global/wapfenlei.html.twig' %} 
+<script>_17mb_nrtop()</script>
+<section class="zj">
+  <div class="nr_shezhi bk1">
       <div class="shezhi1" style="margin-top: 5px">
           <div class="dise">字体</div><div id="b" class="dise pter">大</div> <div id="m" class="dise pter">中</div> <div id="s" class="dise pter">小</div>
       </div>
@@ -58,7 +59,7 @@
         with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
     </script>
 
-  <addiv><script>_17mb_nrmiddle()</script></addiv>
+  <script>_17mb_nrmiddle()</script>
     <div class="nr_page">
       <a class="dise" href="{%if contentData.preview != "" %}{{ path_for('novelcontent', { 'bid': contentData.preview.articleid ,'cid':contentData.preview.chapterid }) }}{%else%} {{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }} {% endif %}">上一章</a>
         <a class="dise" href="{{ path_for('novelmulu1', { 'bookid': contentData.chapter.articleid ,'page':contentData.page }) }}">目录</a>
@@ -66,7 +67,7 @@
         <div class="cc"></div>
     </div>
 </section>
-<addiv><script>_17mb_nrbottom();</script></addiv>
+<script>_17mb_nrbottom();</script>
 {#回顶部的标签#}
 <div id="back-to-top">
   <a class="stop" href="javascript:"><span></span></a>
@@ -74,4 +75,14 @@
 </div>
 {% include 'global/wapfoot.html.twig' %} 
 </body>
+<script type="text/javascript">
+  {{ selectjs|raw }}
+    var thisUrl = window.location.href;
+    var bookName  = "{{contentData.chapter.articlename}}";
+    var author  = "{{ contentData.author }}";
+    var cover = "{{ contentData.cover}}";
+    var chapterName = "{{ contentData.chapter.chaptername }}";
+    var jos = {'thisUrl':thisUrl,'bookName':bookName,'chapterName':chapterName,'author':author,'cover':cover}; 
+    hislogs();
+</script>
 </html>

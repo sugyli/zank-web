@@ -2,8 +2,8 @@
 <body>
 {% include 'global/wapnav.html.twig' %} 
 <!--中部内容开始-->
-<div id="hdtop">
-<addiv><script>_17mb_infotop()</script></addiv>
+<div>
+<script>_17mb_infotop()</script>
   <!--小说信息开始-->
     <section id="xinxi" class="fk">
     <div class="xsfm"><img src="{{ infoData.bookInfo.cover}}" onerror="this.src='/css/noimg.jpg'" /></div>
@@ -24,7 +24,7 @@
         <div class="jianjie bk">{{ infoData.bookInfo.intro}}</div>
     </section>
     <!--小说信息结束-->
-  <addiv><script>_17mb_infomiddle()</script></addiv>
+  <script>_17mb_infomiddle()</script>
     <!--最新9章开始-->
     <section class="zxjz fk">
       <div class="b bk">最新9章</div>
@@ -39,7 +39,7 @@
     </section>
     <!--最新9章结束-->
 </div>
-<addiv><script>_17mb_infobottom();</script></addiv>
+<script>_17mb_infobottom();</script>
 <!--百度推荐开始-->
 <div class="bdtj fk">
   目前没有推荐
@@ -49,5 +49,12 @@
 </body>
 <script type="text/javascript">
   {{ selectjs|raw }}
+    var thisUrl = window.location.href;
+    var bookName  = "{{infoData.bookInfo.articlename}}";
+    var author  = "{{ infoData.bookInfo.author }}";
+    var cover = "{{ infoData.bookInfo.cover}}";
+    var chapterName = "浏览的目录";
+    var jos = {'thisUrl':thisUrl,'bookName':bookName,'chapterName':chapterName,'author':author,'cover':cover}; 
+    hislogs();
 </script>
 </html> 
