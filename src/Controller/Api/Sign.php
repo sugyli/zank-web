@@ -39,7 +39,7 @@ class Sign extends Controller
         $token->token = \Zank\Model\SignToken::createToken();
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
         $token->user_id = $user->user_id;
-        $token->expires = 60 * 60 * 24; // 24小时过期
+        $token->expires = 60 * 60 * 24 * 7; // 24小时过期
 
         // 清除token
         \Zank\Model\SignToken::where('token', $token->token)
