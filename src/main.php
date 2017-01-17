@@ -8,8 +8,8 @@
     define('ROOT',str_replace('\\',DS,realpath(dirname(__FILE__).'/../')).DS);
     define('FENMIAN', NOVELURL . "/xsfengmian/");    
     define('NOFENMIAN', "/css/noimg.jpg"); 
-    define('TXTDIR', "http://txt.dashubao.co/"); 
-    define('IMAGEDIR', "http://img.dashubao.co/"); 
+    define('TXTDIR', "http://txt.dashubao.net/"); 
+    define('IMAGEDIR', "http://img.dashubao.net/"); 
     define('PAGENUM', 40);//目录默认多少分页
     define('SPRIT', ['dashubao.co','sugyli.com','dashubao.net']);//兼容大书包处理/的问题
     define('NOVELMB', 'Novel/Wap/');//小说模板
