@@ -506,10 +506,12 @@ class Control extends PublicController
     public function mSiteMap(Request $request, Response $response,$args)
     {
         $newResponse = $response->withHeader('Content-type', 'text/xml');
-
+        $uri = $request->getUri();
+        $host = $uri->getHost();
+        $scheme = $uri->getScheme();
         $pagesize = 300; //每页输出几条记录
         $router = $this->ci->get('router');
-        $url = "http://m.dashubao.co";
+        $url = $scheme . "://".$host;
         $page =  isset($args['page']) ? intval($args['page']) : 0;
         if ($page > 0) {
 
