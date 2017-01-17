@@ -29,6 +29,11 @@ class TrailingSlash
         $path = $uri->getPath();
         $host = $uri->getHost();
         $in = 0;
+        if ($host == 'm.dashubao.co') {
+           $the_url = "http://m.dashubao.net" . $path;
+           return $response->withRedirect((string) $the_url, 301);         
+        }
+        
         foreach (SPRIT as $itme) {
             
             if (stristr($host, $itme)) {//存在
