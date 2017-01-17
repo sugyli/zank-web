@@ -2,7 +2,7 @@
 
     /*******************************常用*************************************/    
     define("NOVELURL", "http://www.dashubao.co");//设置一些基础的
-    define("NOVELWAPURL", "http://m.dashubao.co");//设置一些基础的
+    define("NOVELWAPURL", "http://m.dashubao.net");//设置一些基础的
     define("WEBNAME", "大书包");
     define("DS", DIRECTORY_SEPARATOR);
     define('ROOT',str_replace('\\',DS,realpath(dirname(__FILE__).'/../')).DS);
