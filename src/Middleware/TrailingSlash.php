@@ -49,6 +49,10 @@ class TrailingSlash
                 return $response->withRedirect((string) $uri, 301);
             }
         }
+
+        if ($path == '/' && $host = 'm.dashubao.co') {
+            return $response->withRedirect((string) "http://m.dashubao.net", 301);
+        }
               
 
         return $next($request, $response);
