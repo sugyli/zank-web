@@ -746,7 +746,7 @@ function _17mb_tj(){//统计代码
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?5fa0598362a3c28fb1c1a612d70a0f9c";
+      hm.src = "https://hm.baidu.com/hm.js?e0714531f1ec1f2a6630342ff685c39d";
       var s = document.getElementsByTagName("script")[0]; 
       s.parentNode.insertBefore(hm, s);
     })();
