@@ -101,7 +101,6 @@ class Control extends PublicController
         
     }
 
-
     public function mIndexPost(Request $request, Response $response,$args)
     {       
         $dwtime =  $request->getParsedBodyParam('dwtime');
@@ -138,6 +137,66 @@ class Control extends PublicController
         $this->comlog($request ,'时间小于0,非法请求可能大');
         return with(new \Zank\Common\Message($response, false, '时间小于0'))
                         ->withJson();
+    }
+//app
+    public function appIndex(Request $request, Response $response,$args)
+    {
+        $bookid =  $request->getParsedBodyParam('bookid');
+        $sortid =  $request->getParsedBodyParam('sortid'); 
+        $isdow =  $request->getParsedBodyParam('isdow'); 
+        $bookid =  intval($bookid);
+        $sortid =  intval($sortid);
+        $isdow =  intval($isdow);
+
+        if ($sortid > 0) {
+            $sort = NovelFunction::findNovelSortById($sortid);
+        }
+        $sortid = isset($sort['sortid']) ? $sort['sortid']:0;
+        if ($bookid > 0) {
+            
+            $articleArticle = ArticleArticle::pageAppData($bookid,$this->pageSize,$sortid , $isdow);
+            
+
+        }else{
+
+            if ($sortid>0) {
+
+                $articleArticle =  ArticleArticle::BaseBook()
+                                            ->where('sortid',$sortid)
+                                            ->orderBy('articleid','desc')
+                                            ->take($this->pageSize)   //限制(Limit)                                                   
+                                            ->get();
+            }else{
+
+                $articleArticle =  ArticleArticle::BaseBook()
+                                            ->orderBy('articleid','desc')
+                                            ->take($this->pageSize)   //限制(Limit)                         
+                                            ->get();
+
+            }
+
+
+
+        }
+
+        if ($articleArticle && !$articleArticle->isEmpty()) {
+
+            $articleDatas = $articleArticle->toArray();
+            $articleDatas = SourceUtil::formatNoveInfoData($articleDatas);
+
+            $outdata['islast'] = false;
+            $outdata['items'] = $articleDatas;
+            if(count($articleDatas) < $this->pageSize)
+            {
+                $outdata['islast'] = true;
+            }
+            return with(new \Zank\Common\Message($response, true, '请求成功！', $outdata))
+                    ->withJson();
+
+        }
+        return with(new \Zank\Common\Message($response, false, '没有获取到数据'))
+                        ->withJson();
+
     }
 
 

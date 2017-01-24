@@ -85,7 +85,50 @@ class ArticleArticle extends Model
         return null;
 
     }
+    public static function pageAppData(int $bookid ,int $pageSize = 15,$sortid = 0 ,$isdow=0)
+    {
 
+        $t = $isdow >0 ? ">" : "<";
+
+
+        if ($sortid>0) {
+            $total = self::BaseBook()
+                       ->where('sortid' , $sortid) 
+                       ->where('articleid', $t ,$bookid)
+                       ->count();
+
+        }else{
+
+            $total = self::BaseBook()
+                        ->where('articleid', $t ,$bookid)
+                        ->count();
+        }
+
+        if($total >0)
+        {
+
+            if ($sortid>0) {
+
+                return  self::BaseBook()
+                            ->where('sortid',$sortid)
+                            ->where('articleid', $t ,$bookid)
+                            ->orderBy('articleid','desc')
+                            ->take($pageSize)   //限制(Limit)                                                   
+                            ->get();
+            }else{
+
+                return  self::BaseBook()
+                            ->where('articleid', $t ,$bookid)
+                            ->orderBy('articleid','desc')
+                            ->take($pageSize)   //限制(Limit)                         
+                            ->get();
+
+            }
+
+        }
+        return null;
+
+    }
 
     public static function pageAjaxData(int $tm = 1 ,int $pageSize = 15,$sortid = 0)
     {

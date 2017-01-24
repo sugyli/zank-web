@@ -232,3 +232,15 @@ Application::group('/novel', function () {
 ->add(\Zank\Middleware\SetNoHttpCache::class)
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
+
+Application::group('/novelapp', function () {
+    $this
+        ->any('/appindex', \Zank\Controller\Novel\Wap\Control::class.':appIndex')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('appindex');
+
+})
+->add(\Zank\Middleware\ExceptionHandle2API::class);
+
+
+
