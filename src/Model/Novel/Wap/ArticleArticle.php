@@ -88,7 +88,7 @@ class ArticleArticle extends Model
     public static function pageAppData(int $bookid ,int $pageSize = 15,$sortid = 0 ,$isdow=0)
     {
 
-        $t = $isdow >0 ? ">" : "<";
+        $t = $isdow >0 ? "<" : ">";
 
 
         if ($sortid>0) {
