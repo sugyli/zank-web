@@ -2,6 +2,31 @@
 
 use Zank\Util\Yaml;
 
+/**
+ * t函数用于过滤标签，输出没有html的干净的文本
+ * @param string text 文本内容
+ * @return string 处理后内容
+ */
+if (!function_exists('t')) {
+    function t($text)
+    {
+        $text = nl2br($text);
+        $text = real_strip_tags($text);
+        $text = addslashes($text);
+        $text = trim($text);
+
+        return $text;
+    }
+}
+
+if (!function_exists('real_strip_tags')) {
+    function real_strip_tags($str, $allowable_tags = '')
+    {
+        $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+
+        return strip_tags($str, $allowable_tags);
+    }
+}
 function mylog($data,$fname='syslog.txt'){
     $ts = fopen(ROOT."/logs/{$fname}","a+");
     fputs($ts,date("Y-m-d H:i:s", time())." : ".$data . PHP_EOL);

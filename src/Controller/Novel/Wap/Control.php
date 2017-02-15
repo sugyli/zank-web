@@ -368,6 +368,41 @@ class Control extends PublicController
                         if ($curl->http_status_code == '200') {
                             $txt = $curl->response;
                             $txt = trim($txt);
+                            
+                            if (!empty($contentData['chapter']['attachment']) && getstrlength(t($txt))<=300) 
+                            {
+                                $imgobj = unserialize($contentData['chapter']['attachment']);
+                                $imghtml = "<myimgs class='contentText'>";
+                                foreach ($imgobj as  $item) {
+                                    $img = IMAGEDIR . $puDIR ."/". $cid . "/" .$item['name'];
+                                    $imghtml .= "<img src='{$img}' />";
+                                }
+                                $imghtml .= '</myimgs>';
+                                //$txtfind = 1;
+                                $isimg = 1;
+                                $contentData['content'] = $imghtml;    
+                            }else{
+                                if (!empty($txt)) {
+                                    //$txtfind = 1;
+                                    $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
+                                    //$txt = @str_replace("\r\n","<br/>",$txt);
+                                    $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
+                                    $txt = @str_replace("&nbsp;"," ",$txt); 
+                                    //写缓存
+                                    $this->ci->fcache->set($mContentKey, $txt ,[                 
+                                                            'ttl' => NRCASE,                    
+                                                            'compress' => YS,             
+                                                        ]);
+                                    $contentData['content'] =  $txt;  
+                                    
+                                }
+
+                            }
+
+                            /*
                             if (!empty($txt)) {
                                 //$txtfind = 1;
                                 $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
@@ -400,6 +435,7 @@ class Control extends PublicController
                                 }
 
                             }
+                            */
                         }  
                     }else{
                         
