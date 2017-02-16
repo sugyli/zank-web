@@ -7,7 +7,7 @@
     define("DS", DIRECTORY_SEPARATOR);
     define('ROOT',str_replace('\\',DS,realpath(dirname(__FILE__).'/../')).DS);
     define('FENMIAN', NOVELURL . "/xsfengmian/");    
-    define('NOFENMIAN', "/css/noimg.jpg"); 
+    define('NOFENMIAN', NOVELURL."/css/noimg.jpg"); 
     define('TXTDIR', "http://txt.dashubao.net/"); 
     define('IMAGEDIR', "http://img.dashubao.net/"); 
     define('PAGENUM', 40);//目录默认多少分页
