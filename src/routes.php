@@ -235,9 +235,9 @@ Application::group('/novel', function () {
 
 Application::group('/novelapp', function () {
     $this
-        ->any('/appindex', \Zank\Controller\Novel\Wap\Control::class.':appIndex')
+        ->post('/uplist', \Zank\Controller\NovelApp\AppControl::class.':upList')
         ->add(\Zank\Middleware\InitDb::class)
-        ->setName('appindex');
+        ->setName('APP_UPLIST');
 
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
