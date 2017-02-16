@@ -123,7 +123,7 @@ class NovelFunction
     {
         //图片推荐
         $ci  = Application::getContainer();
-        $pictuijian = $ci->fcache->get($key);
+        $pictuijian = $ci->fcache->get($key . $counts);
         if (!$pictuijian) 
         {          
             $pictuijian =               
