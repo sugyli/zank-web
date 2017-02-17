@@ -51,5 +51,33 @@ class AppControl extends PublicController
                         ->withJson();
     }
 
+    /*
+    public function downList(Request $request, Response $response,$args)
+    {
+        $sortid = $request->getParsedBodyParam('sortid');
+ 
+        if ($sortid > 0) {
+            $sort = NovelFunction::findNovelSortById($sortid);
+        }
+
+        $sortid = isset($sort['sortid']) ? $sort['sortid']:0;
+        $articleArticle = ArticleArticle::pageData(1,$this->pageSize,$sortid);
+        if ($articleArticle  && !$articleArticle->isEmpty()) {
+            $articleDatas = $articleArticle->toArray();
+            $articleDatas = SourceUtil::formatNoveInfoData($articleDatas);
+            //封面推荐
+            $picTuiJians = NovelFunction::picGoodCache(6);
+            $outdata['islast'] = false;
+            $outdata['items'] = $articleDatas;
+            $lastData = end($articleDatas);
+            $outdata['lastupdate'] = $lastData['lastupdate'];
+            if(count($articleDatas) < PAGESIZE)
+            {
+                $outdata['islast'] = true;
+            }
+
+        }
+    }
+    */
     
 } // END class Sign
