@@ -51,7 +51,7 @@ class AppControl extends PublicController
                         ->withJson();
     }
 
-    /*
+    
     public function downList(Request $request, Response $response,$args)
     {
         $sortid = $request->getParsedBodyParam('sortid');
@@ -61,12 +61,13 @@ class AppControl extends PublicController
         }
 
         $sortid = isset($sort['sortid']) ? $sort['sortid']:0;
-        $articleArticle = ArticleArticle::pageData(1,$this->pageSize,$sortid);
+        $articleArticle = ArticleArticle::pageData(1,PAGESIZE,$sortid);
         if ($articleArticle  && !$articleArticle->isEmpty()) {
             $articleDatas = $articleArticle->toArray();
             $articleDatas = SourceUtil::formatNoveInfoData($articleDatas);
             //封面推荐
             $picTuiJians = NovelFunction::picGoodCache(6);
+            $outdata['fentui'] = $picTuiJians;
             $outdata['islast'] = false;
             $outdata['items'] = $articleDatas;
             $lastData = end($articleDatas);
@@ -75,9 +76,14 @@ class AppControl extends PublicController
             {
                 $outdata['islast'] = true;
             }
+            return with(new \Zank\Common\Message($response, true, '请求成功！', $outdata))
+                    ->withJson();
 
         }
+
+        return with(new \Zank\Common\Message($response, false, '未获取到数据'))
+                        ->withJson();
     }
-    */
+    
     
 } // END class Sign

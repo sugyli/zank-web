@@ -238,6 +238,10 @@ Application::group('/novelapp', function () {
         ->post('/uplist', \Zank\Controller\NovelApp\AppControl::class.':upList')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('APP_UPLIST');
+    $this
+        ->post('/downlist', \Zank\Controller\NovelApp\AppControl::class.':downList')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('APP_DOWNLIST');
 
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
