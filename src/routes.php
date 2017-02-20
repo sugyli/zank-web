@@ -235,13 +235,9 @@ Application::group('/novel', function () {
 
 Application::group('/novelapp', function () {
     $this
-        ->post('/uplist', \Zank\Controller\NovelApp\AppControl::class.':upList')
+        ->post('/mainlist', \Zank\Controller\NovelApp\AppControl::class.':mainList')
         ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_UPLIST');
-    $this
-        ->post('/downlist', \Zank\Controller\NovelApp\AppControl::class.':downList')
-        ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_DOWNLIST');
+        ->setName('APP_MAINLIST');
 
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
