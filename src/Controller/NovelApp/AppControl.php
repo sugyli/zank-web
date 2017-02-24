@@ -53,6 +53,32 @@ class AppControl extends PublicController
     	return with(new \Zank\Common\Message($response, false, '没有数据了'))
                         ->withJson();
     }
+
+    public function bookInfoList(Request $request, Response $response,$args)
+    {
+
+        $bookid  = $request->getParsedBodyParam('bookid') !== null ? 
+                                        intval($request->getParsedBodyParam('bookid')) : 0;
+        $message = "非法请求";
+        $data = "";
+        $state = false;
+        if ($bookid > 0) 
+        {
+            $bookMulu = NovelFunction::getInfoDataBySql($bookid);
+            if ($bookMulu) {
+                $state = true;
+                $message = "请求成功";
+                $data = $bookMulu;
+            }else{
+                $message = "没有获取到数据请检查服务端";
+
+            }
+        }
+
+        return with(new \Zank\Common\Message($response, $state, $message,$data))
+                        ->withJson();
+
+    }
     
     
 } // END class Sign

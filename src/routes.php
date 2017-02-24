@@ -238,6 +238,10 @@ Application::group('/novelapp', function () {
         ->post('/mainlist', \Zank\Controller\NovelApp\AppControl::class.':mainList')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('APP_MAINLIST');
+    $this
+        ->post('/bookinfolist', \Zank\Controller\NovelApp\AppControl::class.':bookInfoList')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('APP_BOOKINFOLIST');
 
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
