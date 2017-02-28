@@ -59,20 +59,20 @@ class AppControl extends PublicController
 
         $bookid  = $request->getParsedBodyParam('bookid') !== null ? 
                                         intval($request->getParsedBodyParam('bookid')) : 0;
-        $message = "非法请求";
-        $data = "";
+        $message = "没有获取到数据请检查服务端";
+        $data = [];
         $state = false;
         if ($bookid > 0) 
         {   
-            $bookMulu = NovelFunction::getInfoData($bookid);
-            if ($bookMulu) {
+            $infoData = NovelFunction::getInfoData($bookid);
+
+            if ($infoData) {
+                $data['chapter'] =  $infoData['chapter'];
                 $state = true;
                 $message = "请求成功";
-                $data = $bookMulu;
-            }else{
-                $message = "没有获取到数据请检查服务端";
-
             }
+        }else{
+            $message = "书的ID小于0";       
         }
 
         return with(new \Zank\Common\Message($response, $state, $message,$data))
