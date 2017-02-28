@@ -63,8 +63,8 @@ class AppControl extends PublicController
         $data = "";
         $state = false;
         if ($bookid > 0) 
-        {
-            $bookMulu = NovelFunction::getInfoDataBySql($bookid);
+        {   
+            $bookMulu = NovelFunction::getInfoData($bookid);
             if ($bookMulu) {
                 $state = true;
                 $message = "请求成功";
