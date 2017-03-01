@@ -242,6 +242,10 @@ Application::group('/novelapp', function () {
         ->post('/bookinfolist', \Zank\Controller\NovelApp\AppControl::class.':bookInfoList')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('APP_BOOKINFOLIST');
+    $this
+        ->post('/bookmuluindex', \Zank\Controller\NovelApp\AppControl::class.':bookMuluIndex')
+        ->add(\Zank\Middleware\InitDb::class)
+        ->setName('APP_BOOKMULUINDEX');
 
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);

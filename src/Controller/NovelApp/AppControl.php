@@ -79,6 +79,36 @@ class AppControl extends PublicController
                         ->withJson();
 
     }
+
+    public function bookMuluIndex(Request $request, Response $response,$args)
+    {
+        $page  = $request->getParsedBodyParam('page') !== null ? 
+                                        intval($request->getParsedBodyParam('page')) : 1;
+        $page > 0 or  $page = 1;
+        $bookid  = $request->getParsedBodyParam('bookid') !== null ? 
+                                        intval($request->getParsedBodyParam('bookid')) : 0;
+        $message = "没有获取到数据请检查服务端";
+        $data = [];
+        $state = false;                                
+        if ($bookid > 0) 
+        {
+            $infoData = NovelFunction::getMuluData($bookid ,$page,null,PAGENUM);
+            for($i = 1 ; $i <= $infoData['pagenum'] ; $i++){
+                $data['muluIndex'][] = (($i-1)*PAGENUM+1).' - '.($i*PAGENUM).'章';
+            }
+            $data['chapter'] = $infoData['chapter'];
+            $state = true;
+            $message = "请求成功";
+        }else{
+
+            $message = "书的ID小于0";
+        }                               
+
+
+        return with(new \Zank\Common\Message($response, $state, $message,$data))
+                        ->withJson();
+
+    }
     
     
 } // END class Sign
