@@ -109,6 +109,98 @@ class AppControl extends PublicController
                         ->withJson();
 
     }
+
+    public function bookContent(Request $request, Response $response,$args)
+    {
+        $bid  = $request->getParsedBodyParam('bid') !== null ? 
+                                        intval($request->getParsedBodyParam('bid')) : 0;
+        $cid  = $request->getParsedBodyParam('cid') !== null ? 
+                                        intval($request->getParsedBodyParam('cid')) : 0;
+        
+        $message = "没有获取到数据请检查服务端";
+        $contentData = [];
+        $state = false;      
+        if ($bid >0 && $cid>0) {
+            $bookData = NovelFunction::getInfoDataBySql($bid);
+            if ($bookData) {
+                $shortid = intval($bid/1000);
+                $key = 0; //章节所在的索引
+                Switch($bookData['total']){
+                    case 1:                           
+                    $contentData['chapter'] = $bookData['chapter'][0];
+                    break;
+                    default:
+                    foreach($bookData['chapter'] as $k=>$v){
+                        if ($v['chapterid'] == $cid) {
+                            $contentData['chapter'] = $v;
+                            $key = $k;
+                            break;
+                        }
+                    }               
+                }
+
+                //在章节存在的情况下再去查内容
+                if (isset($contentData['chapter'])) {
+                    $puDIR = $shortid .'/'.$bid;
+                    $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
+
+                    $mContentKey = 'nrapp_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'];
+                    $txt = $this->ci->fcache->get($mContentKey);
+                    if (!$txt) {
+                        $curl = new \Curl\Curl();
+                        $curl->setOpt(CURLOPT_TIMEOUT, 5);                           
+                        $curl->get($txtDir);
+                        if ($curl->http_status_code == '200') {
+                            $txt = $curl->response;
+                            $txt = trim($txt);
+                            if (!empty($contentData['chapter']['attachment']) && getstrlength(t($txt))<=300) {
+
+                                $contentData['content'] = "本章节内容为图片APP不支持";  
+
+                            }else{
+
+                                if (!empty($txt)) {
+                                    //$txtfind = 1;
+                                    $txt = mb_convert_encoding($txt, 'utf-8', 'GBK,UTF-8,ASCII');
+
+                                    //$txt = @str_replace("\r\n","<br/>",$txt);
+                                    $txt = preg_replace('/<br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/br\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<p\\s*?\/??>/i',PHP_EOL,$txt);
+                                    $txt = preg_replace('/<\/p>/i',PHP_EOL,$txt);
+                                    $txt = @str_replace("&nbsp;"," ",$txt); 
+                                    //写缓存
+                                    $this->ci->fcache->set($mContentKey, $txt ,[                 
+                                                            'ttl' => NRCASE,                    
+                                                            'compress' => YS,             
+                                                        ]);
+                                    $contentData['content'] =  $txt;  
+                                
+                                }
+                            }
+
+                        }
+
+
+                    }else{
+                        
+                        $contentData['content'] =  $txt;  
+                    }
+                    $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
+                    $contentData['next'] = isset($bookData['chapter'][$key+1]) ? $bookData['chapter'][$key+1] : "";
+                    $state = true;   
+
+                }
+            }
+        }else{
+            $message = "非法请求可能大";
+
+        }
+
+        return with(new \Zank\Common\Message($response, $state, $message,$contentData))
+                        ->withJson();                           
+
+    }
     
     
 } // END class Sign
