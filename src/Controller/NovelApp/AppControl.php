@@ -143,7 +143,7 @@ class AppControl extends PublicController
                 if (isset($contentData['chapter'])) {
                     $puDIR = $shortid .'/'.$bid;
                     $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
-
+                    $contentData['content'] = "章节丢失了,欢迎举报让我们修复,非常感谢！！！";
                     $mContentKey = 'nrapp_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'];
                     $txt = $this->ci->fcache->get($mContentKey);
                     if (!$txt) {
@@ -188,6 +188,7 @@ class AppControl extends PublicController
                     }
                     $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
                     $contentData['next'] = isset($bookData['chapter'][$key+1]) ? $bookData['chapter'][$key+1] : "";
+                    $message = "请求成功";
                     $state = true;   
 
                 }
