@@ -89,15 +89,14 @@ class AppControl extends PublicController
                                         intval($request->getParsedBodyParam('bookid')) : 0;
         $message = "没有获取到数据请检查服务端";
         $data = [];
-        $state = false;
-        $pageNb = 40;                                
+        $state = false;                                
         if ($bookid > 0) 
         {
-            $infoData = NovelFunction::getMuluData($bookid ,$page,null,$pageNb);
+            $infoData = NovelFunction::getMuluData($bookid ,$page,null,PAGENUM);
 
             if ($infoData) {
                 for($i = 1 ; $i <= $infoData['pagenum'] ; $i++){
-                    $data['muluIndex'][] = (($i-1)*$pageNb+1).' - '.($i*$pageNb).'章';
+                    $data['muluIndex'][] = (($i-1)*PAGENUM+1).' - '.($i*PAGENUM).'章';
                 }
                 $data['chapter'] = $infoData['chapter'];
                 $state = true;
