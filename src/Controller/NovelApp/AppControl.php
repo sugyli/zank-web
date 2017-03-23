@@ -93,12 +93,18 @@ class AppControl extends PublicController
         if ($bookid > 0) 
         {
             $infoData = NovelFunction::getMuluData($bookid ,$page,null,PAGENUM);
-            for($i = 1 ; $i <= $infoData['pagenum'] ; $i++){
-                $data['muluIndex'][] = (($i-1)*PAGENUM+1).' - '.($i*PAGENUM).'章';
+
+            if ($infoData) {
+                for($i = 1 ; $i <= $infoData['pagenum'] ; $i++){
+                    $data['muluIndex'][] = (($i-1)*PAGENUM+1).' - '.($i*PAGENUM).'章';
+                }
+                $data['chapter'] = $infoData['chapter'];
+                $state = true;
+                $message = "请求成功";  
+            }else{
+                $message = "可能PAGE越界了";
             }
-            $data['chapter'] = $infoData['chapter'];
-            $state = true;
-            $message = "请求成功";
+            
         }else{
 
             $message = "书的ID小于0";
