@@ -90,7 +90,7 @@ class AppControl extends PublicController
         $message = "没有获取到数据请检查服务端";
         $data = [];
         $state = false;
-        $pageNb = 100;                                
+        $pageNb = 40;                                
         if ($bookid > 0) 
         {
             $infoData = NovelFunction::getMuluData($bookid ,$page,null,$pageNb);
