@@ -188,6 +188,7 @@ class AppControl extends PublicController
                     }
                     $contentData['preview'] = isset($bookData['chapter'][$key-1]) ? $bookData['chapter'][$key-1] : "";
                     $contentData['next'] = isset($bookData['chapter'][$key+1]) ? $bookData['chapter'][$key+1] : "";
+                    $contentData['page'] =ceil( ($key+1)/PAGENUM );
                     $message = "请求成功";
                     $state = true;   
 
