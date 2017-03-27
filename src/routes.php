@@ -250,6 +250,12 @@ Application::group('/novelapp', function () {
         ->post('/bookcontent', \Zank\Controller\NovelApp\AppControl::class.':bookContent')
         ->add(\Zank\Middleware\InitDb::class)
         ->setName('APP_BOOKCONTENT');
+
+        // 获取手机号码验证码
+    $this
+        ->post('/verify', \Zank\Controller\Api\Captcha\ZankPhone::class.':get')
+        ->add(\Zank\Middleware\Sign\Up\ValidateAppUserByPhoneByZank::class)
+        ->add(\Zank\Middleware\InitDb::class);
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
