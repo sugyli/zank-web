@@ -236,6 +236,50 @@ class Control extends UserController
     }
 
 
+    public function appIn(Request $request, Response $response)
+    {
+        $phone = $request->getParsedBodyParam('mobile');
+        $password = $request->getParsedBodyParam('userpass');
+        $password = trim($password);
+        if ($this->ci->has('user')) {
+            $user = $this->ci->get('user');
+        } else {
+           $user = \Zank\Model\Novel\Wap\SystemUsers::where('uname',$phone)->first();
+        }
+
+        if ($user->pass != md5($password)) {
+            $response = new \Zank\Common\Message($response, false, '该用户密码错误！');
+
+            return $response->withJson();
+        }
+
+        $token = new \Zank\Model\SignToken();
+        $token->token = \Zank\Model\SignToken::createToken();
+        $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
+        $token->user_id = $user->uid;
+        $token->expires = UEXTIME; // 1个月过期
+
+        // 清除token
+        \Zank\Model\SignToken::where('token', $token->token)
+            ->orWhere('refresh_token', $token->refresh_token)
+            ->orWhere('user_id', $token->user_id)
+            ->delete();
+
+        if (!$token->save()) {
+            $response = new \Zank\Common\Message($response, false, '登陆失败！');
+
+            return $response->withJson();
+
+        // 判断是否注入了验证码，删除验证码
+        } elseif ($this->ci->has('phone_captcha')) {
+            $this->ci->get('phone_captcha')->delete();
+        }
+
+        return with(new \Zank\Common\Message($response, true, '登陆成功！', $token))
+            ->withJson();
+    }
+
+
     public function usercore(Request $request, Response $response,$args)
     {
         

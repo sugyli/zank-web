@@ -256,6 +256,11 @@ Application::group('/novelapp', function () {
         ->post('/verify', \Zank\Controller\Api\Captcha\ZankPhone::class.':get')
         ->add(\Zank\Middleware\Sign\Up\ValidateAppUserByPhoneByZank::class)
         ->add(\Zank\Middleware\InitDb::class);
+        // 登陆
+    $this
+        ->post('/login', \Zank\Controller\Novel\User\Control::class.':appIn')
+        ->add(\Zank\Middleware\Sign\In\ValidateAppUserByPhoneByZank::class)
+        ->add(\Zank\Middleware\InitDb::class);
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
