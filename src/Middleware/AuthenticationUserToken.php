@@ -23,7 +23,10 @@ class AuthenticationUserToken
 
     public function __invoke(Request $request, Response $response, callable $next)
     {
-        $token = $request->getHeaderLine('zank-token');
+       
+       // $token = $request->getHeaderLine('token');
+        $token = $request->getParsedBodyParam('token');
+
         $token = \Zank\Model\SignToken::byToken($token)->first();
 
         if (!$token) {
@@ -31,7 +34,7 @@ class AuthenticationUserToken
                 ->withJson();
 
         // 是否过期
-        } elseif ($token->updated_at->diffInSeconds(Carbon::now()) >= (60 * 60 * 24 * 7)) {
+        } elseif ($token->updated_at->diffInSeconds(Carbon::now()) >= (UEXTIME)) {
             return with(new \Zank\Common\Message($response, false, '登陆过期', -2))
                 ->withJson();
 
@@ -40,6 +43,9 @@ class AuthenticationUserToken
             return with(new \Zank\Common\Message($response, false, '认证用户不存在！', -3))
                 ->withJson();
         }
+        $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
+        $token->expires = UEXTIME;
+        $token->save();
 
         $this->ci->offsetSet('user', $token->user);
 

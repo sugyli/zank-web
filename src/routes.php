@@ -261,6 +261,13 @@ Application::group('/novelapp', function () {
         ->post('/login', \Zank\Controller\Novel\User\Control::class.':appIn')
         ->add(\Zank\Middleware\Sign\In\ValidateAppUserByPhoneByZank::class)
         ->add(\Zank\Middleware\InitDb::class);
+
+
+    //用户书架  
+    $this
+        ->post('/bookcase', \Zank\Controller\Novel\User\Control::class.':appBookcase')
+        ->add(\Zank\Middleware\AuthenticationUserToken::class)
+        ->add(\Zank\Middleware\InitDb::class);
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 

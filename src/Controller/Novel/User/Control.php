@@ -468,6 +468,116 @@ class Control extends UserController
         
     }
 
+
+    public function appBookcase(Request $request, Response $response,$args)
+    {
+        $bookcasepage = $request->getParsedBodyParam('bookcasepage');
+        $bookcasepage > 0 or $bookcasepage = 1;
+        $message = "未知错误";
+        $data = [];
+        $state = false;
+
+        if ($this->ci->has('user')){
+            $user = $this->ci->get('user');
+            $caseDatas = [];
+            $total = $user->bookcase()
+                          ->count();
+            if ($total>0) {
+                $bookCaseDatas = $user->bookcase()->get();
+                
+                if ($bookCaseDatas && !$bookCaseDatas->isEmpty()) {
+
+                    $bookCaseDatas = $bookCaseDatas->toArray(); 
+                    $ids = array_column($bookCaseDatas, 'articleid');  
+                    $articleDatas =
+                                \Zank\Model\Novel\Wap\ArticleArticle::BaseBook()
+                                                    ->whereIn('articleid', $ids)
+                                                    ->orderBy('lastupdate','desc')
+                                                    ->get();
+
+
+                    //主要合并                                            
+                    if ($articleDatas && !$articleDatas->isEmpty()) {
+
+                        $articleDatas = $articleDatas->toArray(); 
+                        //偏移索引 比总数少1
+                        $offset = ($bookcasepage - 1) * USERBOOKCASEC;
+                        $count=0;
+                        $index = count($articleDatas);
+                        //处理越界
+                        if ($offset >= $index){
+                            $offset = $index-1;
+                        }
+                        //取需要的数据 以偏移索引为开头
+                        for ($i=0; $i < $index; $i++) { 
+
+                            if ($i >=$offset && $count<USERBOOKCASEC) {
+
+                                //这个数据是本数据库存在的用户数据
+                                $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$articleDatas[$i]['articleid'] , 'articleid');
+
+                                if ($oneBookCaseData) {   
+
+                                    if ($oneBookCaseData['chapterid'] >0) {
+                                        //查询章节可存在了
+                                        $chaptercount = 
+                                                \Zank\Model\Novel\Wap\ArticleChapter::BaseChapter()
+                                                                        ->where('chapterid',$oneBookCaseData['chapterid'])
+                                                                        ->count();
+                                        if ($chaptercount>0) {
+                                            $articleDatas[$i]['nochapter'] = null;
+                                        }else{
+                                            $articleDatas[$i]['nochapter'] = "章节已经不存在了";
+                                        }
+                                    }else{
+
+                                        $articleDatas[$i]['nochapter'] = "没有添加书签";
+                                    }  
+                                    unset($articleDatas[$i]['lastvisit']);
+                                    $result = array_merge($oneBookCaseData, $articleDatas[$i]);
+                                    $caseDatas[] = $result;
+                                }
+                                $count++;
+
+                            }
+
+                            //循环20次后才会进来
+                            if ($count >=USERBOOKCASEC) {                              
+                                break;
+                            }
+
+                        }
+                        $message = "获取书架数据成功";
+                        $state = true;
+                        $data['bookCaseList'] = $caseDatas;
+                        $data['count'] = $index;
+
+                    }else{
+
+                        $message = "用户收藏的小说,本站已经删除了";
+                    }
+
+
+                }else{
+
+                    $message = "查询用户书架数据出错了";
+                }
+
+            }else{
+                $message = "没有收藏小说";
+            }         
+
+        }else{
+
+            $message = "没有发现用户数据";
+
+        }
+
+
+        return with(new \Zank\Common\Message($response, $state, $message,$data))
+                        ->withJson();    
+    }
+
     public function addbookcase(Request $request, Response $response,$args)
     {
         $bid = $request->getParsedBodyParam('bid');
