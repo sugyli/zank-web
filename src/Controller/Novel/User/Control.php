@@ -495,7 +495,7 @@ class Control extends UserController
                                                     ->orderBy('lastupdate','desc')
                                                     ->get();
 
-
+                    $articleDatas = SourceUtil::formatNoveInfoData($articleDatas);                                
                     //主要合并                                            
                     if ($articleDatas && !$articleDatas->isEmpty()) {
 
