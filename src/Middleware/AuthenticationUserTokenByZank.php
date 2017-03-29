@@ -74,10 +74,9 @@ class AuthenticationUserTokenByZank
             $user['bookcount'] = $bookCount;
         }
         if (CHANGECOOK) {
-            $token->token = \Zank\Model\SignToken::createToken();
-            $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
+            $token->token = \Zank\Model\SignToken::createToken();       
         }
-            
+        $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();    
         $token->expires = UEXTIME;
 
         if ($token->save() && CHANGECOOK) {
