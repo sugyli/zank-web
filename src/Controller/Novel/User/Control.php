@@ -504,8 +504,12 @@ class Control extends UserController
                         $offset = ($bookcasepage - 1) * USERBOOKCASEC;
                         $count=0;
                         $index = count($articleDatas);
+                        //计算总页数
+                        $pagenum = ceil( $index / USERBOOKCASEC );//当没有数据的时候 计算出来为0
+
+
                         //处理越界
-                        if ($offset >= $index){
+                        if ($bookcasepage > $pagenum){
                             $message = "不存在的页数";
                         }else{
                             //取需要的数据 以偏移索引为开头
@@ -515,6 +519,7 @@ class Control extends UserController
 
                                     //这个数据是本数据库存在的用户数据
                                     $oneBookCaseData = SourceUtil::findForTwoArry($bookCaseDatas,$articleDatas[$i]['articleid'] , 'articleid');
+                                    
 
                                     if ($oneBookCaseData) {   
 
@@ -555,7 +560,7 @@ class Control extends UserController
                             }
                             $data['bookCaseList'] = $caseDatas;
                             $data['total'] = $index;
-
+                            $data['pagenum'] = $pagenum;
                         }
                         
                     }else{
