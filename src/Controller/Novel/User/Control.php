@@ -140,6 +140,55 @@ class Control extends UserController
     }
 
 
+    public function stepAppRegisterBase(Request $request, Response $response): Response
+    {
+        $phone = $request->getParsedBodyParam('mobile');
+        $password = $request->getParsedBodyParam('userpass');
+        $password = trim($password);
+        //$invite_code = $request->getParsedBodyParam('invite_code');
+        $lengs = strlen($password);
+        if ($lengs <= 0  or  $lengs >=16) {
+            return with(new \Zank\Common\Message($response, false, '密码长度在1到16位之间'))
+            ->withJson();
+        }
+
+        $user = new \Zank\Model\Novel\Wap\SystemUsers();
+        $user->uname = $phone;
+        $user->name = sprintf('用户_%s', $phone);
+        $user->pass = md5($password);
+        $user->groupid = 3;
+        $user->regdate = time();
+        $user->viewemail = 1;
+        $user->adminemail = 1;
+        $user->email = $phone.str_random(10);
+        $user->lastlogin = time();
+
+        if ($user->save()) {
+            $this->ci->offsetSet('user', $user);
+            //注册的时候删除
+            //\Zank\Model\UsersRecord::where('user_id',$user->user_id)->delete();
+            //$usersRecord = new \Zank\Model\UsersRecord();
+            //$usersRecord->integral = 5;
+            //$usersRecord->user_id = $user->user_id;
+            /*
+            if (!$usersRecord->save()) {
+                //\Zank\Model\User::destroy($user->user_id);
+                $user->forceDelete();//真删除
+                return with(new \Zank\Common\Message($response, false, '注册失败_初始化积分出错！'))
+                     ->withJson();
+                //$user->forceDelete();//删除注册过的组件
+                
+            }
+
+            $this->ci->offsetSet('usersrecord', $usersRecord);
+            */
+            return $this->appIn($request, $response);
+        }
+        $this->errlog($request ,'注册失败！');
+        return with(new \Zank\Common\Message($response, false, '注册失败！'))
+            ->withJson();
+    }
+
      /**
      * 忘记密码重置.
      *

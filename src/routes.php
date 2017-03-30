@@ -261,7 +261,12 @@ Application::group('/novelapp', function () {
         ->post('/login', \Zank\Controller\Novel\User\Control::class.':appIn')
         ->add(\Zank\Middleware\Sign\In\ValidateAppUserByPhoneByZank::class)
         ->add(\Zank\Middleware\InitDb::class);
-
+        // 基本信息注册
+    $this
+        ->post('/sign', \Zank\Controller\Novel\User\Control::class.':stepAppRegisterBase')
+        ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptchaByZank::class)
+        ->add(\Zank\Middleware\Sign\Up\ValidateAppUserByPhoneByZank::class)
+        ->add(\Zank\Middleware\InitDb::class);    
 
     //用户书架  分界线
     $this
