@@ -791,6 +791,53 @@ class Control extends UserController
     }
 
 
+    public function appReadbookcase(Request $request, Response $response,$args)
+    {
+
+        $bid  = $request->getParsedBodyParam('bid'); 
+        $message = "未知错误";
+        $state = false;
+        if ($bid>0) {
+
+            if ($this->ci->has('user')){
+                $user = $this->ci->get('user');
+                $bookCase = $user->bookcase()->where('articleid' , $bid)->first();
+                if ($bookCase) {                                
+                    $bookCase->lastvisit = time();
+                    if ($bookCase->save()) {
+                        $message = "更新阅读数据时间成功";
+                        $state = true;
+
+                    }else{
+
+
+                        $message = "更新阅读数据时间失败 数据库问题";
+                    }              
+
+                }else{
+                    $message = "此收藏未找到";
+
+                }
+
+                
+
+            }else{
+
+
+                 $message = "用户未找到";
+            }
+
+        }else{
+
+            $message = "bid小于0";
+        }
+        
+
+        return with(new \Zank\Common\Message($response, $state, $message))
+                        ->withJson();  
+
+    }
+
     public function mailbox(Request $request, Response $response,$args)
     {
         
