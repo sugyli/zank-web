@@ -233,6 +233,39 @@ class Control extends UserController
         ->withJson();
     }
 
+    public function appForgetpass(Request $request, Response $response): Response
+    {
+        
+        $phone = $request->getParsedBodyParam('mobile');
+        $password = $request->getParsedBodyParam('userpass');
+        $password = trim($password);
+        $lengs = strlen($password);
+        if ($lengs <= 0  or  $lengs >=16) {
+            return with(new \Zank\Common\Message($response, false, '密码长度在1到16位之间'))
+            ->withJson();
+        }
+        //$invite_code = $request->getParsedBodyParam('invite_code');
+        if ($this->ci->has('user')) {
+            $user = $this->ci->get('user');
+        } else {
+            $user = \Zank\Model\Novel\Wap\SystemUsers::where('uname',$phone)->first();
+        }
+
+        if ($user) {
+            //$user->hash = str_random(64);
+            $user->pass = md5($password);
+
+            if ($user->save()) {
+                $this->ci->offsetSet('user', $user);
+                return $this->appIn($request, $response);
+            }
+
+        }
+        $this->errlog($request ,'修改密码失败！');
+        return with(new \Zank\Common\Message($response, false, '修改密码失败！'))
+        ->withJson();
+    }
+
     /**
      * 登陆控制器.
      *

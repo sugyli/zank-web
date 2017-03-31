@@ -266,7 +266,13 @@ Application::group('/novelapp', function () {
         ->post('/sign', \Zank\Controller\Novel\User\Control::class.':stepAppRegisterBase')
         ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptchaByZank::class)
         ->add(\Zank\Middleware\Sign\Up\ValidateAppUserByPhoneByZank::class)
-        ->add(\Zank\Middleware\InitDb::class);    
+        ->add(\Zank\Middleware\InitDb::class); 
+    // 找回密码
+    $this
+        ->post('/forgetpass', \Zank\Controller\Novel\User\Control::class.':appForgetpass')
+        ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptchaByZank::class)
+        ->add(\Zank\Middleware\Sign\Up\ValidateAppUserByPhoneByZank::class)
+        ->add(\Zank\Middleware\InitDb::class);   
 
     //用户书架  分界线
     $this
