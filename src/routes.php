@@ -236,20 +236,20 @@ Application::group('/novel', function () {
 Application::group('/novelapp', function () {
     $this
         ->post('/mainlist', \Zank\Controller\NovelApp\AppControl::class.':mainList')
-        ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_MAINLIST');
+        ->add(\Zank\Middleware\InitDb::class);
     $this
         ->post('/bookinfolist', \Zank\Controller\NovelApp\AppControl::class.':bookInfoList')
-        ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_BOOKINFOLIST');
+        ->add(\Zank\Middleware\InitDb::class);
     $this
         ->post('/bookmuluindex', \Zank\Controller\NovelApp\AppControl::class.':bookMuluIndex')
-        ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_BOOKMULUINDEX');
+        ->add(\Zank\Middleware\InitDb::class);
     $this
         ->post('/bookcontent', \Zank\Controller\NovelApp\AppControl::class.':bookContent')
-        ->add(\Zank\Middleware\InitDb::class)
-        ->setName('APP_BOOKCONTENT');
+        ->add(\Zank\Middleware\InitDb::class);
+
+    $this
+        ->post('/search', \Zank\Controller\NovelApp\AppControl::class.':appSearch')
+        ->add(\Zank\Middleware\InitDb::class);
 
         // 获取手机号码验证码
     $this
@@ -261,7 +261,7 @@ Application::group('/novelapp', function () {
         ->post('/login', \Zank\Controller\Novel\User\Control::class.':appIn')
         ->add(\Zank\Middleware\Sign\In\ValidateAppUserByPhoneByZank::class)
         ->add(\Zank\Middleware\InitDb::class);
-        // 基本信息注册
+     // 基本信息注册
     $this
         ->post('/sign', \Zank\Controller\Novel\User\Control::class.':stepAppRegisterBase')
         ->add(\Zank\Middleware\Captcha\ValidateByPhoneCaptchaByZank::class)
@@ -284,6 +284,8 @@ Application::group('/novelapp', function () {
         ->post('/readbookcase', \Zank\Controller\Novel\User\Control::class.':appReadbookcase')
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
+
+
 })
 ->add(\Zank\Middleware\ExceptionHandle2API::class);
 
