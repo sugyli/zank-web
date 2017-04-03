@@ -102,11 +102,12 @@ class AppControl extends PublicController
                 $state = true;
                 $message = "请求成功";  
             }else{
-                $message = "可能PAGE越界了";
+                $message = "可能PAGE越界了或书不存在";
+                $data = -2;
             }
             
         }else{
-
+            $data = -1;
             $message = "书的ID小于0";
         }                               
 
@@ -212,70 +213,6 @@ class AppControl extends PublicController
 
 
 
-    public function appSearch(Request $request, Response $response,$args)
-    {
-        $type  = $request->getParsedBodyParam('type') !== null ? 
-                                        trim($request->getParsedBodyParam('type')) : "";
-        $s  = $request->getParsedBodyParam('s') !== null ? 
-                                        trim($request->getParsedBodyParam('s')) : "";
-        
-        $message = "没有获取到数据请检查服务端";
-        $data = "";
-        $state = false;                                    
-        if ($type && $s) {
-            if($type == "author"){
-                $type = "author";
-            }else{
-
-                $type = "articlename";
-            }
-            $key = 'search_'. $type . $s;
-            
-            $data = $this->ci->fcache->get($key);
-           
-            if (!$data) {
-                if(strlen($s) > 2){
-                    $articleArticle =     
-                                ArticleArticle::BaseBook()
-                                                ->where($type , 'like', "%{$s}%")
-                                                ->orderBy('articleid', 'desc')
-                                                ->take(50)
-                                                ->get();
-                                              
-                    if ($articleArticle && !$articleArticle->isEmpty()) {
-                        $data = $articleArticle->toArray();
-                        $data = SourceUtil::formatNoveInfoData($data);
-                        //写缓存
-                        $this->ci->fcache->set($key, $data ,[                 
-                                                'ttl' => SCASE,                    
-                                                'compress' => YS,             
-                                            ]); 
-                        $message = "搜索到了数据";
-                        $state = true; 
-
-                    }else{
-
-                        $message = "没有搜索到您要的数据";
-                    }
-
-                }else{
-
-                    $message = "搜索词在2个词以上";
-                }
-                    
-
-            }else{
-                $state = true;    
-                $message = "从文件缓存中获取到了数据";
-            }
-
-        }else{
-            $message = "没有输入查询条件";
-        }
-        
-        return with(new \Zank\Common\Message($response, $state, $message,$data))
-                        ->withJson();   
-    }
     
     
 } // END class Sign

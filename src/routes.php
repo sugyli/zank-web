@@ -247,10 +247,6 @@ Application::group('/novelapp', function () {
         ->post('/bookcontent', \Zank\Controller\NovelApp\AppControl::class.':bookContent')
         ->add(\Zank\Middleware\InitDb::class);
 
-    $this
-        ->post('/search', \Zank\Controller\NovelApp\AppControl::class.':appSearch')
-        ->add(\Zank\Middleware\InitDb::class);
-
         // 获取手机号码验证码
     $this
         ->post('/verify', \Zank\Controller\Api\Captcha\ZankPhone::class.':get')
