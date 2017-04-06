@@ -811,6 +811,138 @@ class Control extends UserController
 
     }
 
+    public function appAddbookcase(Request $request, Response $response,$args)
+    {
+        $bid = $request->getParsedBodyParam('bid');
+        $cid = $request->getParsedBodyParam('cid');
+        $bid = intval($bid);
+        $cid = intval($cid);
+        $message = "未知错误";
+        $state = false;
+        if ($this->ci->has('user') && $bid > 0){
+            $user = $this->ci->get('user');
+            //检查这本是不是正常
+            $articleArticle = \Zank\Model\Novel\Wap\ArticleArticle::BaseBook()
+                                    ->where('articleid' , $bid)
+                                    ->first();
+            
+            if ($articleArticle) 
+            {
+                
+                $bookcase = 
+                            $articleArticle->ArticleBookcase()
+                                                ->where('userid' , $user->uid)
+                                                ->first();
+                
+
+
+                if ($bookcase) {//书架有就更新
+                    
+                    if ($cid > 0) {
+
+                        $articleChapter = 
+                                        $articleArticle->ArticleChapter()
+                                                        ->BaseChapter()
+                                                        ->where('chapterid' ,$cid )
+                                                        ->first();
+                        if ($articleChapter) {
+                            $bookcase->articlename = $articleArticle->articlename;
+                            $bookcase->username = $user->uname;
+                            $bookcase->chapterid = $articleChapter->chapterid;
+                            $bookcase->chaptername = $articleChapter->chaptername;
+                            $bookcase->chapterorder = $articleChapter->chapterorder;
+
+                            if ($bookcase->save()) {
+                                $message = "更新书签成功";
+                                $state = true;
+                            }else{
+                                $message = "更新书签失败,可能已经存在";
+
+                            }
+
+
+                        }else{
+                            $message = "此章节不存在了,无法更新书签！";
+                        }
+
+                    }else{
+                        $message = "本书已经在书架中了！";
+
+                    }
+
+                }else{//收藏没有要加入收藏的时候判断下是不是 满了
+                    $total = $user->bookcase()->count();
+                    if ($total >= $user->bookcount) {
+                        $message = "您目前等级最多有{$user->bookcount}本收藏,请清理书架！";
+                    }else{
+                        if ($cid > 0) {
+                            $articleChapter = 
+                                            $articleArticle->ArticleChapter()
+                                                            ->BaseChapter()
+                                                            ->where('chapterid' ,$cid )
+                                                            ->first();
+                            
+                            if ($articleChapter) {
+                                $bookcase = new \Zank\Model\Novel\Wap\ArticleBookcase();
+                                $bookcase->articleid = $articleArticle->articleid;
+                                $bookcase->articlename = $articleArticle->articlename;
+                                $bookcase->userid = $user->uid;
+                                $bookcase->username = $user->uname;
+                                $bookcase->chapterid = $articleChapter->chapterid;
+                                $bookcase->chaptername = $articleChapter->chaptername;
+                                $bookcase->chapterorder = $articleChapter->chapterorder;
+                                $bookcase->joindate = time();
+                                $bookcase->lastvisit = time();
+                                if ($bookcase->save()) {
+                                    $message = "添加书签成功！";
+                                    $state = true;
+                                }else{
+                                    $message = "添加书签失败,请联系管理员！";
+                                }
+
+
+                            }else{
+
+                                $message = "此章节不存在了,无法添加书签";
+
+                            }
+                        }else{
+
+                            $bookcase = new \Zank\Model\Novel\Wap\ArticleBookcase();
+                            $bookcase->articleid = $articleArticle->articleid;
+                            $bookcase->articlename = $articleArticle->articlename;
+                            $bookcase->userid = $user->uid;
+                            $bookcase->username = $user->uname;
+                            $bookcase->joindate = time();
+                            $bookcase->lastvisit = time();
+                            if ($bookcase->save()) {
+                                $message = "添加本书成功！";
+                                $state = true;
+                            }else{
+                                $message = "添加本书失败,请联系管理员！";
+
+                            }
+                        }
+
+                    }
+                }
+
+            }else{
+                $message = "书未找到";
+            }
+
+        }else{
+
+            $message = "用户在中间件未找到或BOOKID小于0";
+        }
+
+
+        return with(new \Zank\Common\Message($response, $state, $message))
+                        ->withJson();
+
+
+    }
+
     public function delbookcase(Request $request, Response $response,$args)
     {
 
