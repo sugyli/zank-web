@@ -43,23 +43,12 @@ class AuthenticationUserToken
             return with(new \Zank\Common\Message($response, false, '认证用户不存在！', -3))
                 ->withJson();
         }
-        $user = $token->user;
-        //查用户等级
-        $userTitle = \Zank\Util\NovelFunction::getNoveTitle($user->score);
-        $user['touxian'] = '基础会员'; 
-        $user['bookcount'] = MAXBOOKCASE;
-        if (is_array($userTitle)) {   
-            //查这等级对应收藏量       
-            $bookCount = \Zank\Util\NovelFunction::getUserBookCaseCount($userTitle['honorid']);
-            $user['touxian'] = $userTitle['caption'];
-            $user['bookcount'] = $bookCount;
-        }
-
+        
         $token->refresh_token = \Zank\Model\SignToken::createRefreshToken();
         $token->expires = UEXTIME;
         $token->save();
 
-        $this->ci->offsetSet('user', $user);
+        $this->ci->offsetSet('user', $token->user);
 
         return $next($request, $response);
     }
