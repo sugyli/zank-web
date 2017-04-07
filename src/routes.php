@@ -280,6 +280,10 @@ Application::group('/novelapp', function () {
         ->add(\Zank\Middleware\User\UserInfo::class)
         ->add(\Zank\Middleware\AuthenticationUserToken::class)
         ->add(\Zank\Middleware\InitDb::class);
+    $this
+        ->post('/delbookcase', \Zank\Controller\Novel\User\Control::class.':appDelbookcase')
+        ->add(\Zank\Middleware\AuthenticationUserToken::class)
+        ->add(\Zank\Middleware\InitDb::class);
 
     $this
         ->post('/readbookcase', \Zank\Controller\Novel\User\Control::class.':appReadbookcase')

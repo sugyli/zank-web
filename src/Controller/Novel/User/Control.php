@@ -960,8 +960,28 @@ class Control extends UserController
         $this->errlog($request ,"删除收藏失败 传入的ID是 {$id}");
         return with(new \Zank\Common\Message($response, false, '删除失败！'))
                     ->withJson();
+    }
 
+    public function appDelbookcase(Request $request, Response $response,$args){
 
+        $id = $request->getParsedBodyParam('id');
+        $id = intval($id);
+        $message = "未知错误";
+        $state = false;
+    
+        if ($id >0 && $this->ci->has('user')){
+            $user = $this->ci->get('user');
+            \Zank\Model\Novel\Wap\ArticleBookcase::where('caseid',$id)->where('userid',$user->uid)->forceDelete();
+            $message = "已经删除！";
+            $state = true;
+            
+        }else{
+            $message = "用户在中间件未发现或参数出现问题";
+
+        }
+        
+        return with(new \Zank\Common\Message($response, $state, $message))
+                    ->withJson();
 
     }
 
