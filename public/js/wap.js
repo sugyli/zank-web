@@ -716,7 +716,6 @@ function _17mb_top(){//顶部广告
     document.writeln("</div>");
 
 }
-
 function _17mb_middle(){//中间广告
     document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
     document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
