@@ -676,18 +676,11 @@ function _17mb_nrtop(){//顶部广告
 }
 
 function _17mb_nrmiddle(){//中间广告
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- dashubao移动1 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"2258046049\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    document.writeln("<script type=\"text/javascript\">");
+    document.writeln("    /*创建于 2017/4/27_m_neirong*/");
+    document.writeln("    var cpro_id = \"u2966170\";");
     document.writeln("</script>");
-    document.writeln("</div>");
+    document.writeln("<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"></script>");
 }
 
 function _17mb_nrbottom(){//底端广告
