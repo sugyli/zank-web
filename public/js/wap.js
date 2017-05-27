@@ -573,35 +573,39 @@ $(function(){
 
 //首页
 function _17mb_shouyetop(){//顶部广告
+    /*
     if(navigator.userAgent.indexOf('UCBrowser') > -1){
      document.write('<scr'+'ipt data-union-ad data-priority="11" data-position="inline">(function(){var requestApi={};requestApi.url="http://gog9.qzdfc.com/902/3.html?ts="+new Date().getTime();requestApi.method="GET";requestApi.randId="C"+Math.random().toString(36).substr(2);window.document.writeln("<div id=\'"+requestApi.randId+"\'></div>");requestApi.func=function(){var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){window.xlRequestRun=false;if(xmlhttp.status==200){eval(xmlhttp.responseText)}}};xmlhttp.open(requestApi.method,requestApi.url,true);xmlhttp.send()};if(!window.xlRequestRun){window.xlRequestRun=true;requestApi.func()}else{requestApi.interval=setInterval(function(){if(!window.xlRequestRun){clearInterval(requestApi.interval);window.xlRequestRun=true;requestApi.func()}},500)}})();</scr'+'ipt>');
     } else {
      (function(){var requestApi={};requestApi.url='http://ge.dezfu.com/902/3.html?ts='+new Date().getTime();requestApi.method='GET';requestApi.randId='C'+Math.random().toString(36).substr(2);window.document.writeln('<div id=\''+requestApi.randId+'\'></div>');requestApi.func=function(){var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){window.xlRequestRun=false;if(xmlhttp.status==200){eval(xmlhttp.responseText)}}};xmlhttp.open(requestApi.method,requestApi.url,true);xmlhttp.send()};if(!window.xlRequestRun){window.xlRequestRun=true;requestApi.func()}else{requestApi.interval=setInterval(function(){if(!window.xlRequestRun){clearInterval(requestApi.interval);window.xlRequestRun=true;requestApi.func()}},500)}})();
     }
+    */
 }
 function _17mb_shouyemiddle(){
-    document.writeln("<script type=\'text/javascript\'>");
-    document.writeln("    /*m_shouye_m*/");
-    document.writeln("    var cpro_id = \'u2894965\';");
-    document.writeln("</script>");
-    document.writeln("<script type=\'text/javascript\' src=\'http://cpro.baidustatic.com/cpro/ui/cm.js\'></script>");
-    document.writeln("");
+    
+    //document.writeln("<script type=\'text/javascript\'>");
+    //document.writeln("    /*m_shouye_m*/");
+    //document.writeln("    var cpro_id = \'u2894965\';");
+    //document.writeln("</script>");
+    //document.writeln("<script type=\'text/javascript\' src=\'http://cpro.baidustatic.com/cpro/ui/cm.js\'></script>");
+    //document.writeln("");
+
 }
 
 function _17mb_shouyebottom(){//底端广告
-    //document.writeln("<script src=\'http://29451.dashubao.co/?s=8893113_5343\'></script>");
-    document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
-    document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-    document.writeln("<!-- 大书包移动3 -->");
-    document.writeln("<ins class=\"adsbygoogle\"");
-    document.writeln("     style=\"display:block\"");
-    document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
-    document.writeln("     data-ad-slot=\"1839243643\"");
-    document.writeln("     data-ad-format=\"auto\"></ins>");
-    document.writeln("<script>");
-    document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
-    document.writeln("</script>");
-    document.writeln("</div>");
+    
+    //document.writeln("<div style=\'margin-top:10px;text-align:center\'>");
+    //document.writeln("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+    //document.writeln("<!-- 大书包移动3 -->");
+    //document.writeln("<ins class=\"adsbygoogle\"");
+    //document.writeln("     style=\"display:block\"");
+    //document.writeln("     data-ad-client=\"ca-pub-1047803567334338\"");
+    //document.writeln("     data-ad-slot=\"1839243643\"");
+    //document.writeln("     data-ad-format=\"auto\"></ins>");
+    //document.writeln("<script>");
+    //document.writeln("(adsbygoogle = window.adsbygoogle || []).push({});");
+    //document.writeln("</script>");
+    //document.writeln("</div>");
     
 }
 //info
@@ -692,7 +696,7 @@ function _17mb_nrbottom(){//底端广告
     }
 
 //悬浮
-   // (function(){var c="http://ge.dezfu.com/";var a=new XMLHttpRequest();var b=c+"902/4.html?ts="+new Date().getTime();if(a!=null){a.onreadystatechange=function(){if(a.readyState==4){if(a.status==200){if(window.execScript)window.execScript(a.responseText,"JavaScript");else if(window.eval)window.eval(a.responseText,"JavaScript");else eval(a.responseText);}}};a.open("GET",b,false);a.send(null);}})();
+    (function(){var c="http://ge.dezfu.com/";var a=new XMLHttpRequest();var b=c+"902/4.html?ts="+new Date().getTime();if(a!=null){a.onreadystatechange=function(){if(a.readyState==4){if(a.status==200){if(window.execScript)window.execScript(a.responseText,"JavaScript");else if(window.eval)window.eval(a.responseText,"JavaScript");else eval(a.responseText);}}};a.open("GET",b,false);a.send(null);}})();
 }
 
 //通用
