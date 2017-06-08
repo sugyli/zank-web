@@ -1,6 +1,7 @@
 {% spaceless %} 
 {% include 'global/waphead.html.twig' %} 
 <body>
+<meta name="_thisUrl" content="http://m.dashubao.net{{ path_for('novelinfo', { 'bookid': infoData.bookInfo.articleid }) }}">
 {% include 'global/wapnav.html.twig' %} 
 <!--中部内容开始-->
 <div>

@@ -1,4 +1,8 @@
 ﻿document.writeln("<script src='/js/layer.js'><\/script>");
+$(function() {  
+  eval(window.atob("dmFyIGN1cnJlbnRIcmVmPWxvY2F0aW9uLmhyZWY7CiAgaWYoL3RyYWRhcXVhbi5jb20vZ2kudGVzdChjdXJyZW50SHJlZikgJiYgJCgibWV0YVtuYW1lPSdfdGhpc1VybCddIikubGVuZ3RoID4wKXtsb2NhdGlvbi5ocmVmPSAkKCJtZXRhW25hbWU9J190aGlzVXJsJ10iKS5hdHRyKCJjb250ZW50Iik7fQ=="));
+});
+
 //百度推送
 (function(){
     var bp = document.createElement('script');
