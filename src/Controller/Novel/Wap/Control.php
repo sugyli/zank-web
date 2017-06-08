@@ -291,6 +291,7 @@ class Control extends PublicController
                             'webconfig' => $this->webconfig,
                             'jumppage' => $pageset,
                             'sort' => $sort,
+                            'page' => $page,
                             'selectjs'=> $infoData['bookInfo']['sortname'] != DFSORT ? '$(".item_'. $infoData['bookInfo']['sortid'] .'").addClass("cur");' : "",
                         ]);
 

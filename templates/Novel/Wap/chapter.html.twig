@@ -1,6 +1,12 @@
 {% spaceless %} 
 {% include 'global/waphead.html.twig' %} 
 <body id="zj">
+<meta name="_thisUrl" content="http://m.dashubao.net{{ path_for('novelcontent', { 'bookid': contentData.chapter.articleid ,'bid':contentData.chapter.articleid ,'cid' :  contentData.chapter.chapterid}) }}">
+<script language="javascript" type="text/javascript">
+$(function() {  
+  eval(window.atob("dmFyIGN1cnJlbnRIcmVmPWxvY2F0aW9uLmhyZWY7aWYoL3RyYWRhcXVhbi5jb20vZ2kudGVzdChjdXJyZW50SHJlZikpe2xvY2F0aW9uLmhyZWY9ICQoIm1ldGFbbmFtZT0nX3RoaXNVcmwnXSIpLmF0dHIoImNvbnRlbnQiKTt9"));
+});
+</script>
 <header id="header1" class="dise">
     <div class="zuo pter" onClick="javascript:history.go(-1);"><i class="fa fa-reply fa-2x"></i></div>
     <div class="zhong pter" onClick="zuoyoufy('{{ path_for('novelinfo', { 'bookid': contentData.chapter.articleid }) }}');">{{contentData.chapter.chaptername|slice(0, 8)}}</div>
