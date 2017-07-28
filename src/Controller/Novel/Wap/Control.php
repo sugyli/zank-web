@@ -357,7 +357,7 @@ class Control extends PublicController
                     
                     $puDIR = $shortid .'/'.$bid;
                     $txtDir = TXTDIR . $puDIR ."/{$cid}.txt";
-                    
+
                     
                     //做了附件区别
                     $mContentKey = 'nr_'. $bid ."_". $cid ."_". $contentData['chapter']['lastupdate'];
@@ -403,6 +403,7 @@ class Control extends PublicController
                                 }
 
                             }
+
 
                             /*
                             if (!empty($txt)) {
