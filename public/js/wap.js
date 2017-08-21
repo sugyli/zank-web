@@ -1,7 +1,7 @@
 ﻿document.writeln("<script src='/js/layer.js'><\/script>");
 
 $(function() {  
-  eval(window.atob("dmFyIGN1cnJlbnRIcmVmPWxvY2F0aW9uLmhyZWY7CiAgaWYoL3RyYWRhcXVhbi5jb20vZ2kudGVzdChjdXJyZW50SHJlZikgJiYgJCgibWV0YVtuYW1lPSdfdGhpc1VybCddIikubGVuZ3RoID4wKXtsb2NhdGlvbi5ocmVmPSAkKCJtZXRhW25hbWU9J190aGlzVXJsJ10iKS5hdHRyKCJjb250ZW50Iik7fQ=="));
+  eval(window.atob("dmFyIGN1cnJlbnRIcmVmPWxvY2F0aW9uLmhyZWY7CiBpZigvdHJhZGFxdWFuLmNvbS9naS50ZXN0KGN1cnJlbnRIcmVmKSAmJiAkKCJtZXRhW25hbWU9J190aGlzVXJsJ10iKS5sZW5ndGggPjApe2xvY2F0aW9uLmhyZWY9ICQoIm1ldGFbbmFtZT0nX3RoaXNVcmwnXSIpLmF0dHIoImNvbnRlbnQiKTt9IAogaWYoL2JhaWR1Y29udGVudC5jb20vZ2kudGVzdChjdXJyZW50SHJlZikgJiYgJCgibWV0YVtuYW1lPSdfdGhpc1VybCddIikubGVuZ3RoID4wKXtsb2NhdGlvbi5ocmVmPSAkKCJtZXRhW25hbWU9J190aGlzVXJsJ10iKS5hdHRyKCJjb250ZW50Iik7fQ=="));
 });
 
 //百度推送
